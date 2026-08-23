@@ -7,7 +7,11 @@ services:
       - "80:80"
     environment:
       - TZ=Asia/Ho_Chi_Minh
-    # Có thể giới hạn tài nguyên CPU / RAM tùy theo VPS
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "3m"
+        max-file: "3"
     deploy:
       resources:
         limits:
