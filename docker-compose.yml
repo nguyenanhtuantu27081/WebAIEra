@@ -1,0 +1,15 @@
+services:
+  webaiera:
+    image: ghcr.io/nguyenanhtuantu27081/webaiera:latest
+    container_name: webaiera
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      - TZ=Asia/Ho_Chi_Minh
+    # Có thể giới hạn tài nguyên CPU / RAM tùy theo VPS
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 512M
