@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Báo cho crawler biết vị trí của sơ đồ trang web
+Sitemap: https://aiera.vn/sitemap.xml

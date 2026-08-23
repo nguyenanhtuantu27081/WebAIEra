@@ -1,0 +1,129 @@
+/* ============================================
+   AI Era — Typography
+   ============================================ */
+
+/* ----- Intro Section ----- */
+.intro h1{
+  font-size:clamp(2.2rem,4.5vw,5rem);
+  line-height:.97;
+  letter-spacing:-.065em;
+  font-weight:700;
+  background:linear-gradient(180deg,#fff 24%,#8f8f9a 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.intro p{
+  margin-top:18px;
+  color:var(--muted);
+  font-size:.88rem;
+  line-height:1.7;
+  max-width:335px;
+}
+
+/* ----- AI Era Core Label ----- */
+.core-label{
+  position:absolute;left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:178px;height:178px;border-radius:50%;
+  display:grid;place-items:center;text-align:center;
+  pointer-events:none;transition:opacity .2s;
+}
+
+/* ★ UPGRADED: gradient 4 màu + glow multi-layer + animate chuyển màu 9s */
+.core-label strong{
+  display:block;
+  font-family:var(--font-sans);
+  font-weight:800;
+  font-size:clamp(2.4rem, 6vw, 4.2rem);
+  letter-spacing:-0.02em;
+  line-height:1;
+
+  background:linear-gradient(
+    100deg,
+    #ffffff 0%,
+    #e4d9ff 22%,
+    #c9b8ff 40%,
+    #a5b4fc 58%,
+    #818cf8 75%,
+    #67e8f9 100%
+  );
+  background-size:220% 220%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+
+  animation: aiEraGradientShift 9s ease-in-out infinite;
+
+  /* multi-layer glow */
+  filter:
+    drop-shadow(0 0 6px rgba(255,255,255,.55))
+    drop-shadow(0 0 18px rgba(129,140,248,.55))
+    drop-shadow(0 0 36px rgba(103,232,249,.35))
+    drop-shadow(0 0 60px rgba(192,132,252,.25));
+}
+
+.core-label span{
+  display:block;margin-top:12px;color:#b9b9c6;
+  font:500 .58rem var(--font-mono);
+  letter-spacing:.23em;text-transform:uppercase;
+  text-shadow:0 0 14px rgba(129,140,248,.8);
+}
+
+/* ----- Node Label Text ----- */
+.node-label small{
+  color:#555562;
+  font:400 .58rem var(--font-mono);
+  letter-spacing:.06em;
+}
+
+/* ----- Badge ----- */
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 12px;border-radius:var(--radius-pill);
+  border:1px solid rgba(129,140,248,.28);
+  background:rgba(129,140,248,.08);
+  color:#a5b4fc;
+  font:500 .68rem var(--font-mono);
+  margin-bottom:18px;
+}
+.badge i{
+  width:5px;height:5px;border-radius:50%;
+  background:#a5b4fc;box-shadow:0 0 10px #818cf8;
+}
+
+/* ----- Focus Panel Typography ----- */
+.focus-kicker{
+  color:#a5b4fc;
+  font:500 .61rem var(--font-mono);
+  letter-spacing:.08em;
+}
+.focus-panel h2{
+  font-size:1.35rem;
+  letter-spacing:-.04em;
+  margin:9px 0 8px;
+}
+.focus-panel p{
+  font-size:.78rem;
+  line-height:1.65;
+  color:var(--muted);
+}
+
+/* ----- HUD Typography ----- */
+.hud-head b{font-size:.72rem;font-weight:600}
+.hud-head em{
+  font-style:normal;color:#777784;
+  font:400 .58rem var(--font-mono);
+}
+.hud-row{
+  display:flex;justify-content:space-between;
+  margin-bottom:10px;
+  font:400 .61rem var(--font-mono);
+  color:#656572;
+}
+.hud-row span:last-child{color:#a5b4fc}
+.hud-copy{
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.055);
+  font-size:.72rem;color:#8a8a93;line-height:1.6;
+}

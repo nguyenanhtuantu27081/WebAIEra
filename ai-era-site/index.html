@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#030305" />
+  <meta name="description" content="AI Era — Hệ sinh thái trí tuệ nhân tạo đa chiều: AI Automation, AI Agent, Digital Marketing, SEO, Landing Page, Phần mềm quản lý doanh nghiệp." />
+  <title>AI Era — Spatial Intelligence Ecosystem</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- CSS Modules -->
+  <link rel="stylesheet" href="./css/variables.css">
+  <link rel="stylesheet" href="./css/base.css">
+  <link rel="stylesheet" href="./css/typography.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/theme.css">
+  <link rel="stylesheet" href="./css/animations.css">
+  <link rel="stylesheet" href="./css/responsive.css">
+
+  <!-- Import Map — pinned versions -->
+  <script type="importmap">
+  {
+    "imports":{
+      "three":"https://cdn.jsdelivr.net/npm/three@0.185.0/build/three.module.js",
+      "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.185.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- WebGL Canvas -->
+  <div id="webgl"></div>
+
+  <!-- Labels overlay -->
+  <div id="labels">
+    <div class="core-label">
+      <div>
+        <strong>AI Era</strong>
+        <span>Core Intelligence</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlays -->
+  <div class="grain"></div>
+  <div class="vignette"></div>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">
+      <span class="logo-mark"></span>AI ERA<span>.VN</span>
+    </div>
+    <div class="nav-status">SYSTEM ONLINE · 6 NODES</div>
+  </nav>
+
+  <!-- Intro Section -->
+  <section class="intro">
+    <div class="badge"><i></i> SPATIAL INTELLIGENCE ECOSYSTEM</div>
+    <h1>Intelligence in motion.</h1>
+    <p>Khám phá hệ sinh thái AI đa chiều — nơi tự động hóa, AI agents, marketing, phân tích định lượng, AI SEO và SaaS xoay quanh một lõi trí tuệ chung.</p>
+  </section>
+
+  <!-- HUD Panel -->
+  <aside class="hud">
+    <div class="hud-head"><b>Spatial telemetry</b><em>LIVE</em></div>
+    <div class="hud-body">
+      <div class="hud-row"><span>CAMERA DIST</span><span id="distVal">14.0</span></div>
+      <div class="hud-row"><span>ROTATION X</span><span id="rotXVal">0.0°</span></div>
+      <div class="hud-row"><span>ROTATION Y</span><span id="rotYVal">0.0°</span></div>
+      <div class="hud-row"><span>FOCUS</span><span id="focusVal">CORE</span></div>
+      <div class="hud-copy">Scroll to fly through space. Drag to rotate 360°. Shift+drag to roll. Click a node to explore.</div>
+    </div>
+  </aside>
+
+  <!-- Controls -->
+  <div class="controls">
+    <span class="control">DRAG · ROTATE 360°</span>
+    <span class="control">SHIFT+DRAG · ROLL</span>
+    <span class="control">WHEEL · FLY / ZOOM</span>
+    <button id="resetBtn" class="control">RESET VIEW</button>
+  </div>
+
+  <!-- Focus Panel -->
+  <div class="focus-panel" id="focusPanel">
+    <div class="focus-kicker">AI ERA / NODE <span id="nodeNum">01</span></div>
+    <h2 id="focusTitle">AI Automation</h2>
+    <p id="focusText"></p>
+    <a id="focusLink" href="#" class="focus-detail-link">Xem chi tiết</a>
+    <button id="backBtn">Return to AI Era core</button>
+  </div>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
+  <!-- App Entry -->
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+/* ============================================
+   AI Era — Responsive / Touch
+   ============================================ */
+
+@media(max-width:900px){
+  nav{padding:17px 18px}
+  .nav-center{display:none}
+  .intro{left:18px;top:90px;max-width:280px}
+  .intro p{display:none}
+  .hud{display:none}
+  .controls{left:18px;bottom:18px}
+  .node-label{font-size:.61rem;padding:8px 9px}
+  .node-label small{display:none}
+  .focus-panel{right:14px;bottom:62px;width:calc(100vw - 28px)}
+}
+
+@media(max-width:767px){
+  .hud{font-size:.6rem}
+  .focus-panel{
+    width:100%;
+    right:0;
+    bottom:0;
+    top:auto;
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+/* Touch devices — hide custom cursor */
+@media(pointer:coarse){
+  body{cursor:auto}
+  .cursor-dot,.cursor-outline{display:none}
+}

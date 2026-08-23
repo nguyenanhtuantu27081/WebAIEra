@@ -1,0 +1,125 @@
+/* ============================================
+   AI Era — Components
+   ============================================ */
+
+/* ----- Node Labels ----- */
+.node-label{
+  position:absolute;left:0;top:0;
+  transform:translate(-50%,-50%);
+  pointer-events:auto;cursor:none;white-space:nowrap;
+  display:flex;align-items:center;gap:10px;
+  padding:10px 13px;border-radius:11px;
+  color:#dcdce2;font-size:.74rem;font-weight:600;
+  border:1px solid rgba(255,255,255,.08);
+  background:rgba(8,8,14,.64);
+  backdrop-filter:blur(14px);
+  box-shadow:0 12px 38px rgba(0,0,0,.22);
+  transition:border-color .25s,background .25s,transform .25s,opacity .2s,color .25s;
+  will-change:transform,left,top;
+}
+.node-label:before{
+  content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--node-color,#a5b4fc);
+  box-shadow:0 0 12px var(--node-color,#a5b4fc);
+}
+.node-label:hover,.node-label.active{
+  color:#fff;
+  border-color:color-mix(in srgb,var(--node-color) 55%,transparent);
+  background:rgba(14,14,23,.84);
+  transform:translate(-50%,-50%) scale(1.055);
+}
+
+/* ----- HUD Panel ----- */
+.hud{
+  position:fixed;right:var(--space-lg);top:105px;z-index:18;width:248px;
+  border:1px solid var(--border);border-radius:var(--radius-md);
+  background:rgba(7,7,12,.62);
+  backdrop-filter:blur(18px);
+  overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,.28);
+}
+.hud-head{
+  padding:var(--space-sm) 16px;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.hud-body{padding:15px 16px}
+
+/* ----- Focus Panel (glassmorphism) ----- */
+.focus-panel{
+  position:fixed;right:var(--space-lg);bottom:var(--space-lg);z-index:22;
+  width:min(370px,calc(100vw - 56px));
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border-radius:var(--radius-lg);
+  padding:var(--space-md);
+  transform:translateY(22px);opacity:0;pointer-events:none;
+  transition:.35s cubic-bezier(.2,.8,.2,1);
+}
+.focus-panel.show{transform:none;opacity:1;pointer-events:auto}
+.focus-panel button{
+  margin-top:var(--space-sm);
+  border:1px solid var(--border);border-radius:var(--radius-pill);
+  padding:8px 13px;
+  background:#fff;color:#030305;
+  font-weight:700;font-size:.69rem;cursor:none;
+  transition:background .2s,transform .15s;
+}
+.focus-panel button:hover{
+  background:#e4d9ff;
+  transform:scale(1.04);
+}
+
+/* Focus detail link */
+.focus-detail-link{
+  display:inline-block;margin-top:12px;
+  color:var(--indigo-2);font-size:.72rem;font-weight:600;
+  text-decoration:none;
+  transition:color .2s;
+}
+.focus-detail-link:hover{color:var(--cyan)}
+.focus-detail-link::after{content:" →"}
+
+/* ----- Control Buttons ----- */
+.control{
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.028);color:#90909c;
+  font:500 .61rem var(--font-mono);
+  padding:8px 10px;border-radius:var(--radius-sm);
+  backdrop-filter:blur(12px);
+}
+button.control{cursor:none;transition:.25s}
+button.control:hover{
+  color:#fff;
+  border-color:rgba(129,140,248,.38);
+  background:rgba(129,140,248,.08);
+}
+
+/* ----- Custom Cursor ----- */
+.cursor-dot,.cursor-outline{
+  position:fixed;left:0;top:0;border-radius:50%;
+  pointer-events:none;z-index:10000;
+  transform:translate(-50%,-50%);
+}
+.cursor-dot{
+  width:5px;height:5px;background:#fff;
+  box-shadow:0 0 10px rgba(255,255,255,.55);
+}
+.cursor-outline{
+  width:34px;height:34px;
+  border:1px solid rgba(255,255,255,.34);
+  background:rgba(255,255,255,.018);
+  backdrop-filter:blur(1px);
+  transition:width .18s,height .18s,border-color .18s,background .18s;
+}
+body.hovering .cursor-outline{
+  width:46px;height:46px;
+  border-color:rgba(129,140,248,.65);
+  background:rgba(129,140,248,.06);
+}
+body.dragging .cursor-outline{
+  width:58px;height:58px;
+  border-color:rgba(103,232,249,.65);
+}

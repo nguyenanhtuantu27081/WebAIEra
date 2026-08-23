@@ -1,0 +1,15 @@
+/* ============================================
+   AI Era — Animations / Keyframes
+   ============================================ */
+
+/* AI Era gradient shift — 9s cycle, 4-color gradient panning */
+@keyframes aiEraGradientShift{
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Reduced motion override */
+@media (prefers-reduced-motion: reduce){
+  .core-label strong{ animation:none; }
+}
