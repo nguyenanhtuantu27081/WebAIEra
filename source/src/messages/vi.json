@@ -1,0 +1,93 @@
+{
+  "site": {
+    "name": "AI Era",
+    "tagline": "Intelligence in motion."
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "services": "Dịch vụ",
+    "contact": "Liên hệ",
+    "systemOnline": "HỆ THỐNG ONLINE"
+  },
+  "home": {
+    "badge": "HỆ SINH THÁI TRÍ TUỆ NHÂN TẠO",
+    "hero": {
+      "title": "Intelligence in motion.",
+      "subtitle": "Khám phá hệ sinh thái AI nơi automation, agent, marketing, phân tích định lượng, AI SEO và SaaS cùng chuyển động."
+    },
+    "hud": {
+      "title": "Spatial telemetry",
+      "status": "LIVE",
+      "distance": "KHOẢNG CÁCH CAMERA",
+      "rotationX": "XOẠY X",
+      "rotationY": "XOẠY Y",
+      "focus": "TIÊU ĐIỂM",
+      "controls": {
+        "drag": "KÉO · XOAY 360°",
+        "wheel": "CON LĂN · BAY / PHÓNG TO",
+        "reset": "ĐẶT LẠI GÓC NHÌN"
+      }
+    },
+    "focusPanel": {
+      "kicker": "AI ERA / NODE",
+      "back": "Quay về lõi AI Era"
+    },
+    "cursor": {
+      "drag": "KÉO · XOAY 360°",
+      "wheel": "CON LĂN · BAY / PHÓNG TO"
+    }
+  },
+  "services": {
+    "aiAutomation": {
+      "name": "AI Automation",
+      "desc": "Autonomous workflows, orchestration and intelligent process automation that connect tools, data and decisions.",
+      "label": "Tự động hóa thông minh"
+    },
+    "aiAgent": {
+      "name": "AI Agent",
+      "desc": "Goal-driven AI agents that reason, use tools, collaborate and execute multi-step operations across digital systems.",
+      "label": "Agent thông minh"
+    },
+    "digitalMarketing": {
+      "name": "Digital Marketing",
+      "desc": "AI-assisted growth systems for content, campaigns, audience intelligence, conversion and lifecycle optimization.",
+      "label": "Marketing thông minh"
+    },
+    "quantEquity": {
+      "name": "Phân tích định lượng",
+      "desc": "Data-driven equity research combining quantitative signals, factor models, screening and machine-assisted analysis.",
+      "label": "Phân tích định lượng"
+    },
+    "aiSeo": {
+      "name": "AI-driven SEO",
+      "desc": "Search-first web experiences combining technical SEO, semantic architecture, AI discovery and conversion-focused design.",
+      "label": "Thiết kế web chuẩn SEO"
+    },
+    "ispa": {
+      "name": "SaaS iSpa",
+      "desc": "Vertical SaaS infrastructure for spa operations, customer journeys, automation, analytics and intelligent service management.",
+      "label": "Phần mềm quản lý Spa"
+    }
+  },
+  "ecosystem": {
+    "title": "Dịch vụ chính",
+    "subtitle": "Hệ sinh thái giải pháp toàn diện cho doanh nghiệp"
+  },
+  "cta": {
+    "title": "Sẵn sàng tăng trưởng với AI?",
+    "subtitle": "Liên hệ với AI Era để được tư vấn miễn phí và nhận đề xuất phù hợp nhất với mục tiêu kinh doanh của bạn.",
+    "button": "Liên hệ ngay"
+  },
+  "footer": {
+    "company": "AI Era",
+    "description": "Công ty công nghệ chuyên cung cấp các giải pháp AI và digital marketing toàn diện cho doanh nghiệp Việt Nam.",
+    "links": {
+      "services": "Dịch vụ",
+      "about": "Về chúng tôi",
+      "contact": "Liên hệ",
+      "privacy": "Chính sách bảo mật"
+    },
+    "rights": "Bảo lưu mọi quyền.",
+    "tagline": "Intelligence in motion."
+  }
+}

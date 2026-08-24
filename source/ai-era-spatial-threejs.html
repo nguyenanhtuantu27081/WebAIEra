@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#030305" />
+  <title>AI Era — Spatial Intelligence Ecosystem</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#030305;
+      --surface:rgba(255,255,255,.035);
+      --surface-2:rgba(8,8,16,.72);
+      --border:rgba(255,255,255,.085);
+      --text:#fff;
+      --muted:#8a8a93;
+      --indigo:#818cf8;
+      --indigo-2:#a5b4fc;
+      --cyan:#67e8f9;
+      --purple:#c084fc;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text)}
+    body{
+      font-family:"Plus Jakarta Sans",sans-serif;
+      -webkit-font-smoothing:antialiased;
+      cursor:none;
+      background:
+        radial-gradient(circle at 50% 42%, rgba(99,102,241,.075), transparent 28%),
+        radial-gradient(circle at 50% 50%, #06060a 0%, #030305 58%, #020203 100%);
+    }
+
+    #webgl{position:fixed;inset:0;z-index:0}
+    #webgl canvas{display:block;width:100%;height:100%}
+
+    .grain{
+      position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.045;mix-blend-mode:screen;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.95' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    nav{
+      position:fixed;left:0;right:0;top:0;z-index:30;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:22px 42px;
+      border-bottom:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(3,3,5,.82),rgba(3,3,5,.48));
+      backdrop-filter:blur(16px);
+    }
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.12rem;letter-spacing:-.45px}
+    .logo-mark{
+      width:22px;height:22px;border:1px solid rgba(165,180,252,.7);border-radius:7px;
+      display:grid;place-items:center;position:relative;box-shadow:inset 0 0 14px rgba(129,140,248,.12),0 0 18px rgba(99,102,241,.09)
+    }
+    .logo-mark:before,.logo-mark:after{content:"";position:absolute;background:#a5b4fc}
+    .logo-mark:before{width:10px;height:1px}
+    .logo-mark:after{height:10px;width:1px}
+    .logo span{color:var(--indigo)}
+    .nav-center{
+      display:flex;gap:28px;font-size:.76rem;color:var(--muted);font-weight:500;
+    }
+    .nav-center span{transition:.25s}
+    .nav-center span:hover{color:#fff}
+    .nav-status{
+      font-family:"JetBrains Mono",monospace;font-size:.67rem;color:#a5b4fc;
+      border:1px solid rgba(129,140,248,.22);background:rgba(129,140,248,.07);
+      padding:7px 11px;border-radius:999px;
+    }
+
+    .intro{
+      position:fixed;left:42px;top:112px;z-index:18;max-width:365px;pointer-events:none;
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 12px;border-radius:999px;
+      border:1px solid rgba(129,140,248,.28);background:rgba(129,140,248,.08);
+      color:#a5b4fc;font:500 .68rem "JetBrains Mono",monospace;margin-bottom:18px;
+    }
+    .badge i{width:5px;height:5px;border-radius:50%;background:#a5b4fc;box-shadow:0 0 10px #818cf8}
+    .intro h1{
+      font-size:clamp(2.2rem,4.5vw,5rem);line-height:.97;letter-spacing:-.065em;font-weight:700;
+      background:linear-gradient(180deg,#fff 24%,#8f8f9a 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    .intro p{margin-top:18px;color:var(--muted);font-size:.88rem;line-height:1.7;max-width:335px}
+
+    #labels{position:fixed;inset:0;z-index:12;pointer-events:none}
+    .node-label{
+      position:absolute;left:0;top:0;transform:translate(-50%,-50%);
+      pointer-events:auto;cursor:none;white-space:nowrap;
+      display:flex;align-items:center;gap:10px;
+      padding:10px 13px;border-radius:11px;
+      color:#dcdce2;font-size:.74rem;font-weight:600;
+      border:1px solid rgba(255,255,255,.08);
+      background:rgba(8,8,14,.64);backdrop-filter:blur(14px);
+      box-shadow:0 12px 38px rgba(0,0,0,.22);
+      transition:border-color .25s,background .25s,transform .25s,opacity .2s,color .25s;
+      will-change:transform,left,top;
+    }
+    .node-label:before{
+      content:"";width:5px;height:5px;border-radius:50%;background:var(--node-color,#a5b4fc);
+      box-shadow:0 0 12px var(--node-color,#a5b4fc);
+    }
+    .node-label small{
+      color:#555562;font:400 .58rem "JetBrains Mono",monospace;letter-spacing:.06em;
+    }
+    .node-label:hover,.node-label.active{
+      color:#fff;border-color:color-mix(in srgb,var(--node-color) 55%,transparent);
+      background:rgba(14,14,23,.84);
+      transform:translate(-50%,-50%) scale(1.055);
+    }
+
+    .core-label{
+      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+      width:178px;height:178px;border-radius:50%;display:grid;place-items:center;text-align:center;
+      pointer-events:none;transition:opacity .2s;
+    }
+    .core-label strong{
+      display:block;font-size:clamp(2.25rem,4vw,4.6rem);font-weight:800;line-height:.82;
+      letter-spacing:-.075em;
+      background:linear-gradient(115deg,#fff 6%,#d8ddff 28%,#818cf8 55%,#67e8f9 76%,#fff 100%);
+      background-size:220% 220%;
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      filter:drop-shadow(0 0 7px rgba(255,255,255,.35)) drop-shadow(0 0 20px rgba(129,140,248,.9));
+      animation:coreText 4.5s ease-in-out infinite;
+    }
+    .core-label span{
+      display:block;margin-top:12px;color:#b9b9c6;
+      font:500 .58rem "JetBrains Mono",monospace;letter-spacing:.23em;text-transform:uppercase;
+      text-shadow:0 0 14px rgba(129,140,248,.8);
+    }
+    @keyframes coreText{
+      0%,100%{background-position:0 50%;filter:drop-shadow(0 0 7px rgba(255,255,255,.28)) drop-shadow(0 0 19px rgba(129,140,248,.72))}
+      50%{background-position:100% 50%;filter:drop-shadow(0 0 12px rgba(103,232,249,.62)) drop-shadow(0 0 31px rgba(129,140,248,1))}
+    }
+
+    .hud{
+      position:fixed;right:28px;top:105px;z-index:18;width:248px;
+      border:1px solid var(--border);border-radius:18px;background:rgba(7,7,12,.62);
+      backdrop-filter:blur(18px);overflow:hidden;
+      box-shadow:0 24px 70px rgba(0,0,0,.28);
+    }
+    .hud-head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .hud-head b{font-size:.72rem;font-weight:600}
+    .hud-head em{font-style:normal;color:#777784;font:400 .58rem "JetBrains Mono",monospace}
+    .hud-body{padding:15px 16px}
+    .hud-row{display:flex;justify-content:space-between;margin-bottom:10px;font:400 .61rem "JetBrains Mono",monospace;color:#656572}
+    .hud-row span:last-child{color:#a5b4fc}
+    .hud-copy{padding-top:10px;border-top:1px solid rgba(255,255,255,.055);font-size:.72rem;color:#8a8a93;line-height:1.6}
+
+    .controls{
+      position:fixed;left:42px;bottom:32px;z-index:20;
+      display:flex;align-items:center;gap:9px;
+    }
+    .control{
+      border:1px solid var(--border);background:rgba(255,255,255,.028);color:#90909c;
+      font:500 .61rem "JetBrains Mono",monospace;padding:8px 10px;border-radius:9px;
+      backdrop-filter:blur(12px);
+    }
+    button.control{cursor:none;transition:.25s}
+    button.control:hover{color:#fff;border-color:rgba(129,140,248,.38);background:rgba(129,140,248,.08)}
+
+    .focus-panel{
+      position:fixed;right:28px;bottom:28px;z-index:22;width:min(370px,calc(100vw - 56px));
+      border:1px solid var(--border);background:rgba(7,7,12,.73);backdrop-filter:blur(20px);
+      border-radius:20px;padding:20px;transform:translateY(22px);opacity:0;pointer-events:none;
+      transition:.35s cubic-bezier(.2,.8,.2,1);
+    }
+    .focus-panel.show{transform:none;opacity:1;pointer-events:auto}
+    .focus-kicker{color:#a5b4fc;font:500 .61rem "JetBrains Mono",monospace;letter-spacing:.08em}
+    .focus-panel h2{font-size:1.35rem;letter-spacing:-.04em;margin:9px 0 8px}
+    .focus-panel p{font-size:.78rem;line-height:1.65;color:var(--muted)}
+    .focus-panel button{
+      margin-top:14px;border:1px solid var(--border);border-radius:999px;padding:8px 13px;
+      background:#fff;color:#030305;font-weight:700;font-size:.69rem;cursor:none;
+    }
+
+    .cursor-dot,.cursor-outline{
+      position:fixed;left:0;top:0;border-radius:50%;pointer-events:none;z-index:10000;
+      transform:translate(-50%,-50%);
+    }
+    .cursor-dot{width:5px;height:5px;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.55)}
+    .cursor-outline{
+      width:34px;height:34px;border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.018);
+      backdrop-filter:blur(1px);transition:width .18s,height .18s,border-color .18s,background .18s;
+    }
+    body.hovering .cursor-outline{width:46px;height:46px;border-color:rgba(129,140,248,.65);background:rgba(129,140,248,.06)}
+    body.dragging .cursor-outline{width:58px;height:58px;border-color:rgba(103,232,249,.65)}
+
+    .vignette{
+      position:fixed;inset:0;z-index:2;pointer-events:none;
+      box-shadow:inset 0 0 180px rgba(0,0,0,.5);
+    }
+
+    @media(max-width:900px){
+      nav{padding:17px 18px}.nav-center{display:none}
+      .intro{left:18px;top:90px;max-width:280px}.intro p{display:none}
+      .hud{display:none}.controls{left:18px;bottom:18px}
+      .node-label{font-size:.61rem;padding:8px 9px}.node-label small{display:none}
+      .focus-panel{right:14px;bottom:62px;width:calc(100vw - 28px)}
+    }
+    @media(pointer:coarse){body{cursor:auto}.cursor-dot,.cursor-outline{display:none}}
+  </style>
+
+  <script type="importmap">
+  {
+    "imports":{
+      "three":"https://cdn.jsdelivr.net/npm/three@0.185.0/build/three.module.js",
+      "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.185.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="webgl"></div>
+  <div id="labels"><div class="core-label"><div><strong>AI Era</strong><span>Core Intelligence</span></div></div></div>
+  <div class="grain"></div>
+  <div class="vignette"></div>
+
+  <nav>
+    <div class="logo"><span class="logo-mark"></span>AI ERA<span>.VN</span></div>
+    <div class="nav-center"><span>Intelligence</span><span>Automation</span><span>Growth</span><span>Analytics</span><span>SaaS</span></div>
+    <div class="nav-status">SYSTEM ONLINE · 6 NODES</div>
+  </nav>
+
+  <section class="intro">
+    <div class="badge"><i></i> SPATIAL INTELLIGENCE ECOSYSTEM</div>
+    <h1>Intelligence in motion.</h1>
+    <p>Explore a multidimensional AI ecosystem where automation, agents, marketing, quantitative intelligence, AI-driven SEO and SaaS orbit one shared core.</p>
+  </section>
+
+  <aside class="hud">
+    <div class="hud-head"><b>Spatial telemetry</b><em>LIVE</em></div>
+    <div class="hud-body">
+      <div class="hud-row"><span>CAMERA DIST</span><span id="distVal">14.0</span></div>
+      <div class="hud-row"><span>ROTATION X</span><span id="rotXVal">0.00</span></div>
+      <div class="hud-row"><span>ROTATION Y</span><span id="rotYVal">0.00</span></div>
+      <div class="hud-row"><span>FOCUS</span><span id="focusVal">CORE</span></div>
+      <div class="hud-copy">Scroll to fly through space. Drag to rotate. Click a node to initiate autonomous camera approach.</div>
+    </div>
+  </aside>
+
+  <div class="controls">
+    <span class="control">DRAG · ROTATE 360°</span>
+    <span class="control">WHEEL · FLY / ZOOM</span>
+    <button id="resetBtn" class="control">RESET VIEW</button>
+  </div>
+
+  <div class="focus-panel" id="focusPanel">
+    <div class="focus-kicker">AI ERA / NODE <span id="nodeNum">01</span></div>
+    <h2 id="focusTitle">AI Automation</h2>
+    <p id="focusText"></p>
+    <button id="backBtn">Return to AI Era core</button>
+  </div>
+
+  <div class="cursor-dot"></div>
+  <div class="cursor-outline"></div>
+
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+const mount = document.querySelector('#webgl');
+const labelsRoot = document.querySelector('#labels');
+const coreLabel = document.querySelector('.core-label');
+const focusPanel = document.querySelector('#focusPanel');
+const focusTitle = document.querySelector('#focusTitle');
+const focusText = document.querySelector('#focusText');
+const nodeNum = document.querySelector('#nodeNum');
+const focusVal = document.querySelector('#focusVal');
+const distVal = document.querySelector('#distVal');
+const rotXVal = document.querySelector('#rotXVal');
+const rotYVal = document.querySelector('#rotYVal');
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x030305, .022);
+
+const camera = new THREE.PerspectiveCamera(48, innerWidth/innerHeight, .1, 120);
+camera.position.set(0, .2, 14.5);
+
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
+renderer.setSize(innerWidth,innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+mount.appendChild(renderer.domElement);
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),1.1,.75,.18);
+bloom.strength = .95;
+bloom.radius = .8;
+bloom.threshold = .08;
+composer.addPass(bloom);
+
+scene.add(new THREE.AmbientLight(0x30304c,.36));
+const key = new THREE.PointLight(0x8b8cff,28,36,2);
+key.position.set(4,4,6); scene.add(key);
+const cyanLight = new THREE.PointLight(0x67e8f9,15,30,2);
+cyanLight.position.set(-4,-3,3); scene.add(cyanLight);
+
+const world = new THREE.Group();
+scene.add(world);
+
+// ---------- textures ----------
+function radialTexture(inner='rgba(255,255,255,1)', mid='rgba(129,140,248,.35)'){
+  const c=document.createElement('canvas'); c.width=c.height=256;
+  const x=c.getContext('2d');
+  const g=x.createRadialGradient(128,128,0,128,128,128);
+  g.addColorStop(0,inner); g.addColorStop(.16,mid); g.addColorStop(.48,'rgba(99,102,241,.08)'); g.addColorStop(1,'rgba(0,0,0,0)');
+  x.fillStyle=g;x.fillRect(0,0,256,256);
+  return new THREE.CanvasTexture(c);
+}
+const glowTex=radialTexture();
+
+// ---------- AI Era core ----------
+const coreGroup=new THREE.Group(); world.add(coreGroup);
+
+const core=new THREE.Mesh(
+  new THREE.IcosahedronGeometry(1.28,5),
+  new THREE.MeshPhysicalMaterial({
+    color:0x11121e,metalness:.7,roughness:.16,clearcoat:1,clearcoatRoughness:.12,
+    emissive:0x34398c,emissiveIntensity:1.45
+  })
+);
+coreGroup.add(core);
+
+const coreWire=new THREE.LineSegments(
+  new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.39,2)),
+  new THREE.LineBasicMaterial({color:0xa5b4fc,transparent:true,opacity:.19})
+);
+coreGroup.add(coreWire);
+
+const halo=new THREE.Sprite(new THREE.SpriteMaterial({
+  map:glowTex,color:0x8b8cff,transparent:true,opacity:.68,
+  blending:THREE.AdditiveBlending,depthWrite:false
+}));
+halo.scale.set(6.7,6.7,1); coreGroup.add(halo);
+
+[1.72,2.08,2.48].forEach((r,i)=>{
+  const torus=new THREE.Mesh(
+    new THREE.TorusGeometry(r,.009+i*.003,8,190),
+    new THREE.MeshBasicMaterial({color:i===1?0x67e8f9:0x818cf8,transparent:true,opacity:.22-i*.035})
+  );
+  torus.rotation.set(.48+i*.41,.22+i*.62,.12+i*.29);
+  torus.userData.speed=(i%2?-.0017:.0021)*(i+1);
+  coreGroup.add(torus);
+});
+
+// neural sparks around core
+const sparkGroup=new THREE.Group(); coreGroup.add(sparkGroup);
+for(let i=0;i<44;i++){
+  const a=Math.random()*Math.PI*2, b=Math.acos(THREE.MathUtils.randFloatSpread(2)), r=THREE.MathUtils.randFloat(1.55,2.72);
+  const dot=new THREE.Mesh(
+    new THREE.SphereGeometry(THREE.MathUtils.randFloat(.012,.028),6,6),
+    new THREE.MeshBasicMaterial({color:Math.random()>.72?0x67e8f9:0xa5b4fc,transparent:true,opacity:.78})
+  );
+  dot.position.set(r*Math.sin(b)*Math.cos(a),r*Math.cos(b),r*Math.sin(b)*Math.sin(a));
+  dot.userData.phase=Math.random()*6.28;
+  sparkGroup.add(dot);
+}
+
+// ---------- ecosystem nodes ----------
+const fieldData=[
+  {name:'AI Automation',color:0x818cf8,desc:'Autonomous workflows, orchestration and intelligent process automation that connect tools, data and decisions.'},
+  {name:'AI Agent',color:0x67e8f9,desc:'Goal-driven AI agents that reason, use tools, collaborate and execute multi-step operations across digital systems.'},
+  {name:'Digital Marketing',color:0xc084fc,desc:'AI-assisted growth systems for content, campaigns, audience intelligence, conversion and lifecycle optimization.'},
+  {name:'Quantitative Equity Analysis',color:0x60a5fa,desc:'Data-driven equity research combining quantitative signals, factor models, screening and machine-assisted analysis.'},
+  {name:'AI-driven SEO web design',color:0x5eead4,desc:'Search-first web experiences combining technical SEO, semantic architecture, AI discovery and conversion-focused design.'},
+  {name:'SaaS iSpa',color:0xf0abfc,desc:'Vertical SaaS infrastructure for spa operations, customer journeys, automation, analytics and intelligent service management.'}
+];
+
+const nodes=[];
+const labelEls=[];
+const orbitX=5.8, orbitY=3.75;
+
+fieldData.forEach((d,i)=>{
+  const a=i/fieldData.length*Math.PI*2-Math.PI/2;
+  const base=new THREE.Vector3(Math.cos(a)*orbitX,Math.sin(a)*orbitY,Math.sin(a*1.7)*1.05);
+
+  const group=new THREE.Group();
+  group.position.copy(base); world.add(group);
+
+  const shell=new THREE.Mesh(
+    new THREE.IcosahedronGeometry(.26,2),
+    new THREE.MeshPhysicalMaterial({color:0x101018,emissive:d.color,emissiveIntensity:1.2,metalness:.65,roughness:.22})
+  );
+  group.add(shell);
+
+  const point=new THREE.PointLight(d.color,5.5,5.2,2); group.add(point);
+
+  const aura=new THREE.Sprite(new THREE.SpriteMaterial({
+    map:glowTex,color:d.color,transparent:true,opacity:.52,blending:THREE.AdditiveBlending,depthWrite:false
+  }));
+  aura.scale.set(1.55,1.55,1); group.add(aura);
+
+  const ring=new THREE.Mesh(
+    new THREE.TorusGeometry(.48,.008,7,70),
+    new THREE.MeshBasicMaterial({color:d.color,transparent:true,opacity:.44})
+  );
+  ring.rotation.set(1.04,.34,.1); group.add(ring);
+
+  const lineGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),base.clone()]);
+  const line=new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:d.color,transparent:true,opacity:.12}));
+  world.add(line);
+
+  const pulseGeo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),base.clone()]);
+  const pulseMat=new THREE.LineDashedMaterial({color:d.color,transparent:true,opacity:.22,dashSize:.09,gapSize:.16});
+  const pulseLine=new THREE.Line(pulseGeo,pulseMat); pulseLine.computeLineDistances(); world.add(pulseLine);
+
+  const el=document.createElement('div');
+  el.className='node-label';
+  el.style.setProperty('--node-color','#'+d.color.toString(16).padStart(6,'0'));
+  el.innerHTML=`<span>${d.name}</span><small>0${i+1}</small>`;
+  labelsRoot.appendChild(el);
+  labelEls.push(el);
+
+  const n={...d,index:i,group,shell,aura,ring,line,pulseLine,base,el,phase:i*1.21};
+  nodes.push(n);
+
+  el.addEventListener('click',e=>{e.stopPropagation();focusNode(i)});
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hovering'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hovering'));
+});
+
+// ---------- deep-space particles ----------
+function makeStarLayer(count,spread,size,opacity){
+  const g=new THREE.BufferGeometry();
+  const p=new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    p[i*3]=THREE.MathUtils.randFloatSpread(spread);
+    p[i*3+1]=THREE.MathUtils.randFloatSpread(spread*.65);
+    p[i*3+2]=THREE.MathUtils.randFloat(-58,18);
+  }
+  g.setAttribute('position',new THREE.BufferAttribute(p,3));
+  const m=new THREE.PointsMaterial({color:0xa5b4fc,size,transparent:true,opacity,depthWrite:false,blending:THREE.AdditiveBlending});
+  const pts=new THREE.Points(g,m); scene.add(pts); return pts;
+}
+const starsA=makeStarLayer(innerWidth<800?900:1900,42,.025,.58);
+const starsB=makeStarLayer(innerWidth<800?260:650,55,.055,.28);
+
+// subtle perspective grid rings
+const gridGroup=new THREE.Group(); scene.add(gridGroup);
+for(let z=-36;z<8;z+=4){
+  const r=new THREE.Mesh(
+    new THREE.RingGeometry(8.5,8.53,96),
+    new THREE.MeshBasicMaterial({color:0x818cf8,transparent:true,opacity:.022,side:THREE.DoubleSide})
+  );
+  r.position.z=z;r.rotation.x=Math.PI/2;
+  gridGroup.add(r);
+}
+
+// ---------- interaction state ----------
+let pointer={x:0,y:0,px:innerWidth/2,py:innerHeight/2};
+let dragging=false,lastX=0,lastY=0;
+let rot={x:0,y:0,z:0},targetRot={x:0,y:0,z:0};
+let cameraDistance=14.5;
+let selected=-1;
+let flight=null;
+
+const raycaster=new THREE.Raycaster();
+const mouseNDC=new THREE.Vector2();
+
+function easeInOut(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+
+function startFlight(toPos,toLook,duration=1450,onDone=null){
+  flight={
+    start:performance.now(),duration,
+    fromPos:camera.position.clone(),
+    toPos:toPos.clone(),
+    fromLook:currentLook.clone(),
+    toLook:toLook.clone(),
+    onDone
+  };
+}
+
+const currentLook=new THREE.Vector3(0,0,0);
+const targetLook=new THREE.Vector3(0,0,0);
+
+function focusNode(i){
+  selected=i;
+  const n=nodes[i];
+  const wp=n.group.getWorldPosition(new THREE.Vector3());
+  const outward=wp.clone().normalize();
+  // approach from outside, with a little elevation and depth for cinematic parallax
+  const toPos=wp.clone().add(outward.multiplyScalar(3.25)).add(new THREE.Vector3(0,.45,1.1));
+  targetLook.copy(wp);
+  startFlight(toPos,wp,1500,()=>{});
+  labelEls.forEach((el,j)=>el.classList.toggle('active',j===i));
+  focusTitle.textContent=n.name;
+  focusText.textContent=n.desc;
+  nodeNum.textContent=String(i+1).padStart(2,'0');
+  focusVal.textContent=`NODE 0${i+1}`;
+  focusPanel.classList.add('show');
+}
+
+function resetView(){
+  selected=-1;
+  targetRot.x=targetRot.y=targetRot.z=0;
+  targetLook.set(0,0,0);
+  startFlight(new THREE.Vector3(0,.2,14.5),new THREE.Vector3(0,0,0),1350);
+  labelEls.forEach(el=>el.classList.remove('active'));
+  focusVal.textContent='CORE';
+  focusPanel.classList.remove('show');
+  cameraDistance=14.5;
+}
+document.querySelector('#resetBtn').onclick=resetView;
+document.querySelector('#backBtn').onclick=resetView;
+
+renderer.domElement.addEventListener('pointerdown',e=>{
+  if(e.button!==0)return;
+  dragging=true;lastX=e.clientX;lastY=e.clientY;
+  renderer.domElement.setPointerCapture?.(e.pointerId);
+  document.body.classList.add('dragging');
+});
+addEventListener('pointerup',()=>{
+  dragging=false;document.body.classList.remove('dragging');
+});
+addEventListener('pointermove',e=>{
+  pointer.px=e.clientX;pointer.py=e.clientY;
+  pointer.x=(e.clientX/innerWidth-.5)*2;
+  pointer.y=(e.clientY/innerHeight-.5)*2;
+  mouseNDC.set(pointer.x,-pointer.y);
+  if(dragging && !flight){
+    const dx=e.clientX-lastX,dy=e.clientY-lastY;
+    targetRot.y+=dx*.008;
+    targetRot.x+=dy*.008;
+    targetRot.z+=(dx*pointer.y-dy*pointer.x)*.0012;
+    lastX=e.clientX;lastY=e.clientY;
+  }
+});
+
+renderer.domElement.addEventListener('wheel',e=>{
+  e.preventDefault();
+  if(flight)flight=null;
+  selected=-1;
+  focusPanel.classList.remove('show');
+  labelEls.forEach(el=>el.classList.remove('active'));
+  focusVal.textContent='FREE';
+  // wheel = actual spatial travel along camera forward vector
+  cameraDistance=THREE.MathUtils.clamp(cameraDistance+e.deltaY*.009,7.2,28);
+  const dir=new THREE.Vector3(0,0,1).applyQuaternion(camera.quaternion);
+  const desired=currentLook.clone().add(dir.multiplyScalar(cameraDistance));
+  camera.position.lerp(desired,.45);
+},{passive:false});
+
+renderer.domElement.addEventListener('click',e=>{
+  if(dragging)return;
+  raycaster.setFromCamera(mouseNDC,camera);
+  const hits=raycaster.intersectObjects(nodes.map(n=>n.shell),false);
+  if(hits.length){
+    const idx=nodes.findIndex(n=>n.shell===hits[0].object);
+    if(idx>=0)focusNode(idx);
+  }
+});
+
+// cursor
+const dot=document.querySelector('.cursor-dot'),outline=document.querySelector('.cursor-outline');
+let cx=innerWidth/2,cy=innerHeight/2;
+addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px'});
+function cursorLoop(){
+  cx+=(pointer.px-cx)*.17;cy+=(pointer.py-cy)*.17;
+  outline.style.left=cx+'px';outline.style.top=cy+'px';
+  requestAnimationFrame(cursorLoop);
+}
+cursorLoop();
+
+function projectLabels(){
+  nodes.forEach((n,i)=>{
+    const wp=n.group.getWorldPosition(new THREE.Vector3());
+    const p=wp.clone().project(camera);
+    const x=(p.x*.5+.5)*innerWidth;
+    const y=(-p.y*.5+.5)*innerHeight;
+    const facing=p.z<1 && p.z>-1;
+    n.el.style.left=x+'px';n.el.style.top=y+'px';
+    n.el.style.opacity=facing?'1':'0';
+    n.el.style.pointerEvents=facing?'auto':'none';
+  });
+  const cp=coreGroup.getWorldPosition(new THREE.Vector3()).project(camera);
+  coreLabel.style.left=((cp.x*.5+.5)*innerWidth)+'px';
+  coreLabel.style.top=((-cp.y*.5+.5)*innerHeight)+'px';
+  coreLabel.style.opacity=(cp.z<1&&cp.z>-1&&selected<0)?'1':'.2';
+}
+
+// ---------- animation ----------
+const clock=new THREE.Clock();
+function animate(){
+  const t=clock.getElapsedTime();
+
+  // subtle pointer steering when not dragging/focused
+  if(!dragging && selected<0 && !flight){
+    targetRot.y+=pointer.x*.00012;
+    targetRot.x+=pointer.y*.00007;
+  }
+  rot.x+=(targetRot.x-rot.x)*.07;
+  rot.y+=(targetRot.y-rot.y)*.07;
+  rot.z+=(targetRot.z-rot.z)*.055;
+  world.rotation.set(rot.x,rot.y,rot.z);
+
+  core.rotation.x=t*.09;core.rotation.y=t*.14;
+  coreWire.rotation.x=-t*.08;coreWire.rotation.z=t*.055;
+  halo.material.opacity=.53+Math.sin(t*2.05)*.09;
+  coreGroup.children.forEach(o=>{if(o.userData.speed){o.rotation.z+=o.userData.speed;o.rotation.y-=o.userData.speed*.45}});
+  sparkGroup.children.forEach(s=>{s.scale.setScalar(.7+Math.sin(t*2+s.userData.phase)*.28)});
+
+  nodes.forEach((n,i)=>{
+    n.group.position.copy(n.base);
+    n.group.position.y+=Math.sin(t*.72+n.phase)*.12;
+    n.group.position.z+=Math.cos(t*.57+n.phase)*.15;
+    const pulse=1+Math.sin(t*2+n.phase)*.14+(selected===i?.18:0);
+    n.shell.scale.setScalar(pulse);
+    n.aura.material.opacity=(selected===i?.9:.48)+Math.sin(t*1.6+n.phase)*.06;
+    n.ring.rotation.z+=.004*(i%2?1:-1);
+    n.ring.rotation.y+=.0014;
+
+    const a=n.line.geometry.attributes.position.array;
+    a[3]=n.group.position.x;a[4]=n.group.position.y;a[5]=n.group.position.z;
+    n.line.geometry.attributes.position.needsUpdate=true;
+    const b=n.pulseLine.geometry.attributes.position.array;
+    b[3]=n.group.position.x;b[4]=n.group.position.y;b[5]=n.group.position.z;
+    n.pulseLine.geometry.attributes.position.needsUpdate=true;
+    n.pulseLine.computeLineDistances();
+    n.line.material.opacity=selected===i?.48:.11;
+  });
+
+  // cinematic flight
+  if(flight){
+    const raw=(performance.now()-flight.start)/flight.duration;
+    const q=Math.min(1,raw);
+    const e=easeInOut(q);
+    // small arc toward destination
+    camera.position.lerpVectors(flight.fromPos,flight.toPos,e);
+    camera.position.y+=Math.sin(Math.PI*e)*.55;
+    currentLook.lerpVectors(flight.fromLook,flight.toLook,e);
+    if(q>=1){
+      camera.position.copy(flight.toPos);currentLook.copy(flight.toLook);
+      const cb=flight.onDone;flight=null;if(cb)cb();
+    }
+  }else if(selected<0){
+    // free-flight camera parallax while preserving wheel distance
+    const desired=new THREE.Vector3(pointer.x*.18,.2-pointer.y*.1,cameraDistance);
+    camera.position.lerp(desired,.035);
+    currentLook.lerp(new THREE.Vector3(0,0,0),.06);
+  }else{
+    currentLook.lerp(targetLook,.08);
+  }
+
+  camera.lookAt(currentLook);
+
+  // Star layers move opposite the camera to strengthen "flying through space".
+  starsA.rotation.y=t*.004;starsB.rotation.y=-t*.003;
+  starsA.position.z=(t*.17)%7;
+  starsB.position.z=(t*.28)%9;
+
+  projectLabels();
+
+  distVal.textContent=camera.position.distanceTo(currentLook).toFixed(1);
+  rotXVal.textContent=rot.x.toFixed(2);
+  rotYVal.textContent=rot.y.toFixed(2);
+
+  composer.render();
+}
+renderer.setAnimationLoop(animate);
+
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+  composer.setSize(innerWidth,innerHeight);
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+{
+  "site": {
+    "name": "AI Era",
+    "tagline": "Intelligence in motion."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "contact": "Contact",
+    "systemOnline": "SYSTEM ONLINE"
+  },
+  "home": {
+    "badge": "SPATIAL INTELLIGENCE ECOSYSTEM",
+    "hero": {
+      "title": "Intelligence in motion.",
+      "subtitle": "Explore a multidimensional AI ecosystem where automation, agents, marketing, quantitative intelligence, AI-driven SEO and SaaS orbit one shared core."
+    },
+    "hud": {
+      "title": "Spatial telemetry",
+      "status": "LIVE",
+      "distance": "CAMERA DIST",
+      "rotationX": "ROTATION X",
+      "rotationY": "ROTATION Y",
+      "focus": "FOCUS",
+      "controls": {
+        "drag": "DRAG · ROTATE 360°",
+        "wheel": "WHEEL · FLY / ZOOM",
+        "reset": "RESET VIEW"
+      }
+    },
+    "focusPanel": {
+      "kicker": "AI ERA / NODE",
+      "back": "Return to AI Era core"
+    },
+    "cursor": {
+      "drag": "DRAG · ROTATE 360°",
+      "wheel": "WHEEL · FLY / ZOOM"
+    }
+  },
+  "services": {
+    "aiAutomation": {
+      "name": "AI Automation",
+      "desc": "Autonomous workflows, orchestration and intelligent process automation that connect tools, data and decisions.",
+      "label": "Smart Automation"
+    },
+    "aiAgent": {
+      "name": "AI Agent",
+      "desc": "Goal-driven AI agents that reason, use tools, collaborate and execute multi-step operations across digital systems.",
+      "label": "Intelligent Agents"
+    },
+    "digitalMarketing": {
+      "name": "Digital Marketing",
+      "desc": "AI-assisted growth systems for content, campaigns, audience intelligence, conversion and lifecycle optimization.",
+      "label": "Digital Marketing"
+    },
+    "quantEquity": {
+      "name": "Quantitative Equity",
+      "desc": "Data-driven equity research combining quantitative signals, factor models, screening and machine-assisted analysis.",
+      "label": "Quantitative Analysis"
+    },
+    "aiSeo": {
+      "name": "AI-driven SEO",
+      "desc": "Search-first web experiences combining technical SEO, semantic architecture, AI discovery and conversion-focused design.",
+      "label": "SEO Web Design"
+    },
+    "ispa": {
+      "name": "SaaS iSpa",
+      "desc": "Vertical SaaS infrastructure for spa operations, customer journeys, automation, analytics and intelligent service management.",
+      "label": "Spa Management"
+    }
+  },
+  "ecosystem": {
+    "title": "Our Services",
+    "subtitle": "A comprehensive ecosystem of solutions for your business"
+  },
+  "cta": {
+    "title": "Ready to grow with AI?",
+    "subtitle": "Contact AI Era for a free consultation and get the best recommendations for your business goals.",
+    "button": "Contact us now"
+  },
+  "footer": {
+    "company": "AI Era",
+    "description": "Technology company specializing in comprehensive AI and digital marketing solutions for Vietnamese businesses.",
+    "links": {
+      "services": "Services",
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy"
+    },
+    "rights": "All rights reserved.",
+    "tagline": "Intelligence in motion."
+  }
+}

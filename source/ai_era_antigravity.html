@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Era — Next-Gen Intelligence Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #030305;
+            --surface-color: rgba(255, 255, 255, 0.03);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #ffffff;
+            --text-muted: #8a8a93;
+            --accent-glow: rgba(99, 102, 241, 0.15);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Canvas Background for Antigravity Particles */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background: #ffffff;
+        }
+        .cursor-outline {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(1px);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            background: rgba(3, 3, 5, 0.7);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: #818cf8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        /* Magnetic Wrappers & Buttons */
+        .magnetic-wrap {
+            display: inline-block;
+            padding: 20px;
+            margin: -20px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: #ffffff;
+            color: #030305;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 99px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+            transition: transform 0.2s;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--surface-color);
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 99px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        header.hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(129, 140, 248, 0.1);
+            border: 1px solid rgba(129, 140, 248, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #a5b4fc;
+            margin-bottom: 24px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        header.hero h1 {
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            max-width: 900px;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, #ffffff 30%, #71717a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header.hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Feature Section & Interactive Cards */
+        .features-section {
+            padding: 120px 48px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            transition: border-color 0.4s, transform 0.4s;
+            transform-style: preserve-3d;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(129, 140, 248, 0.06), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            border-color: rgba(129, 140, 248, 0.3);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.25rem;
+            color: #818cf8;
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Interactive Showcase Terminal / Workspace */
+        .showcase-section {
+            padding: 60px 48px 140px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .terminal-box {
+            background: rgba(10, 10, 15, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .dot:nth-child(1) { background: #ef4444; }
+        .dot:nth-child(2) { background: #f59e0b; }
+        .dot:nth-child(3) { background: #10b981; }
+
+        .terminal-body {
+            padding: 32px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+        }
+
+        .prompt { color: #818cf8; }
+        .command { color: #f43f5e; }
+        .output { color: #94a3b8; }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 60px 48px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            AGENCY<span>.AI</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#features">Products</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#developers">SDK & CLI</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+        </ul>
+        <div class="magnetic-wrap">
+            <a href="#launch" class="btn-secondary magnetic-btn">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+            Next-Gen Agentic Platform 2.0
+        </div>
+        <h1>Intelligence in zero gravity.</h1>
+        <p>Build, scale, and orchestrate autonomous AI agents with physics-defying speed, advanced neural runtimes, and real-time workspaces.</p>
+        <div class="hero-actions">
+            <div class="magnetic-wrap">
+                <a href="#explore" class="btn-primary magnetic-btn">
+                    Explore Platform
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="magnetic-wrap">
+                <a href="#docs" class="btn-secondary magnetic-btn">Read Documentation</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <h2>Built for the agent-first era</h2>
+            <p>Everything you need to orchestrate multi-agent applications at enterprise scale.</p>
+        </div>
+
+        <div class="grid-cards">
+            <!-- Card 1 -->
+            <div class="card tilt-card">
+                <div class="card-icon">⚡</div>
+                <h3>Parallel Agent Core</h3>
+                <p>Manage hundreds of local autonomous agents concurrently with zero friction, automated task routing, and intelligent state sharing.</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="card tilt-card">
+                <div class="card-icon">🔮</div>
+                <h3>Antigravity Runtime</h3>
+                <p>Our proprietary spatial physics engine dynamically allocates compute based on thread complexity and live user interaction.</p>
+            </div>
+            <!-- Card 3 -->
+            <div class="card tilt-card">
+                <div class="card-icon">🛡️</div>
+                <h3>Enterprise Security</h3>
+                <p>Granular permission scopes, air-gapped sandbox execution, and cryptographic verification logs for every agent action.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showcase / Terminal Section -->
+    <section class="showcase-section" id="architecture">
+        <div class="section-header">
+            <h2>Terminal-first workflow</h2>
+            <p>Deploy custom pipelines using simple Python scripts and instant CLI hooks.</p>
+        </div>
+
+        <div class="terminal-box">
+            <div class="terminal-header">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <span style="margin-left: 12px; font-size: 0.8rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">terminal — antigravity-cli v2.4</span>
+            </div>
+            <div class="terminal-body">
+                <span class="prompt">$</span> <span class="command">antigravity init --agent=autonomous-dev</span><br>
+                <span class="output">[INFO] Initializing quantum harness environment...</span><br>
+                <span class="output">[INFO] Loaded neural weights (Gemini 3.6 Flash Engine)</span><br>
+                <span class="prompt">$</span> <span class="command">antigravity run --parallel=8 --workspace=./core</span><br>
+                <span class="output">✨ Spawning 8 parallel agent nodes in antigravity space...</span><br>
+                <span class="output">🚀 All agents synchronized successfully. Ready for prompt input.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Agency AI Platform. Designed with Antigravity Motion & Physics.</p>
+    </footer>
+
+    <!-- Libraries: GSAP, ScrollTrigger, Lenis Smooth Scroll -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+
+    <script>
+        // 1. LENIS SMOOTH SCROLL
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true
+        });
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. CUSTOM CURSOR MOTION WITH LERP
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        let mouse = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+
+            gsap.to(cursorDot, { x: mouse.x, y: mouse.y, duration: 0.05 });
+            gsap.to(cursorOutline, { x: mouse.x, y: mouse.y, duration: 0.35, ease: "power2.out" });
+        });
+
+        // Interactive hover states for cursor enlargement
+        const interactiveElements = document.querySelectorAll('a, button, .card');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(cursorOutline, { scale: 1.6, backgroundColor: 'rgba(255, 255, 255, 0.05)', borderColor: 'rgba(129, 140, 248, 0.6)', duration: 0.2 });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(cursorOutline, { scale: 1, backgroundColor: 'rgba(255, 255, 255, 0.02)', borderColor: 'rgba(255, 255, 255, 0.4)', duration: 0.2 });
+            });
+        });
+
+        // 3. MAGNETIC BUTTONS
+        const magneticWraps = document.querySelectorAll('.magnetic-wrap');
+        magneticWraps.forEach(wrap => {
+            const btn = wrap.querySelector('.magnetic-btn');
+            wrap.addEventListener('mousemove', (e) => {
+                const rect = wrap.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                gsap.to(btn, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: "power2.out" });
+            });
+            wrap.addEventListener('mouseleave', () => {
+                gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.3)" });
+            });
+        });
+
+        // 4. CARD 3D TILT & MOUSE POSITION (for radial gradient)
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                const dx = (x - xc) / xc;
+                const dy = (y - yc) / yc;
+
+                gsap.to(card, {
+                    rotateX: -dy * 8,
+                    rotateY: dx * 8,
+                    duration: 0.3,
+                    ease: "power2.out",
+                    transformPerspective: 1000
+                });
+            });
+
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    duration: 0.7,
+                    ease: "elastic.out(1, 0.4)"
+                });
+            });
+        });
+
+        // 5. CANVAS PARTICLES - ANTIGRAVITY MOUSE REPULSION
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const particles = [];
+        const particleCount = Math.min(window.innerWidth > 768 ? 140 : 60, 200);
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                size: Math.random() * 2 + 0.8,
+                alpha: Math.random() * 0.5 + 0.2
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                // Screen boundaries bounce/wrap
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+
+                // Mouse Repulsion Physics
+                const dx = p.x - mouse.x;
+                const dy = p.y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const interactionRadius = 160;
+
+                if (dist < interactionRadius) {
+                    const force = (interactionRadius - dist) / interactionRadius;
+                    const angle = Math.atan2(dy, dx);
+                    p.vx += Math.cos(angle) * force * 0.4;
+                    p.vy += Math.sin(angle) * force * 0.4;
+                }
+
+                // Damping / Friction
+                p.vx *= 0.98;
+                p.vy *= 0.98;
+
+                // Maintain minimum floating speed (Antigravity effect)
+                const currentSpeed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
+                if (currentSpeed < 0.15) {
+                    p.vx += (Math.random() - 0.5) * 0.1;
+                    p.vy += (Math.random() - 0.5) * 0.1;
+                }
+
+                // Draw Particle
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(165, 180, 252, ${p.alpha})`;
+                ctx.fill();
+            });
+
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>

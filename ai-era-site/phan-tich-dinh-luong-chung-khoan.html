@@ -13,17 +13,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#030305" />
-  <meta name="description" content="AI Era — Phân tích định lượng chứng khoán Việt Nam: mô hình factor-based, machine learning, tín hiệu mua/bán và quản lý rủi ro." />
-  <title>Phân tích định lượng chứng khoán — AI Era</title>
+  <meta name="description" data-i18n="quant-meta-desc" content="AI Era — Phân tích định lượng chứng khoán Việt Nam: mô hình factor-based, machine learning, tín hiệu mua/bán và quản lý rủi ro." />
+  <title data-i18n="quant-meta-title">Phân tích định lượng chứng khoán — AI Era</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="alternate icon" href="./favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/variables.css">
   <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/typography.css">
+  <link rel="stylesheet" href="./css/components.css">
   <style>
     body{cursor:auto;overflow:auto;min-height:100vh;padding:0;background:var(--bg)}
     .page{max-width:760px;margin:0 auto;padding:80px 24px 60px}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
     .page h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;letter-spacing:-.04em;font-weight:800;margin-bottom:20px;
       background:linear-gradient(100deg,#fff 0%,#a5b4fc 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
     .page h2{font-size:1.2rem;font-weight:700;color:var(--indigo-2);margin:32px 0 12px;letter-spacing:-.02em}
@@ -31,51 +35,66 @@
     .page p,.page li{font-size:.88rem;line-height:1.75;color:var(--muted)}
     .page ul{padding-left:20px;margin:8px 0}
     .page em{color:#8a8a93;font-style:italic}
-    .back-link{display:inline-block;margin-bottom:32px;color:var(--indigo-2);text-decoration:none;font-size:.78rem;font-weight:600}
+    .back-link{display:inline-block;color:var(--indigo-2);text-decoration:none;font-size:.78rem;font-weight:600}
     .back-link:hover{color:var(--cyan)}
     .back-link::before{content:"← "}
+    .lang-switch{display:flex;align-items:center;gap:3px;padding:3px;border-radius:var(--radius-pill);border:1px solid var(--border);background:rgba(8,8,14,.58);backdrop-filter:blur(14px)}
+    .lang-btn{border:none;outline:none;cursor:pointer;font:600 .62rem var(--font-mono);color:#8a8a93;letter-spacing:.06em;padding:6px 11px;border-radius:var(--radius-pill);background:transparent;transition:all .28s cubic-bezier(.2,.8,.2,1)}
+    .lang-btn:hover{color:#dcdce2;background:rgba(129,140,248,.08)}
+    .lang-btn.active{color:#fff;background:linear-gradient(135deg,rgba(129,140,248,.32),rgba(103,232,249,.22));box-shadow:0 0 14px rgba(129,140,248,.18)}
   </style>
 </head>
 <body>
   <article class="page">
-    <a href="./index.html" class="back-link">Quay lại AI Era Ecosystem</a>
+    <div class="page-header">
+      <a href="./index.html" class="back-link" data-i18n="back-link">Quay lại AI Era Ecosystem</a>
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
+        <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+      </div>
+    </div>
 
-    <h1>Phân tích định lượng chứng khoán Việt Nam — Tín hiệu dữ liệu, Quyết định chính xác</h1>
-    <p>AI Era cung cấp dịch vụ phân tích định lượng và đưa tín hiệu trên thị trường chứng khoán Việt Nam, kết hợp dữ liệu lịch sử, mô hình factor-based, machine learning và quản lý rủi ro để hỗ trợ nhà đầu tư ra quyết định có cơ sở khoa học.</p>
+    <h1 data-i18n="quant-h1">Phân tích định lượng chứng khoán Việt Nam — Tín hiệu dữ liệu, Quyết định chính xác</h1>
+    <p data-i18n="quant-p1">AI Era cung cấp dịch vụ phân tích định lượng và đưa tín hiệu trên thị trường chứng khoán Việt Nam, kết hợp dữ liệu lịch sử, mô hình factor-based, machine learning và quản lý rủi ro để hỗ trợ nhà đầu tư ra quyết định có cơ sở khoa học.</p>
 
-    <h2>Dịch vụ chính</h2>
+    <h2 data-i18n="quant-h2-1">Dịch vụ chính</h2>
 
-    <h3>Tín hiệu định lượng hàng ngày</h3>
-    <p>Hệ thống thu thập và xử lý dữ liệu thị trường, đưa ra tín hiệu mua/bán dựa trên mô hình định lượng được kiểm chứng trên dữ liệu lịch sử thị trường Việt Nam. Tín hiệu được cập nhật thường xuyên và kèm theo giải thích ngắn gọn về cơ sở đưa ra quyết định.</p>
+    <h3 data-i18n="quant-h3-1">Tín hiệu định lượng hàng ngày</h3>
+    <p data-i18n="quant-p2">Hệ thống thu thập và xử lý dữ liệu thị trường, đưa ra tín hiệu mua/bán dựa trên mô hình định lượng được kiểm chứng trên dữ liệu lịch sử thị trường Việt Nam. Tín hiệu được cập nhật thường xuyên và kèm theo giải thích ngắn gọn về cơ sở đưa ra quyết định.</p>
 
-    <h3>Phân tích factor model &amp; screening cổ phiếu</h3>
-    <p>Sử dụng mô hình factor-based để phân loại cổ phiếu theo tiêu chí giá trị, tăng trưởng, chất lượng và động lượng. Hỗ trợ nhà đầu tư lọc danh mục đầu tư phù hợp với chiến lược cá nhân hoặc tổ chức.</p>
+    <h3 data-i18n="quant-h3-2">Phân tích factor model &amp; screening cổ phiếu</h3>
+    <p data-i18n="quant-p3">Sử dụng mô hình factor-based để phân loại cổ phiếu theo tiêu chí giá trị, tăng trưởng, chất lượng và động lượng. Hỗ trợ nhà đầu tư lọc danh mục đầu tư phù hợp với chiến lược cá nhân hoặc tổ chức.</p>
 
-    <h3>Machine learning &amp; dự báo xu hướng</h3>
-    <p>Áp dụng thuật toán machine learning để nhận diện mẫu hình và dự báo xu hướng ngắn và trung hạn. Hệ thống liên tục được tinh chỉnh để phù hợp với biến động thị trường Việt Nam.</p>
+    <h3 data-i18n="quant-h3-3">Machine learning &amp; dự báo xu hướng</h3>
+    <p data-i18n="quant-p4">Áp dụng thuật toán machine learning để nhận diện mẫu hình và dự báo xu hướng ngắn và trung hạn. Hệ thống liên tục được tinh chỉnh để phù hợp với biến động thị trường Việt Nam.</p>
 
-    <h3>Báo cáo định kỳ &amp; quản lý rủi ro</h3>
-    <p>Cung cấp báo cáo định kỳ về danh mục, hiệu suất và biến động thị trường, kèm khuyến nghị điều chỉnh theo mức độ chấp nhận rủi ro của nhà đầu tư.</p>
+    <h3 data-i18n="quant-h3-4">Báo cáo định kỳ &amp; quản lý rủi ro</h3>
+    <p data-i18n="quant-p5">Cung cấp báo cáo định kỳ về danh mục, hiệu suất và biến động thị trường, kèm khuyến nghị điều chỉnh theo mức độ chấp nhận rủi ro của nhà đầu tư.</p>
 
-    <h2>Đối tượng sử dụng</h2>
+    <h2 data-i18n="quant-h2-2">Đối tượng sử dụng</h2>
     <ul>
-      <li>Nhà đầu tư cá nhân muốn nâng cao hiệu suất danh mục</li>
-      <li>Quỹ đầu tư và tổ chức tài chính cần tín hiệu định lượng bổ sung</li>
-      <li>Chuyên gia phân tích muốn đa dạng hóa công cụ nghiên cứu</li>
-      <li>Doanh nhân có nguồn vốn dư muốn đầu tư có chiến lược</li>
+      <li data-i18n="quant-li-1">Nhà đầu tư cá nhân muốn nâng cao hiệu suất danh mục</li>
+      <li data-i18n="quant-li-2">Quỹ đầu tư và tổ chức tài chính cần tín hiệu định lượng bổ sung</li>
+      <li data-i18n="quant-li-3">Chuyên gia phân tích muốn đa dạng hóa công cụ nghiên cứu</li>
+      <li data-i18n="quant-li-4">Doanh nhân có nguồn vốn dư muốn đầu tư có chiến lược</li>
     </ul>
 
-    <h2>Lý do chọn AI Era cho phân tích định lượng</h2>
+    <h2 data-i18n="quant-h2-3">Lý do chọn AI Era cho phân tích định lượng</h2>
     <ul>
-      <li><strong>Chuyên sâu thị trường Việt Nam:</strong> Mô hình được xây dựng và hiệu chỉnh dựa trên đặc thù thị trường chứng khoán nội địa.</li>
-      <li><strong>Minh bạch rõ ràng:</strong> Mỗi tín hiệu đều có cơ sở dữ liệu và lý giải minh bạch.</li>
-      <li><strong>Kết hợp AI và con người:</strong> Công nghệ hỗ trợ, quyết định cuối cùng thuộc về nhà đầu tư.</li>
-      <li><strong>Cập nhật liên tục:</strong> Hệ thống theo dõi và tinh chỉnh mô hình theo biến động thị trường.</li>
+      <li data-i18n="quant-li-5"><strong>Chuyên sâu thị trường Việt Nam:</strong> Mô hình được xây dựng và hiệu chỉnh dựa trên đặc thù thị trường chứng khoán nội địa.</li>
+      <li data-i18n="quant-li-6"><strong>Minh bạch rõ ràng:</strong> Mỗi tín hiệu đều có cơ sở dữ liệu và lý giải minh bạch.</li>
+      <li data-i18n="quant-li-7"><strong>Kết hợp AI và con người:</strong> Công nghệ hỗ trợ, quyết định cuối cùng thuộc về nhà đầu tư.</li>
+      <li data-i18n="quant-li-8"><strong>Cập nhật liên tục:</strong> Hệ thống theo dõi và tinh chỉnh mô hình theo biến động thị trường.</li>
     </ul>
 
-    <h2>Liên hệ tư vấn</h2>
-    <p>Bạn muốn biết thêm về dịch vụ phân tích định lượng và tín hiệu chứng khoán Việt Nam? Liên hệ với AI Era để nhận tư vấn chi tiết về gói dịch vụ phù hợp với chiến lược đầu tư của bạn.</p>
-    <p><em>AI Era — Intelligence in motion. Đưa dữ liệu vào từng quyết định đầu tư.</em></p>
+    <h2 data-i18n="quant-h2-4">Liên hệ tư vấn</h2>
+    <p data-i18n="quant-p6">Bạn muốn biết thêm về dịch vụ phân tích định lượng và tín hiệu chứng khoán Việt Nam? Liên hệ với AI Era để nhận tư vấn chi tiết về gói dịch vụ phù hợp với chiến lược đầu tư của bạn.</p>
+    <p><em data-i18n="quant-quote">AI Era — Intelligence in motion. Đưa dữ liệu vào từng quyết định đầu tư.</em></p>
   </article>
+
+  <script type="module">
+    import { initDetailPageI18n } from './js/detail-i18n.js';
+    initDetailPageI18n();
+  </script>
 </body>
 </html>

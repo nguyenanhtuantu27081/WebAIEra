@@ -5,6 +5,7 @@ import { camera, renderer, world } from './scene-setup.js';
 import { coreGroup } from './core.js';
 import { nodes, labelEls } from './nodes.js';
 import { NODES } from '../data/nodes.js';
+import { getCurrentLang, nodeTranslations } from '../i18n.js';
 
 // ----- DOM refs -----
 const focusPanel = document.querySelector('#focusPanel');
@@ -68,9 +69,15 @@ function focusNode(i) {
   targetLook.copy(wp);
   startFlight(toPos, wp, 1500);
 
+  // Use current language for focus panel content
+  const lang = getCurrentLang();
+  const tr = nodeTranslations[lang];
+  const nodeName = tr ? tr[i].name : data.name;
+  const nodeDesc = tr ? tr[i].shortDesc : data.shortDesc;
+
   labelEls.forEach((el, j) => el.classList.toggle('active', j === i));
-  focusTitle.textContent = data.name;
-  focusText.textContent = data.shortDesc;
+  focusTitle.textContent = nodeName;
+  focusText.textContent = nodeDesc;
   if (focusLink) focusLink.setAttribute('href', data.url);
   nodeNum.textContent = String(i + 1).padStart(2, '0');
   focusVal.textContent = `NODE 0${i + 1}`;

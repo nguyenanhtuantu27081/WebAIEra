@@ -15,6 +15,8 @@
   <meta name="theme-color" content="#030305" />
   <meta name="description" content="AI Era — Hệ sinh thái trí tuệ nhân tạo đa chiều: AI Automation, AI Agent, Digital Marketing, SEO, Landing Page, Phần mềm quản lý doanh nghiệp." />
   <title>AI Era — Spatial Intelligence Ecosystem</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="alternate icon" href="./favicon.svg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,8 +51,8 @@
   <div id="labels">
     <div class="core-label">
       <div>
-        <strong>AI Era</strong>
-        <span>Core Intelligence</span>
+        <strong data-i18n="core-name">AI Era</strong>
+        <span data-i18n="core-sub">Core Intelligence</span>
       </div>
     </div>
   </div>
@@ -64,43 +66,47 @@
     <div class="logo">
       <span class="logo-mark"></span>AI ERA<span>.VN</span>
     </div>
-    <div class="nav-status">SYSTEM ONLINE · 6 NODES</div>
+    <div class="lang-switch" id="langSwitch">
+      <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
+      <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+    </div>
+    <div class="nav-status" data-i18n="nav-status">SYSTEM ONLINE · 6 NODES</div>
   </nav>
 
   <!-- Intro Section -->
   <section class="intro">
-    <div class="badge"><i></i> SPATIAL INTELLIGENCE ECOSYSTEM</div>
-    <h1>Intelligence in motion.</h1>
-    <p>Khám phá hệ sinh thái AI đa chiều — nơi tự động hóa, AI agents, marketing, phân tích định lượng, AI SEO và SaaS xoay quanh một lõi trí tuệ chung.</p>
+    <div class="badge"><i></i> <span data-i18n="intro-badge">SPATIAL INTELLIGENCE ECOSYSTEM</span></div>
+    <h1 data-i18n="intro-h1">Intelligence in motion.</h1>
+    <p data-i18n="intro-p">Khám phá hệ sinh thái AI đa chiều — nơi tự động hóa, AI agents, marketing, phân tích định lượng, AI SEO và SaaS xoay quanh một lõi trí tuệ chung.</p>
   </section>
 
   <!-- HUD Panel -->
   <aside class="hud">
-    <div class="hud-head"><b>Spatial telemetry</b><em>LIVE</em></div>
+    <div class="hud-head"><b data-i18n="hud-title">Spatial telemetry</b><em data-i18n="hud-live">LIVE</em></div>
     <div class="hud-body">
-      <div class="hud-row"><span>CAMERA DIST</span><span id="distVal">14.0</span></div>
-      <div class="hud-row"><span>ROTATION X</span><span id="rotXVal">0.0°</span></div>
-      <div class="hud-row"><span>ROTATION Y</span><span id="rotYVal">0.0°</span></div>
-      <div class="hud-row"><span>FOCUS</span><span id="focusVal">CORE</span></div>
-      <div class="hud-copy">Scroll to fly through space. Drag to rotate 360°. Shift+drag to roll. Click a node to explore.</div>
+      <div class="hud-row"><span data-i18n="hud-camera">CAMERA DIST</span><span id="distVal">14.0</span></div>
+      <div class="hud-row"><span data-i18n="hud-rotx">ROTATION X</span><span id="rotXVal">0.0°</span></div>
+      <div class="hud-row"><span data-i18n="hud-roty">ROTATION Y</span><span id="rotYVal">0.0°</span></div>
+      <div class="hud-row"><span data-i18n="hud-focus">FOCUS</span><span id="focusVal">CORE</span></div>
+      <div class="hud-copy" data-i18n="hud-copy">Scroll to fly through space. Drag to rotate 360°. Shift+drag to roll. Click a node to explore.</div>
     </div>
   </aside>
 
   <!-- Controls -->
   <div class="controls">
-    <span class="control">DRAG · ROTATE 360°</span>
-    <span class="control">SHIFT+DRAG · ROLL</span>
-    <span class="control">WHEEL · FLY / ZOOM</span>
-    <button id="resetBtn" class="control">RESET VIEW</button>
+    <span class="control" data-i18n="ctrl-drag">DRAG · ROTATE 360°</span>
+    <span class="control" data-i18n="ctrl-shift">SHIFT+DRAG · ROLL</span>
+    <span class="control" data-i18n="ctrl-wheel">WHEEL · FLY / ZOOM</span>
+    <button id="resetBtn" class="control" data-i18n="ctrl-reset">RESET VIEW</button>
   </div>
 
   <!-- Focus Panel -->
   <div class="focus-panel" id="focusPanel">
-    <div class="focus-kicker">AI ERA / NODE <span id="nodeNum">01</span></div>
+    <div class="focus-kicker"><span data-i18n="focus-kicker-prefix">AI ERA / NODE </span><span id="nodeNum">01</span></div>
     <h2 id="focusTitle">AI Automation</h2>
     <p id="focusText"></p>
-    <a id="focusLink" href="#" class="focus-detail-link">Xem chi tiết</a>
-    <button id="backBtn">Return to AI Era core</button>
+    <a id="focusLink" href="#" class="focus-detail-link" data-i18n="focus-link">Xem chi tiết</a>
+    <button id="backBtn" data-i18n="focus-back">Return to AI Era core</button>
   </div>
 
   <!-- Custom Cursor -->

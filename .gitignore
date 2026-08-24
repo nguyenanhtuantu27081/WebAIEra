@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Next.js build outputs
+.next/
+out/
+build/
+dist/
+
+# Environment and sensitive files
+.env
+.env*.local
+workflows/.env
+*.pem
+*.key
+
+# Operating System & IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Antigravity & Agent workspace
+/.agent/
+/.agents/
+scratch/
+
+# TypeScript & Cache
+*.tsbuildinfo
+next-env.d.ts
+.eslintcache
+
+# Archives
+*.zip

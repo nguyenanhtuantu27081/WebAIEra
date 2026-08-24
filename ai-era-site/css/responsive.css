@@ -12,6 +12,8 @@
   .node-label{font-size:.61rem;padding:8px 9px}
   .node-label small{display:none}
   .focus-panel{right:14px;bottom:62px;width:calc(100vw - 28px)}
+  .lang-btn{padding:5px 8px;font-size:.56rem}
+  .lang-switch{gap:2px;padding:2px}
 }
 
 @media(max-width:767px){

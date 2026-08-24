@@ -3,12 +3,18 @@ import * as THREE from 'three';
 import { world } from './scene-setup.js';
 import { glowTex } from './core.js';
 import { NODES } from '../data/nodes.js';
+import { getCurrentLang, onLanguageChange, nodeTranslations } from '../i18n.js';
 
 const labelsRoot = document.querySelector('#labels');
 const orbitX = 5.8, orbitY = 3.75;
 
 export const nodes = [];
 export const labelEls = [];
+
+function getNodeName(i, lang) {
+  const tr = nodeTranslations[lang];
+  return tr ? tr[i].name : NODES[i].name;
+}
 
 NODES.forEach((d, i) => {
   const a = i / NODES.length * Math.PI * 2 - Math.PI / 2;
@@ -81,11 +87,12 @@ NODES.forEach((d, i) => {
   pulseLine.computeLineDistances();
   world.add(pulseLine);
 
-  // DOM label
+  // DOM label — uses current language
+  const lang = getCurrentLang();
   const el = document.createElement('div');
   el.className = 'node-label';
   el.style.setProperty('--node-color', '#' + d.color.toString(16).padStart(6, '0'));
-  el.innerHTML = `<span>${d.name}</span><small>0${i + 1}</small>`;
+  el.innerHTML = `<span class="node-label-name">${getNodeName(i, lang)}</span><small>0${i + 1}</small>`;
   labelsRoot.appendChild(el);
   labelEls.push(el);
 
@@ -98,6 +105,14 @@ NODES.forEach((d, i) => {
   // Hover cursor class
   el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
   el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+});
+
+// Update node label names when language changes
+onLanguageChange((lang) => {
+  nodes.forEach((n, i) => {
+    const nameEl = n.el.querySelector('.node-label-name');
+    if (nameEl) nameEl.textContent = getNodeName(i, lang);
+  });
 });
 
 // Animate nodes — called every frame
@@ -151,3 +166,4 @@ export function projectLabels(camera, coreGroup, selected) {
   coreLabel.style.top = ((-cp.y * .5 + .5) * innerHeight) + 'px';
   coreLabel.style.opacity = (cp.z < 1 && cp.z > -1 && selected < 0) ? '1' : '.2';
 }
+

@@ -8,11 +8,14 @@ import { initControls, updateCamera, pointer, selected } from './three/camera-co
 import { updateHUD } from './three/hud.js';
 import { applyQualityEffects } from './three/effects.js';
 import { initCursor } from './cursor.js';
+import { initI18n } from './i18n.js';
 
 // Initialise
 initControls();
 initCursor(() => pointer);
 applyQualityEffects();
+initI18n();
+
 
 // Animation loop
 const clock = new THREE.Clock();

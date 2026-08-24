@@ -13,17 +13,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#030305" />
-  <meta name="description" content="AI Era — Phần mềm quản lý doanh nghiệp ngành: Spa, Nail, Thẩm mỹ viện, Nha khoa, Phòng khám, Gym." />
-  <title>Phần mềm quản lý doanh nghiệp ngành — AI Era</title>
+  <meta name="description" data-i18n="pm-meta-desc" content="AI Era — Phần mềm quản lý doanh nghiệp ngành: Spa, Nail, Thẩm mỹ viện, Nha khoa, Phòng khám, Gym." />
+  <title data-i18n="pm-meta-title">Phần mềm quản lý doanh nghiệp ngành — AI Era</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="alternate icon" href="./favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/variables.css">
   <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/typography.css">
+  <link rel="stylesheet" href="./css/components.css">
   <style>
     body{cursor:auto;overflow:auto;min-height:100vh;padding:0;background:var(--bg)}
     .page{max-width:760px;margin:0 auto;padding:80px 24px 60px}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
     .page h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;letter-spacing:-.04em;font-weight:800;margin-bottom:20px;
       background:linear-gradient(100deg,#fff 0%,#a5b4fc 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
     .page h2{font-size:1.2rem;font-weight:700;color:var(--indigo-2);margin:32px 0 12px;letter-spacing:-.02em}
@@ -31,83 +35,98 @@
     .page p,.page li{font-size:.88rem;line-height:1.75;color:var(--muted)}
     .page ul{padding-left:20px;margin:8px 0}
     .page em{color:#8a8a93;font-style:italic}
-    .back-link{display:inline-block;margin-bottom:32px;color:var(--indigo-2);text-decoration:none;font-size:.78rem;font-weight:600}
+    .back-link{display:inline-block;color:var(--indigo-2);text-decoration:none;font-size:.78rem;font-weight:600}
     .back-link:hover{color:var(--cyan)}
     .back-link::before{content:"← "}
+    .lang-switch{display:flex;align-items:center;gap:3px;padding:3px;border-radius:var(--radius-pill);border:1px solid var(--border);background:rgba(8,8,14,.58);backdrop-filter:blur(14px)}
+    .lang-btn{border:none;outline:none;cursor:pointer;font:600 .62rem var(--font-mono);color:#8a8a93;letter-spacing:.06em;padding:6px 11px;border-radius:var(--radius-pill);background:transparent;transition:all .28s cubic-bezier(.2,.8,.2,1)}
+    .lang-btn:hover{color:#dcdce2;background:rgba(129,140,248,.08)}
+    .lang-btn.active{color:#fff;background:linear-gradient(135deg,rgba(129,140,248,.32),rgba(103,232,249,.22));box-shadow:0 0 14px rgba(129,140,248,.18)}
   </style>
 </head>
 <body>
   <article class="page">
-    <a href="./index.html" class="back-link">Quay lại AI Era Ecosystem</a>
+    <div class="page-header">
+      <a href="./index.html" class="back-link" data-i18n="back-link">Quay lại AI Era Ecosystem</a>
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
+        <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+      </div>
+    </div>
 
-    <h1>Phần mềm quản lý doanh nghiệp — Giải pháp nghiệp vụ lõi cho từng ngành</h1>
-    <p>AI Era cung cấp hệ sinh thái phần mềm quản lý doanh nghiệp chuyên biệt cho từng ngành: Spa, Nail, Thẩm mỹ viện, Nha khoa, Phòng khám Đa khoa và Gym. Mỗi sản phẩm được thiết kế để tự động hóa quy trình vận hành, quản lý khách hàng, nhân viên, dịch vụ và tài chính một cách hiệu quả.</p>
+    <h1 data-i18n="pm-h1">Phần mềm quản lý doanh nghiệp — Giải pháp nghiệp vụ lõi cho từng ngành</h1>
+    <p data-i18n="pm-p1">AI Era cung cấp hệ sinh thái phần mềm quản lý doanh nghiệp chuyên biệt cho từng ngành: Spa, Nail, Thẩm mỹ viện, Nha khoa, Phòng khám Đa khoa và Gym. Mỗi sản phẩm được thiết kế để tự động hóa quy trình vận hành, quản lý khách hàng, nhân viên, dịch vụ và tài chính một cách hiệu quả.</p>
 
-    <h2>iSpa — Quản lý Spa</h2>
+    <h2 data-i18n="pm-h2-1">iSpa — Quản lý Spa</h2>
     <ul>
-      <li>Quản lý lịch hẹn, dịch vụ, nhân viên và phòng</li>
-      <li>Theo dõi liệu trình chăm sóc và lịch sử khách hàng</li>
-      <li>Quản lý kho nguyên liệu, nhập/xuất và hóa đơn</li>
-      <li>Báo cáo doanh thu, hiệu suất nhân viên và tỷ lệ quay lại</li>
-      <li>Tích hợp đặt lịch online, SMS/Zalo nhắc lịch</li>
+      <li data-i18n="pm-ispa-1">Quản lý lịch hẹn, dịch vụ, nhân viên và phòng</li>
+      <li data-i18n="pm-ispa-2">Theo dõi liệu trình chăm sóc và lịch sử khách hàng</li>
+      <li data-i18n="pm-ispa-3">Quản lý kho nguyên liệu, nhập/xuất và hóa đơn</li>
+      <li data-i18n="pm-ispa-4">Báo cáo doanh thu, hiệu suất nhân viên và tỷ lệ quay lại</li>
+      <li data-i18n="pm-ispa-5">Tích hợp đặt lịch online, SMS/Zalo nhắc lịch</li>
     </ul>
 
-    <h2>iNail — Quản lý Nail</h2>
+    <h2 data-i18n="pm-h2-2">iNail — Quản lý Nail</h2>
     <ul>
-      <li>Quản lý lịch hẹn, kỹ thuật viên và dịch vụ nail</li>
-      <li>Theo dõi lịch sử làm móng, sở thích và ghi chú khách hàng</li>
-      <li>Quản lý tồn kho sơn móng, phụ kiện và dụng cụ</li>
-      <li>Báo cáo doanh thu theo kỹ thuật viên, theo ngày và theo dịch vụ</li>
-      <li>Hỗ trợ đặt lịch qua fanpage, website hoặc Zalo</li>
+      <li data-i18n="pm-inail-1">Quản lý lịch hẹn, kỹ thuật viên và dịch vụ nail</li>
+      <li data-i18n="pm-inail-2">Theo dõi lịch sử làm móng, sở thích và ghi chú khách hàng</li>
+      <li data-i18n="pm-inail-3">Quản lý tồn kho sơn móng, phụ kiện và dụng cụ</li>
+      <li data-i18n="pm-inail-4">Báo cáo doanh thu theo kỹ thuật viên, theo ngày và theo dịch vụ</li>
+      <li data-i18n="pm-inail-5">Hỗ trợ đặt lịch qua fanpage, website hoặc Zalo</li>
     </ul>
 
-    <h2>iBeauty — Quản lý Thẩm mỹ viện</h2>
+    <h2 data-i18n="pm-h2-3">iBeauty — Quản lý Thẩm mỹ viện</h2>
     <ul>
-      <li>Quản lý liệu trình điều trị, bác sĩ/kỹ thuật viên và phòng điều trị</li>
-      <li>Theo dõi tình trạng da, phác đồ điều trị và kết quả khách hàng</li>
-      <li>Quản lý kho mỹ phẩm, dụng cụ và hóa đơn bán hàng</li>
-      <li>Báo cáo doanh thu, tỷ lệ chuyển đổi dịch vụ và hiệu quả điều trị</li>
-      <li>Tích hợp đặt lịch tư vấn và chăm sóc sau liệu trình</li>
+      <li data-i18n="pm-ibeauty-1">Quản lý liệu trình điều trị, bác sĩ/kỹ thuật viên và phòng điều trị</li>
+      <li data-i18n="pm-ibeauty-2">Theo dõi tình trạng da, phác đồ điều trị và kết quả khách hàng</li>
+      <li data-i18n="pm-ibeauty-3">Quản lý kho mỹ phẩm, dụng cụ và hóa đơn bán hàng</li>
+      <li data-i18n="pm-ibeauty-4">Báo cáo doanh thu, tỷ lệ chuyển đổi dịch vụ và hiệu quả điều trị</li>
+      <li data-i18n="pm-ibeauty-5">Tích hợp đặt lịch tư vấn và chăm sóc sau liệu trình</li>
     </ul>
 
-    <h2>iDental — Quản lý Nha khoa</h2>
+    <h2 data-i18n="pm-h2-4">iDental — Quản lý Nha khoa</h2>
     <ul>
-      <li>Quản lý lịch hẹn, nha sĩ, phòng điều trị và dịch vụ</li>
-      <li>Hồ sơ bệnh án điện tử, phác đồ điều trị và hình ảnh X-quang</li>
-      <li>Quản lý kho vật tư y tế, nhập/xuất và hạn sử dụng</li>
-      <li>Báo cáo doanh thu, hiệu suất nha sĩ và tỷ lệ tái khám</li>
-      <li>Tích hợp SMS/Zalo nhắc lịch và chăm sóc sau điều trị</li>
+      <li data-i18n="pm-idental-1">Quản lý lịch hẹn, nha sĩ, phòng điều trị và dịch vụ</li>
+      <li data-i18n="pm-idental-2">Hồ sơ bệnh án điện tử, phác đồ điều trị và hình ảnh X-quang</li>
+      <li data-i18n="pm-idental-3">Quản lý kho vật tư y tế, nhập/xuất và hạn sử dụng</li>
+      <li data-i18n="pm-idental-4">Báo cáo doanh thu, hiệu suất nha sĩ và tỷ lệ tái khám</li>
+      <li data-i18n="pm-idental-5">Tích hợp SMS/Zalo nhắc lịch và chăm sóc sau điều trị</li>
     </ul>
 
-    <h2>iClinic — Quản lý Phòng khám Đa khoa</h2>
+    <h2 data-i18n="pm-h2-5">iClinic — Quản lý Phòng khám Đa khoa</h2>
     <ul>
-      <li>Quản lý lịch hẹn, bác sĩ, chuyên khoa và phòng khám</li>
-      <li>Hồ sơ bệnh án, đơn thuốc, chỉ định xét nghiệm và theo dõi sức khỏe</li>
-      <li>Quản lý kho thuốc, vật tư y tế và hóa đơn bảo hiểm</li>
-      <li>Báo cáo doanh thu, tần suất khám và hiệu suất bác sĩ</li>
-      <li>Tích hợp đặt lịch online, nhắc lịch tự động và chăm sóc bệnh nhân</li>
+      <li data-i18n="pm-iclinic-1">Quản lý lịch hẹn, bác sĩ, chuyên khoa và phòng khám</li>
+      <li data-i18n="pm-iclinic-2">Hồ sơ bệnh án, đơn thuốc, chỉ định xét nghiệm và theo dõi sức khỏe</li>
+      <li data-i18n="pm-iclinic-3">Quản lý kho thuốc, vật tư y tế và hóa đơn bảo hiểm</li>
+      <li data-i18n="pm-iclinic-4">Báo cáo doanh thu, tần suất khám và hiệu suất bác sĩ</li>
+      <li data-i18n="pm-iclinic-5">Tích hợp đặt lịch online, nhắc lịch tự động và chăm sóc bệnh nhân</li>
     </ul>
 
-    <h2>iGym — Quản lý Gym</h2>
+    <h2 data-i18n="pm-h2-6">iGym — Quản lý Gym</h2>
     <ul>
-      <li>Quản lý gói tập, hội viên, huấn luyện viên và lịch tập</li>
-      <li>Theo dõi tiến độ tập luyện, chỉ số sức khỏe và mục tiêu cá nhân</li>
-      <li>Quản lý thu phí, gia hạn gói tập và khuyến mãi</li>
-      <li>Báo cáo doanh thu, tỷ lệ giữ chân hội viên và hiệu suất HLV</li>
-      <li>Tích hợp đăng ký gói online, check-in QR và thông báo tự động</li>
+      <li data-i18n="pm-igym-1">Quản lý gói tập, hội viên, huấn luyện viên và lịch tập</li>
+      <li data-i18n="pm-igym-2">Theo dõi tiến độ tập luyện, chỉ số sức khỏe và mục tiêu cá nhân</li>
+      <li data-i18n="pm-igym-3">Quản lý thu phí, gia hạn gói tập và khuyến mãi</li>
+      <li data-i18n="pm-igym-4">Báo cáo doanh thu, tỷ lệ giữ chân hội viên và hiệu suất HLV</li>
+      <li data-i18n="pm-igym-5">Tích hợp đăng ký gói online, check-in QR và thông báo tự động</li>
     </ul>
 
-    <h2>Lý do chọn giải pháp phần mềm ngành của AI Era</h2>
+    <h2 data-i18n="pm-h2-7">Lý do chọn giải pháp phần mềm ngành của AI Era</h2>
     <ul>
-      <li><strong>Chuyên biệt từng ngành:</strong> Mỗi sản phẩm được xây dựng theo đặc thù nghiệp vụ thực tế, không phải giải pháp đa năng chung chung.</li>
-      <li><strong>Tự động hóa quy trình:</strong> Giảm thủ công, giảm sai sót và tăng tốc vận hành hàng ngày.</li>
-      <li><strong>Báo cáo thông minh:</strong> Theo dõi doanh thu, hiệu suất nhân viên và hành vi khách hàng để ra quyết định chính xác.</li>
-      <li><strong>Triển khai nhanh:</strong> Đội ngũ AI Era hỗ trợ cấu hình, đào tạo và vận hành, giảm thời gian áp dụng.</li>
+      <li data-i18n="pm-li-1"><strong>Chuyên biệt từng ngành:</strong> Mỗi sản phẩm được xây dựng theo đặc thù nghiệp vụ thực tế, không phải giải pháp đa năng chung chung.</li>
+      <li data-i18n="pm-li-2"><strong>Tự động hóa quy trình:</strong> Giảm thủ công, giảm sai sót và tăng tốc vận hành hàng ngày.</li>
+      <li data-i18n="pm-li-3"><strong>Báo cáo thông minh:</strong> Theo dõi doanh thu, hiệu suất nhân viên và hành vi khách hàng để ra quyết định chính xác.</li>
+      <li data-i18n="pm-li-4"><strong>Triển khai nhanh:</strong> Đội ngũ AI Era hỗ trợ cấu hình, đào tạo và vận hành, giảm thời gian áp dụng.</li>
     </ul>
 
-    <h2>Liên hệ tư vấn</h2>
-    <p>Bạn muốn ứng dụng phần mềm quản lý chuyên ngành cho doanh nghiệp? Liên hệ AI Era để nhận tư vấn và demo sản phẩm phù hợp.</p>
-    <p><em>AI Era — Intelligence in motion. Phần mềm không chỉ quản lý, mà còn giúp doanh nghiệp tăng trưởng.</em></p>
+    <h2 data-i18n="pm-h2-8">Liên hệ tư vấn</h2>
+    <p data-i18n="pm-p2">Bạn muốn ứng dụng phần mềm quản lý chuyên ngành cho doanh nghiệp? Liên hệ AI Era để nhận tư vấn và demo sản phẩm phù hợp.</p>
+    <p><em data-i18n="pm-quote">AI Era — Intelligence in motion. Phần mềm không chỉ quản lý, mà còn giúp doanh nghiệp tăng trưởng.</em></p>
   </article>
+
+  <script type="module">
+    import { initDetailPageI18n } from './js/detail-i18n.js';
+    initDetailPageI18n();
+  </script>
 </body>
 </html>
