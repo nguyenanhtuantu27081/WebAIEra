@@ -29,11 +29,21 @@ const translations = {
     'ctrl-shift': 'SHIFT+KÉO · LĂN',
     'ctrl-wheel': 'CUỘN · BAY / ZOOM',
     'ctrl-reset': 'ĐẶT LẠI',
+    'ctrl-contact': 'LIÊN HỆ NGAY',
+    'cta-status': 'TƯ VẤN 24/7',
 
     // Focus panel
     'focus-kicker-prefix': 'AI ERA / NODE ',
     'focus-link': 'Xem chi tiết',
     'focus-back': 'Quay về lõi AI Era',
+
+    // Contact footer
+    'footer-kicker': 'LIÊN HỆ VỚI CHÚNG TÔI',
+    'footer-title': 'Kết nối ngay với AI Era',
+    'footer-chat-now': 'Chat ngay',
+    'footer-phone-label': 'Điện thoại',
+    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-back-top': '↑ TRỞ VỀ AI ERA core',
   },
   en: {
     // Nav
@@ -62,11 +72,21 @@ const translations = {
     'ctrl-shift': 'SHIFT+DRAG · ROLL',
     'ctrl-wheel': 'WHEEL · FLY / ZOOM',
     'ctrl-reset': 'RESET VIEW',
+    'ctrl-contact': 'CONTACT US',
+    'cta-status': 'ONLINE 24/7',
 
     // Focus panel
     'focus-kicker-prefix': 'AI ERA / NODE ',
     'focus-link': 'View details',
     'focus-back': 'Return to AI Era core',
+
+    // Contact footer
+    'footer-kicker': 'GET IN TOUCH',
+    'footer-title': 'Connect with AI Era',
+    'footer-chat-now': 'Chat now',
+    'footer-phone-label': 'Phone',
+    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-back-top': '↑ RETURN TO AI ERA CORE',
   }
 };
 

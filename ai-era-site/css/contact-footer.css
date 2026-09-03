@@ -1,0 +1,287 @@
+/* ============================================
+   AI Era — Contact Footer
+   Three.js particle network + glassmorphism
+   ============================================ */
+
+/* ----- Footer Container ----- */
+.contact-footer{
+  position:relative;
+  z-index:25;
+  width:100%;
+  min-height:340px;
+  overflow:hidden;
+  border-top:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(3,3,5,.92) 0%,rgba(6,6,14,.98) 100%);
+}
+
+/* Three.js canvas sits behind content */
+.contact-footer__canvas{
+  position:absolute;inset:0;z-index:0;
+  pointer-events:none;
+}
+.contact-footer__canvas canvas{
+  display:block;width:100%;height:100%;
+}
+
+/* Gradient overlay to blend top edge */
+.contact-footer__fade{
+  position:absolute;top:0;left:0;right:0;height:80px;z-index:1;
+  background:linear-gradient(180deg,var(--bg) 0%,transparent 100%);
+  pointer-events:none;
+}
+
+/* ----- Content Layer ----- */
+.contact-footer__content{
+  position:relative;z-index:2;
+  max-width:900px;
+  margin:0 auto;
+  padding:52px 42px 40px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:32px;
+}
+
+/* Close (X) button — top-right corner */
+.contact-footer__close{
+  position:absolute;
+  top:18px;right:18px;
+  z-index:10;
+  width:42px;height:42px;
+  display:grid;place-items:center;
+  border:1px solid rgba(129,140,248,.25);
+  border-radius:50%;
+  background:rgba(8,8,16,.65);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  color:#a5b4fc;
+  font-size:1.1rem;
+  font-weight:300;
+  font-family:var(--font-mono);
+  cursor:pointer;
+  text-decoration:none;
+  transition:all .3s cubic-bezier(.2,.8,.2,1);
+  box-shadow:0 0 0 0 rgba(129,140,248,0);
+  animation:closeButtonPulse 3s ease-in-out infinite;
+}
+.contact-footer__close:hover{
+  color:#fff;
+  border-color:rgba(129,140,248,.55);
+  background:rgba(129,140,248,.18);
+  transform:scale(1.12) rotate(90deg);
+  box-shadow:
+    0 0 20px rgba(129,140,248,.25),
+    0 0 40px rgba(129,140,248,.08);
+}
+.contact-footer__close:active{
+  transform:scale(.95) rotate(90deg);
+}
+@keyframes closeButtonPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(129,140,248,0)}
+  50%{box-shadow:0 0 0 8px rgba(129,140,248,.1)}
+}
+
+/* Section header */
+.contact-footer__kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 14px;border-radius:var(--radius-pill);
+  border:1px solid rgba(129,140,248,.28);
+  background:rgba(129,140,248,.08);
+  color:#a5b4fc;
+  font:500 .68rem var(--font-mono);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.contact-footer__kicker i{
+  width:5px;height:5px;border-radius:50%;
+  background:#a5b4fc;
+  box-shadow:0 0 10px #818cf8;
+  animation:contactPulse 2s ease-in-out infinite;
+}
+@keyframes contactPulse{
+  0%,100%{opacity:.6;transform:scale(.85)}
+  50%{opacity:1;transform:scale(1.2)}
+}
+
+.contact-footer__title{
+  font-size:clamp(1.4rem,3vw,2rem);
+  font-weight:700;
+  letter-spacing:-.04em;
+  text-align:center;
+  background:linear-gradient(115deg,#fff 10%,#d8ddff 35%,#818cf8 60%,#67e8f9 85%);
+  background-size:220% 220%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:aiEraGradientShift 6s ease-in-out infinite;
+}
+
+/* ----- Icon Grid ----- */
+.contact-footer__grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:16px;
+}
+
+/* Each contact item — glassmorphism card */
+.contact-item{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 20px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.07);
+  background:rgba(8,8,16,.55);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  text-decoration:none;
+  color:#dcdce2;
+  font-size:.82rem;
+  font-weight:500;
+  cursor:pointer;
+  transition:all .32s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+  overflow:hidden;
+}
+
+/* Glow border on hover */
+.contact-item::before{
+  content:"";
+  position:absolute;inset:-1px;
+  border-radius:inherit;
+  background:linear-gradient(135deg,var(--item-glow,rgba(129,140,248,.35)),transparent 60%);
+  opacity:0;
+  transition:opacity .35s;
+  z-index:-1;
+}
+.contact-item:hover::before{opacity:1}
+
+.contact-item:hover{
+  color:#fff;
+  border-color:color-mix(in srgb,var(--item-glow,#818cf8) 45%,transparent);
+  background:rgba(14,14,23,.78);
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:
+    0 8px 32px rgba(0,0,0,.28),
+    0 0 20px color-mix(in srgb,var(--item-glow,#818cf8) 18%,transparent);
+}
+
+/* Icon container */
+.contact-item__icon{
+  width:36px;height:36px;
+  display:grid;place-items:center;
+  border-radius:10px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  flex-shrink:0;
+  transition:all .32s;
+}
+.contact-item:hover .contact-item__icon{
+  background:rgba(129,140,248,.1);
+  border-color:rgba(129,140,248,.22);
+  box-shadow:0 0 14px color-mix(in srgb,var(--item-glow,#818cf8) 25%,transparent);
+}
+
+.contact-item__icon svg{
+  width:20px;height:20px;
+  fill:currentColor;
+  transition:color .3s,filter .3s;
+}
+.contact-item:hover .contact-item__icon svg{
+  filter:drop-shadow(0 0 6px color-mix(in srgb,var(--item-glow,#818cf8) 55%,transparent));
+}
+
+/* Text stack */
+.contact-item__text{
+  display:flex;flex-direction:column;gap:2px;
+}
+.contact-item__label{
+  font:500 .58rem var(--font-mono);
+  color:#555562;letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.contact-item__value{
+  color:inherit;font-size:.82rem;font-weight:600;
+}
+
+/* Color variants */
+.contact-item--zalo{--item-glow:#3b82f6}
+.contact-item--zalo .contact-item__icon svg{color:#3b82f6}
+.contact-item--telegram{--item-glow:#38bdf8}
+.contact-item--telegram .contact-item__icon svg{color:#38bdf8}
+.contact-item--whatsapp{--item-glow:#22c55e}
+.contact-item--whatsapp .contact-item__icon svg{color:#22c55e}
+.contact-item--phone{--item-glow:#a5b4fc}
+.contact-item--phone .contact-item__icon svg{color:#a5b4fc}
+.contact-item--email{--item-glow:#67e8f9}
+.contact-item--email .contact-item__icon svg{color:#67e8f9}
+
+/* ----- Footer Bottom ----- */
+.contact-footer__bottom{
+  display:flex;align-items:center;gap:12px;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.05);
+  width:100%;
+  justify-content:center;
+}
+.contact-footer__copyright{
+  font:400 .62rem var(--font-mono);
+  color:#444450;
+  letter-spacing:.06em;
+}
+.contact-footer__dot{
+  width:3px;height:3px;border-radius:50%;
+  background:rgba(129,140,248,.35);
+}
+.spatial-hero{
+  height:100vh;
+  width:100%;
+  pointer-events:none;
+}
+.contact-footer__back-top{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px;
+  border-radius:var(--radius-pill);
+  border:1px solid rgba(129,140,248,.25);
+  background:rgba(129,140,248,.07);
+  color:var(--indigo-2);
+  font:500 .62rem var(--font-mono);
+  letter-spacing:.06em;
+  text-decoration:none;
+  transition:all .25s;
+}
+.contact-footer__back-top:hover{
+  background:rgba(129,140,248,.18);
+  border-color:rgba(129,140,248,.45);
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+/* ----- Responsive ----- */
+@media(max-width:900px){
+  .contact-footer__content{padding:40px 18px 32px}
+  .contact-footer__close{top:12px;right:12px;width:36px;height:36px;font-size:.95rem}
+  .contact-footer__grid{gap:10px}
+  .contact-item{padding:11px 14px;font-size:.76rem;gap:10px}
+  .contact-item__icon{width:32px;height:32px}
+  .contact-item__icon svg{width:17px;height:17px}
+  .contact-item__label{font-size:.52rem}
+  .contact-item__value{font-size:.76rem}
+}
+
+@media(max-width:480px){
+  .contact-footer__grid{flex-direction:column;align-items:stretch}
+  .contact-item{justify-content:flex-start}
+  .contact-footer__title{font-size:1.2rem}
+  .contact-footer{min-height:auto}
+  .contact-footer__close{top:8px;right:8px;width:34px;height:34px}
+}
+
+/* Cursor override for footer on desktop */
+@media(pointer:fine){
+  .contact-item{cursor:none}
+  .contact-footer__close{cursor:none}
+}
+@media(pointer:coarse){
+  .contact-item{cursor:pointer}
+  .contact-footer__close{cursor:pointer}
+}

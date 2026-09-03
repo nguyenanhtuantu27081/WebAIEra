@@ -24,7 +24,8 @@
       --purple:#c084fc;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text)}
+    html{width:100%;min-height:100%;scroll-behavior:smooth}
+    body{width:100%;min-height:100%;overflow-x:hidden;overflow-y:auto;background:var(--bg);color:var(--text)}
     body{
       font-family:"Plus Jakarta Sans",sans-serif;
       -webkit-font-smoothing:antialiased;
@@ -204,6 +205,7 @@
     }
     @media(pointer:coarse){body{cursor:auto}.cursor-dot,.cursor-outline{display:none}}
   </style>
+  <link rel="stylesheet" href="../ai-era-site/css/contact-footer.css">
 
   <script type="importmap">
   {
@@ -247,6 +249,7 @@
     <span class="control">DRAG · ROTATE 360°</span>
     <span class="control">WHEEL · FLY / ZOOM</span>
     <button id="resetBtn" class="control">RESET VIEW</button>
+    <a href="#contactFooter" class="control" style="text-decoration:none;color:#a5b4fc;display:inline-flex;align-items:center;gap:5px;">LIÊN HỆ ↓</a>
   </div>
 
   <div class="focus-panel" id="focusPanel">
@@ -256,8 +259,36 @@
     <button id="backBtn">Return to AI Era core</button>
   </div>
 
+  <div class="spatial-hero" id="top"></div>
+
+  <!-- Contact Footer -->
+  <footer class="contact-footer" id="contactFooter">
+    <div class="contact-footer__canvas"></div>
+    <div class="contact-footer__fade"></div>
+    <div class="contact-footer__content">
+      <div class="contact-footer__kicker"><i></i> LIÊN HỆ VỚI CHÚNG TÔI</div>
+      <h2 class="contact-footer__title">Kết nối ngay với AI Era</h2>
+      <div class="contact-footer__grid">
+        <a href="https://zalo.me/84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--zalo" id="contact-zalo"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm8.98 30.7c-.1.3-.45.5-.76.5H18.6c-1.14 0-2.02-.65-2.02-1.65 0-.63.35-1.24 1.06-1.97l8.68-9.25c.2-.22.3-.44.3-.62 0-.37-.34-.67-.76-.67H18.1c-.32 0-.66-.2-.76-.5l-.37-1.1c-.1-.3.1-.6.42-.6h13.2c1.14 0 2.06.74 2.06 1.65 0 .6-.32 1.18-.98 1.87l-8.8 9.35c-.18.2-.27.4-.27.6 0 .37.34.67.76.67h9.97c.32 0 .66.2.76.5l.37 1.1c.1.3-.1.6-.42.6l-.37-1.1.37 1.1z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Zalo</span><span class="contact-item__value">Chat ngay</span></span></a>
+        <a href="https://t.me/+84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--telegram" id="contact-telegram"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm9.2 13.7-3.1 14.6c-.23 1.02-.84 1.27-1.7.79l-4.7-3.47-2.27 2.18c-.25.25-.46.46-.95.46l.34-4.77 8.7-7.86c.38-.34-.08-.52-.58-.19l-10.75 6.77-4.63-1.45c-1.01-.31-1.03-.97.21-1.44l18.1-6.98c.84-.31 1.57.2 1.3 1.44l.03-.04z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Telegram</span><span class="contact-item__value">Chat ngay</span></span></a>
+        <a href="https://wa.me/84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--whatsapp" id="contact-whatsapp"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24c0 3.82 1.1 7.39 2.98 10.42L4.2 43.8l9.68-2.72A19.88 19.88 0 0024 44c11.05 0 20-8.95 20-20S35.05 4 24 4zm0 36.5c-3.36 0-6.48-.98-9.12-2.67l-.65-.4-5.73 1.61 1.53-5.56-.42-.67A16.42 16.42 0 017.5 24c0-9.11 7.39-16.5 16.5-16.5S40.5 14.89 40.5 24 33.11 40.5 24 40.5zm9.06-12.35c-.5-.25-2.94-1.45-3.4-1.62-.45-.16-.78-.25-1.11.25-.33.5-1.28 1.62-1.57 1.95-.29.33-.58.37-1.08.12-.5-.25-2.1-.77-4-2.47-1.48-1.32-2.48-2.95-2.77-3.45-.29-.5-.03-.77.22-1.02.22-.22.5-.58.75-.87.25-.29.33-.5.5-.83.16-.33.08-.62-.04-.87-.12-.25-1.11-2.68-1.52-3.67-.4-.97-.81-.84-1.11-.85h-.95c-.33 0-.87.12-1.32.62-.45.5-1.74 1.7-1.74 4.15 0 2.45 1.78 4.82 2.03 5.15.25.33 3.5 5.35 8.49 7.5 1.19.51 2.11.82 2.84 1.05 1.19.38 2.27.33 3.13.2.95-.14 2.94-1.2 3.35-2.36.42-1.16.42-2.15.29-2.36-.12-.2-.45-.33-.95-.58z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">WhatsApp</span><span class="contact-item__value">Chat ngay</span></span></a>
+        <a href="tel:+84977511663" class="contact-item contact-item--phone" id="contact-phone"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M13.25 21.6c2.78 5.47 7.2 9.84 12.7 12.6l4.24-4.24c.52-.52 1.3-.7 1.98-.46 2.2.72 4.56 1.1 7.02 1.1 1.1 0 2 .9 2 2v6.8c0 1.1-.9 2-2 2C19.42 41.4 6.6 28.58 6.6 12.8c0-1.1.9-2 2-2h6.8c1.1 0 2 .9 2 2 0 2.46.38 4.82 1.1 7.02.24.68.06 1.46-.46 1.98l-4.8 4.24z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Phone</span><span class="contact-item__value">(+84) 977 511 663</span></span></a>
+        <a href="mailto:info@aiera.vn" class="contact-item contact-item--email" id="contact-email"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M40 8H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V12c0-2.2-1.8-4-4-4zm0 8L24 26 8 16v-4l16 10 16-10v4z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Email</span><span class="contact-item__value">info@aiera.vn</span></span></a>
+      </div>
+      <div class="contact-footer__bottom">
+        <span class="contact-footer__copyright">© 2025 AI ERA .VN</span>
+        <span class="contact-footer__dot"></span>
+        <span class="contact-footer__copyright">INTELLIGENCE IN MOTION</span>
+        <span class="contact-footer__dot"></span>
+        <a href="#top" class="contact-footer__back-top">↑ TRỞ VỀ 3D CORE</a>
+      </div>
+    </div>
+  </footer>
+
   <div class="cursor-dot"></div>
   <div class="cursor-outline"></div>
+
+  <script type="module" src="../ai-era-site/js/contact-footer.js"></script>
 
 <script type="module">
 import * as THREE from 'three';

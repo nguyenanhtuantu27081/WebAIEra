@@ -97,6 +97,110 @@ button.control:hover{
   background:rgba(129,140,248,.08);
 }
 
+/* ----- HUD Controls ----- */
+.hud-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px solid rgba(255,255,255,.055);
+}
+.hud-controls .control{
+  font-size:.56rem;
+  padding:5px 7px;
+  letter-spacing:.02em;
+  flex:1 1 auto;
+  text-align:center;
+}
+.hud-controls #resetBtn{
+  width:100%;
+  flex:1 1 100%;
+  margin-top:2px;
+  background:rgba(129,140,248,.12);
+  border-color:rgba(129,140,248,.3);
+  color:#c7d2fe;
+}
+.hud-controls #resetBtn:hover{
+  background:rgba(129,140,248,.25);
+  color:#fff;
+  border-color:rgba(129,140,248,.55);
+}
+
+/* ----- 3D Holographic Contact CTA Button ----- */
+.contact-cta-btn{
+  position:relative;
+  display:inline-flex;align-items:center;gap:12px;
+  padding:7px 20px 7px 9px;
+  border-radius:var(--radius-pill);
+  border:1px solid rgba(129,140,248,.38);
+  background:linear-gradient(135deg, rgba(16,16,32,.88) 0%, rgba(8,8,18,.95) 100%);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:0 10px 30px rgba(0,0,0,.45), 0 0 25px rgba(99,102,241,.24), inset 0 1px 0 rgba(255,255,255,.18);
+  text-decoration:none;
+  cursor:none;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), border-color .3s, box-shadow .35s;
+  overflow:hidden;
+}
+.contact-cta-btn:hover{
+  transform:translateY(-3px) scale(1.04);
+  border-color:rgba(103,232,249,.7);
+  box-shadow:0 16px 42px rgba(0,0,0,.55), 0 0 35px rgba(129,140,248,.5), 0 0 20px rgba(103,232,249,.4), inset 0 1px 0 rgba(255,255,255,.35);
+}
+.contact-cta-canvas-wrap{
+  width:50px;height:50px;min-width:50px;
+  position:relative;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle, rgba(129,140,248,.25) 0%, rgba(10,10,24,0) 70%);
+}
+#contactBtnCanvas{
+  width:50px;height:50px;display:block;
+  border-radius:50%;pointer-events:none;
+}
+.contact-cta-halo{
+  position:absolute;inset:-3px;border-radius:50%;
+  border:1px solid rgba(103,232,249,.35);
+  animation:cta-halo-pulse 2.4s infinite ease-in-out;
+  pointer-events:none;
+}
+.contact-cta-text{
+  display:flex;flex-direction:column;gap:2px;
+  text-align:left;
+}
+.contact-cta-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font:600 .58rem var(--font-mono);color:#a5b4fc;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.contact-cta-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:#4ade80;
+  box-shadow:0 0 8px #4ade80, 0 0 16px rgba(74,222,128,.6);
+  animation:cta-dot-blink 1.8s infinite ease-in-out;
+}
+.contact-cta-title{
+  display:inline-flex;align-items:center;gap:7px;
+  font:700 .92rem var(--font-sans);color:#fff;
+  letter-spacing:.025em;line-height:1.2;
+}
+.contact-cta-arrow{
+  color:#67e8f9;
+  animation:cta-arrow-drift 1.5s infinite ease-in-out;
+}
+@keyframes cta-halo-pulse{
+  0%,100%{transform:scale(.95);opacity:.35;border-color:rgba(103,232,249,.3)}
+  50%{transform:scale(1.18);opacity:.85;border-color:rgba(192,132,252,.65)}
+}
+@keyframes cta-dot-blink{
+  0%,100%{opacity:.5;transform:scale(.85)}
+  50%{opacity:1;transform:scale(1.25)}
+}
+@keyframes cta-arrow-drift{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(4px)}
+}
+
 /* ----- Custom Cursor ----- */
 .cursor-dot,.cursor-outline{
   position:fixed;left:0;top:0;border-radius:50%;

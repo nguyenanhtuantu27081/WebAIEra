@@ -199,7 +199,15 @@ export const detailTranslations = {
     'seo-li-5': '<strong>Bảo trì & cải tiến:</strong> Theo dõi hiệu suất, cập nhật nội dung và tối ưu liên tục.',
     'seo-h2-4': 'Liên hệ tư vấn',
     'seo-p9': 'Bạn cần thiết kế website doanh nghiệp chuẩn SEO và AI SEO? Liên hệ AI Era để nhận báo giá và lộ trình phù hợp.',
-    'seo-quote': 'AI Era — Intelligence in motion. Website không chỉ đẹp, mà còn được tìm thấy đúng người.'
+    'seo-quote': 'AI Era — Intelligence in motion. Website không chỉ đẹp, mà còn được tìm thấy đúng người.',
+
+    // Contact footer
+    'footer-kicker': 'LIÊN HỆ VỚI CHÚNG TÔI',
+    'footer-title': 'Kết nối ngay với AI Era',
+    'footer-chat-now': 'Chat ngay',
+    'footer-phone-label': 'Điện thoại',
+    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-back-top': '↑ VỀ ĐẦU TRANG'
   },
   en: {
     'back-link': 'Return to AI Era Ecosystem',
@@ -398,7 +406,15 @@ export const detailTranslations = {
     'seo-li-5': '<strong>Maintenance & Evolution:</strong> Ongoing performance telemetry, content updates, and continuous optimization.',
     'seo-h2-4': 'Contact for Consultation',
     'seo-p9': 'Ready to build an SEO and AI-search optimized enterprise website? Contact AI Era for a customized quote and roadmap.',
-    'seo-quote': 'AI Era — Intelligence in motion. Websites crafted not only to look stunning, but to be discovered by the right audience.'
+    'seo-quote': 'AI Era — Intelligence in motion. Websites crafted not only to look stunning, but to be discovered by the right audience.',
+
+    // Contact footer
+    'footer-kicker': 'GET IN TOUCH',
+    'footer-title': 'Connect with AI Era',
+    'footer-chat-now': 'Chat now',
+    'footer-phone-label': 'Phone',
+    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-back-top': '↑ BACK TO TOP'
   }
 };
 

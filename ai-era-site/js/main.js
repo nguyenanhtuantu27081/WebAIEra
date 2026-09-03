@@ -9,13 +9,14 @@ import { updateHUD } from './three/hud.js';
 import { applyQualityEffects } from './three/effects.js';
 import { initCursor } from './cursor.js';
 import { initI18n } from './i18n.js';
+import { initContactBtn3D } from './three/contact-btn-3d.js';
 
-// Initialise
+// Initialise UI controls & i18n immediately
+initI18n();
 initControls();
+initContactBtn3D();
 initCursor(() => pointer);
 applyQualityEffects();
-initI18n();
-
 
 // Animation loop
 const clock = new THREE.Clock();
@@ -45,7 +46,29 @@ function animate() {
   composer.render();
 }
 
-renderer.setAnimationLoop(animate);
+// Start rendering loop via requestAnimationFrame
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => {
+    renderer.setAnimationLoop(animate);
+  }, { timeout: 800 });
+} else {
+  requestAnimationFrame(() => {
+    renderer.setAnimationLoop(animate);
+  });
+}
 
 // Window resize
-addEventListener('resize', onResize);
+addEventListener('resize', onResize, { passive: true });
+
+// Contact footer close button — scroll back to top
+const closeBtn = document.getElementById('contactClose');
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    const top = document.getElementById('top');
+    if (top) {
+      top.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+}

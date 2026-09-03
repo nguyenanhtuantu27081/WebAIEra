@@ -18,6 +18,16 @@
 
 @media(max-width:767px){
   .hud{font-size:.6rem}
+  .contact-cta-btn{
+    padding:5px 15px 5px 7px;
+    gap:9px;
+  }
+  .contact-cta-canvas-wrap, #contactBtnCanvas{
+    width:42px;height:42px;min-width:42px;
+  }
+  .contact-cta-title{
+    font-size:.82rem;
+  }
   .focus-panel{
     width:100%;
     right:0;
@@ -30,5 +40,6 @@
 /* Touch devices — hide custom cursor */
 @media(pointer:coarse){
   body{cursor:auto}
+  .contact-cta-btn{cursor:pointer}
   .cursor-dot,.cursor-outline{display:none}
 }

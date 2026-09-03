@@ -100,6 +100,17 @@ export function initControls() {
   document.querySelector('#resetBtn').onclick = resetView;
   document.querySelector('#backBtn').onclick = resetView;
 
+  const ctrlDrag = document.querySelector('#ctrlDrag');
+  if (ctrlDrag) ctrlDrag.onclick = () => { targetRot.y += Math.PI / 3; };
+
+  const ctrlShift = document.querySelector('#ctrlShift');
+  if (ctrlShift) ctrlShift.onclick = () => { targetRot.z += Math.PI / 4; };
+
+  const ctrlWheel = document.querySelector('#ctrlWheel');
+  if (ctrlWheel) ctrlWheel.onclick = () => {
+    targetCameraDistance = targetCameraDistance > 11 ? targetCameraDistance - 3.5 : 16;
+  };
+
   // Drag rotate (step 5) — 360° on X/Y, Shift+drag for Z
   renderer.domElement.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
