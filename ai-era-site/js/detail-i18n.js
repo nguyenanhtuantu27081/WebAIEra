@@ -453,8 +453,24 @@ export function applyDetailLang(lang) {
   });
 }
 
+const THEME_KEY = 'aiera_theme';
+
+export function getDetailTheme() {
+  try { return localStorage.getItem(THEME_KEY) || 'dark'; } catch { return 'dark'; }
+}
+
+export function setDetailTheme(theme) {
+  const isLight = theme === 'light';
+  document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+  });
+  try { localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark'); } catch {}
+}
+
 export function initDetailPageI18n() {
-  const current = getCurrentLang();
+  const currentLang = getCurrentLang();
+  const currentTheme = getDetailTheme();
 
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -464,5 +480,13 @@ export function initDetailPageI18n() {
     });
   });
 
-  applyDetailLang(current);
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetTheme = btn.getAttribute('data-theme-val') || (getDetailTheme() === 'light' ? 'dark' : 'light');
+      setDetailTheme(targetTheme);
+    });
+  });
+
+  applyDetailLang(currentLang);
+  setDetailTheme(currentTheme);
 }

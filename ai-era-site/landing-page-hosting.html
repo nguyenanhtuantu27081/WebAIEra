@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#030305" />
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('aiera_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
   <meta name="description" data-i18n="land-meta-desc" content="AI Era — Thiết kế Landing Page chuyển đổi cao kèm miễn phí Hosting, triển khai chiến dịch nhanh chóng." />
   <title data-i18n="land-meta-title">Landing Page & Hosting — AI Era</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
@@ -24,7 +32,7 @@
     function loadGTM() {
       if (window.gtmLoaded) return;
       window.gtmLoaded = true;
-      const s = document.createElement('script');
+      var s = document.createElement('script');
       s.async = true;
       s.src = 'https://www.googletagmanager.com/gtag/js?id=G-LS0X2ERLBL';
       document.head.appendChild(s);
@@ -41,23 +49,36 @@
     });
   </script>
   <style>
-    body{cursor:auto;overflow:auto;min-height:100vh;padding:0;background:var(--bg)}
+    body{cursor:auto;overflow:auto;min-height:100vh;padding:0;background:var(--bg);color:var(--text);transition:background-color .35s ease, color .35s ease}
     .page{max-width:760px;margin:0 auto;padding:80px 24px 60px}
-    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;gap:12px;flex-wrap:wrap}
+    .page-controls{display:flex;align-items:center;gap:8px}
     .page h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;letter-spacing:-.04em;font-weight:800;margin-bottom:20px;
       background:linear-gradient(100deg,#fff 0%,#a5b4fc 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    [data-theme="light"] .page h1{
+      background:linear-gradient(100deg,#0f172a 0%,#4338ca 50%,#0284c7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
     .page h2{font-size:1.2rem;font-weight:700;color:var(--indigo-2);margin:32px 0 12px;letter-spacing:-.02em}
+    [data-theme="light"] .page h2{color:#4f46e5}
     .page h3{font-size:1rem;font-weight:600;color:var(--text);margin:20px 0 8px}
     .page p,.page li{font-size:.88rem;line-height:1.75;color:var(--muted)}
+    [data-theme="light"] .page p,[data-theme="light"] .page li{color:#334155}
     .page ul{padding-left:20px;margin:8px 0}
     .page em{color:#8a8a93;font-style:italic}
+    [data-theme="light"] .page em{color:#64748b}
     .back-link{display:inline-block;color:var(--indigo-2);text-decoration:none;font-size:.78rem;font-weight:600}
+    [data-theme="light"] .back-link{color:#4f46e5}
     .back-link:hover{color:var(--cyan)}
+    [data-theme="light"] .back-link:hover{color:#0284c7}
     .back-link::before{content:"← "}
-    .lang-switch{display:flex;align-items:center;gap:3px;padding:3px;border-radius:var(--radius-pill);border:1px solid var(--border);background:rgba(8,8,14,.58);backdrop-filter:blur(14px)}
-    .lang-btn{border:none;outline:none;cursor:pointer;font:600 .62rem var(--font-mono);color:#8a8a93;letter-spacing:.06em;padding:6px 11px;border-radius:var(--radius-pill);background:transparent;transition:all .28s cubic-bezier(.2,.8,.2,1)}
-    .lang-btn:hover{color:#dcdce2;background:rgba(129,140,248,.08)}
-    .lang-btn.active{color:#fff;background:linear-gradient(135deg,rgba(129,140,248,.32),rgba(103,232,249,.22));box-shadow:0 0 14px rgba(129,140,248,.18)}
+    .lang-switch,.theme-switch{display:flex;align-items:center;gap:3px;padding:3px;border-radius:var(--radius-pill);border:1px solid var(--border);background:rgba(8,8,14,.58);backdrop-filter:blur(14px)}
+    [data-theme="light"] .lang-switch,[data-theme="light"] .theme-switch{background:rgba(255,255,255,.85);border-color:rgba(148,163,184,.3)}
+    .lang-btn,.theme-btn{border:none;outline:none;cursor:pointer;font:600 .62rem var(--font-mono);color:#8a8a93;letter-spacing:.06em;padding:6px 11px;border-radius:var(--radius-pill);background:transparent;transition:all .28s cubic-bezier(.2,.8,.2,1)}
+    .theme-btn{width:28px;height:28px;padding:0;display:grid;place-items:center;border-radius:50%}
+    .theme-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .lang-btn:hover,.theme-btn:hover{color:#dcdce2;background:rgba(129,140,248,.08)}
+    [data-theme="light"] .lang-btn:hover,[data-theme="light"] .theme-btn:hover{color:#0f172a;background:rgba(99,102,241,.08)}
+    .lang-btn.active,.theme-btn.active{color:#fff;background:linear-gradient(135deg,rgba(129,140,248,.32),rgba(103,232,249,.22));box-shadow:0 0 14px rgba(129,140,248,.18)}
+    [data-theme="light"] .lang-btn.active,[data-theme="light"] .theme-btn.active{color:#fff;background:linear-gradient(135deg,#4f46e5,#0284c7)}
   </style>
 
   <script type="importmap">
@@ -73,9 +94,19 @@
   <article class="page">
     <div class="page-header">
       <a href="./index.html" class="back-link" data-i18n="back-link">Quay lại AI Era Ecosystem</a>
-      <div class="lang-switch" id="langSwitch">
-        <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
-        <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+      <div class="page-controls">
+        <div class="lang-switch" id="langSwitch">
+          <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
+          <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+        </div>
+        <div class="theme-switch" id="themeSwitch">
+          <button class="theme-btn active" data-theme-val="dark" aria-label="Dark Mode" title="Chế độ tối / Dark Mode">
+            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <button class="theme-btn" data-theme-val="light" aria-label="Light Mode" title="Chế độ sáng / Light Mode">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </button>
+        </div>
       </div>
     </div>
 

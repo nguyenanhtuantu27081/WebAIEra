@@ -9,10 +9,12 @@ import { updateHUD } from './three/hud.js';
 import { applyQualityEffects } from './three/effects.js';
 import { initCursor } from './cursor.js';
 import { initI18n } from './i18n.js';
+import { initTheme } from './theme.js';
 import { initContactBtn3D } from './three/contact-btn-3d.js';
 
-// Initialise UI controls & i18n immediately
+// Initialise UI controls & i18n & theme immediately
 initI18n();
+initTheme();
 initControls();
 initContactBtn3D();
 initCursor(() => pointer);

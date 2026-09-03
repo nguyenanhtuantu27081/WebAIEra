@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#030305" />
+  <script>
+    (function(){
+      try {
+        var t = localStorage.getItem('aiera_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch(e){}
+    })();
+  </script>
   <meta name="description" content="AI Era — Hệ sinh thái trí tuệ nhân tạo đa chiều: AI Automation, AI Agent, Digital Marketing, SEO, Landing Page, Phần mềm quản lý doanh nghiệp." />
   <title>AI Era — Spatial Intelligence Ecosystem</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
@@ -82,9 +90,19 @@
     <div class="logo">
       <span class="logo-mark"></span>AI ERA<span>.VN</span>
     </div>
-    <div class="lang-switch" id="langSwitch">
-      <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
-      <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+    <div class="nav-controls" style="display:flex;align-items:center;gap:8px;">
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
+        <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
+      </div>
+      <div class="theme-switch" id="themeSwitch">
+        <button class="theme-btn active" data-theme-val="dark" aria-label="Dark Mode" title="Chế độ tối / Dark Mode">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button class="theme-btn" data-theme-val="light" aria-label="Light Mode" title="Chế độ sáng / Light Mode">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+      </div>
     </div>
     <!--<div class="nav-status" data-i18n="nav-status">SYSTEM ONLINE · 6 NODES</div>-->
   </nav>

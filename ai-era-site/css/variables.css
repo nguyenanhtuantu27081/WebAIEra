@@ -30,3 +30,16 @@
   --font-sans:"Plus Jakarta Sans",sans-serif;
   --font-mono:"JetBrains Mono",monospace;
 }
+
+[data-theme="light"]{
+  --bg:#f8fafc;
+  --surface:rgba(0,0,0,.03);
+  --surface-2:rgba(255,255,255,.82);
+  --border:rgba(0,0,0,.1);
+  --text:#0f172a;
+  --muted:#64748b;
+  --indigo:#4f46e5;
+  --indigo-2:#6366f1;
+  --cyan:#0284c7;
+  --purple:#7c3aed;
+}

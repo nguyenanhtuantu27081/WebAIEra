@@ -285,3 +285,68 @@
   .contact-item{cursor:pointer}
   .contact-footer__close{cursor:pointer}
 }
+
+/* ----- Light Theme Overrides for Contact Footer ----- */
+[data-theme="light"] .contact-footer{
+  background:linear-gradient(180deg,rgba(248,250,252,.92) 0%,rgba(241,245,249,.98) 100%);
+  border-top-color:rgba(148,163,184,.28);
+}
+[data-theme="light"] .contact-footer__fade{
+  background:linear-gradient(180deg,var(--bg) 0%,transparent 100%);
+}
+[data-theme="light"] .contact-footer__title{
+  background:linear-gradient(115deg,#0f172a 10%,#312e81 35%,#4f46e5 60%,#0284c7 85%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+[data-theme="light"] .contact-footer__kicker{
+  border-color:rgba(99,102,241,.3);
+  background:rgba(99,102,241,.08);
+  color:#4f46e5;
+}
+[data-theme="light"] .contact-footer__kicker i{
+  background:#4f46e5;
+  box-shadow:0 0 10px #6366f1;
+}
+[data-theme="light"] .contact-footer__close{
+  background:rgba(255,255,255,.85);
+  border-color:rgba(148,163,184,.35);
+  color:#4f46e5;
+}
+[data-theme="light"] .contact-footer__close:hover{
+  background:rgba(99,102,241,.15);
+  color:#312e81;
+}
+[data-theme="light"] .contact-item{
+  background:rgba(255,255,255,.85);
+  border-color:rgba(148,163,184,.28);
+  color:#1e293b;
+  box-shadow:0 6px 20px rgba(15,23,42,.06);
+}
+[data-theme="light"] .contact-item:hover{
+  background:#fff;
+  color:#0f172a;
+  border-color:color-mix(in srgb,var(--item-glow,#4f46e5) 55%,transparent);
+  box-shadow:0 12px 32px rgba(15,23,42,.12),0 0 20px color-mix(in srgb,var(--item-glow,#4f46e5) 20%,transparent);
+}
+[data-theme="light"] .contact-item__label{
+  color:#64748b;
+}
+[data-theme="light"] .contact-item__icon{
+  background:rgba(241,245,249,.9);
+  border-color:rgba(148,163,184,.25);
+}
+[data-theme="light"] .contact-footer__bottom{
+  border-top-color:rgba(148,163,184,.2);
+}
+[data-theme="light"] .contact-footer__copyright{
+  color:#64748b;
+}
+[data-theme="light"] .contact-footer__back-top{
+  background:rgba(99,102,241,.08);
+  border-color:rgba(99,102,241,.25);
+  color:#4f46e5;
+}
+[data-theme="light"] .contact-footer__back-top:hover{
+  background:rgba(99,102,241,.18);
+  color:#312e81;
+}
