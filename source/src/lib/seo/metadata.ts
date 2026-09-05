@@ -1,11 +1,12 @@
 import { Metadata } from 'next';
 
 export const siteConfig = {
-  name: 'AI Era',
-  description: 'AI Era (AI Era Solution) cung cấp các giải pháp AI, Fintech, AI Automation, AI Agent và Digital Marketing toàn diện cho doanh nghiệp Việt Nam.',
+  name: 'AIERA Solutions',
+  description: 'AIERA (AI Era Solutions) cung cấp các giải pháp AI, Fintech, AI Automation, AI Agent, AI SEO và Digital Marketing toàn diện cho doanh nghiệp Việt Nam tại aiera.vn.',
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiera.vn',
   ogImage: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiera.vn'}/og-image.jpg`,
-  creator: 'AI Era',
+  creator: 'AIERA Solutions',
+  keywords: ['aiera', 'aiera solutions', 'ai era', 'ai era solutions', 'aiera vn', 'aiera.vn'],
 };
 
 export const generateMetadata = ({
