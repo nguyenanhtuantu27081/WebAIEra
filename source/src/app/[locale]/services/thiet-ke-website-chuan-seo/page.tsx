@@ -121,7 +121,9 @@ export default function SeoWebDesignPage({ params: { locale } }: { params: { loc
         </div>
 
         <div className="mb-16">
-          <h2 className="text-2xl font-bold mb-6">Dự án tiêu biểu</h2>
+          <h2 className="text-2xl font-bold mb-6">
+            {locale === 'vi' ? 'Dự án tiêu biểu' : 'Featured Projects'}
+          </h2>
           <GlassCard>
             <h3 className="text-lg font-semibold mb-3">
               <a
@@ -134,16 +136,33 @@ export default function SeoWebDesignPage({ params: { locale } }: { params: { loc
               </a>
             </h3>
             <p className="text-sm text-muted leading-relaxed">
-              AI Era thiết kế và triển khai website chuẩn SEO cho{' '}
-              <a
-                href="https://arabeautycenter.com/"
-                target="_blank"
-                rel="noopener"
-                className="text-indigo hover:text-indigo-2 transition-colors"
-              >
-                ARA Beauty Center
-              </a>
-              , tối ưu kiến trúc thông tin, tốc độ tải và cấu trúc heading/schema chuẩn SEO cho ngành làm đẹp — spa & thẩm mỹ.
+              {locale === 'vi' ? (
+                <>
+                  AI Era thiết kế và triển khai website chuẩn SEO cho{' '}
+                  <a
+                    href="https://arabeautycenter.com/"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-indigo hover:text-indigo-2 transition-colors"
+                  >
+                    ARA Beauty Center
+                  </a>
+                  , tối ưu kiến trúc thông tin, tốc độ tải và cấu trúc heading/schema chuẩn SEO cho ngành làm đẹp — spa & thẩm mỹ.
+                </>
+              ) : (
+                <>
+                  AI Era designed and deployed an SEO-standard website for{' '}
+                  <a
+                    href="https://arabeautycenter.com/"
+                    target="_blank"
+                    rel="noopener"
+                    className="text-indigo hover:text-indigo-2 transition-colors"
+                  >
+                    ARA Beauty Center
+                  </a>
+                  , optimizing information architecture, load speed, and SEO-compliant heading/schema structures tailored for the beauty, spa & aesthetics industry.
+                </>
+              )}
             </p>
           </GlassCard>
         </div>
