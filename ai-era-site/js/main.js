@@ -20,10 +20,30 @@ initContactBtn3D();
 initCursor(() => pointer);
 applyQualityEffects();
 
-// Animation loop
+// Animation loop & pause state (Checklist F.7)
 const clock = new THREE.Clock();
+let isVisible = document.visibilityState === 'visible';
+let isIntersecting = true;
+
+document.addEventListener('visibilitychange', () => {
+  isVisible = document.visibilityState === 'visible';
+});
+
+// Pause render loop when canvas/hero scrolls out of view
+const canvasEl = renderer.domElement;
+if ('IntersectionObserver' in window && canvasEl) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      isIntersecting = entry.isIntersecting;
+    });
+  }, { threshold: 0.05 });
+  observer.observe(canvasEl);
+}
 
 function animate() {
+  // F.7: Skip calculations & render when tab hidden or scrolled out of view
+  if (!isVisible || !isIntersecting) return;
+
   const t = clock.getElapsedTime();
 
   // Core animations (rotation, sparks, halo)
@@ -48,7 +68,7 @@ function animate() {
   composer.render();
 }
 
-// Start rendering loop via requestAnimationFrame
+// Start rendering loop via requestAnimationFrame / requestIdleCallback
 if ('requestIdleCallback' in window) {
   requestIdleCallback(() => {
     renderer.setAnimationLoop(animate);

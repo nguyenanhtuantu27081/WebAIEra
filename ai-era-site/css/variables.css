@@ -31,15 +31,27 @@
   --font-mono:"JetBrains Mono",monospace;
 }
 
+:root[data-theme="light"],
 [data-theme="light"]{
-  --bg:#f8fafc;
-  --surface:rgba(0,0,0,.03);
-  --surface-2:rgba(255,255,255,.82);
-  --border:rgba(0,0,0,.1);
-  --text:#0f172a;
-  --muted:#64748b;
-  --indigo:#4f46e5;
-  --indigo-2:#6366f1;
-  --cyan:#0284c7;
-  --purple:#7c3aed;
+  /* Nền */
+  --bg: #F6F7FB;
+  --surface: #FFFFFF;
+  --surface-2: #FFFFFF;
+  --border: #E7E9F2;
+
+  /* Chữ */
+  --text: #161832;        /* navy đậm — dùng cho heading, không dùng đen thuần */
+  --text-muted: #666B85;  /* xám ánh navy — dùng cho mô tả, label phụ */
+  --muted: #666B85;
+
+  /* Accent */
+  --accent: #3D4FE0;      /* xanh điện — chấm bullet, số liệu, icon nhấn */
+  --accent2: #8B5CF6;     /* tím — node, orbit, gradient heading */
+  --indigo: #3D4FE0;
+  --indigo-2: #8B5CF6;
+  --cyan: #0284c7;
+  --purple: #8B5CF6;
+
+  /* Gradient dùng cho heading/logo chữ */
+  --gradient-text: linear-gradient(150deg, #1B1D3D 0%, #2A2B57 45%, #4C3E8F 100%);
 }

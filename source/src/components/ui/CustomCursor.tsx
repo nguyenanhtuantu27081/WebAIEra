@@ -13,15 +13,15 @@ export default function CustomCursor() {
     if (!isFinePointer || reduceMotion) return;
 
     const handleMove = (e: MouseEvent) => {
-      gsap.to(dotRef.current, { x: e.clientX, y: e.clientY, duration: 0.05 });
-      gsap.to(outlineRef.current, { x: e.clientX, y: e.clientY, duration: 0.35, ease: 'power2.out' });
+      gsap.to(dotRef.current, { x: e.clientX, y: e.clientY, duration: 0.05, force3D: true });
+      gsap.to(outlineRef.current, { x: e.clientX, y: e.clientY, duration: 0.35, ease: 'power2.out', force3D: true });
     };
 
     const interactiveEls = document.querySelectorAll('a, button, .glass-tilt');
     const onEnter = () =>
-      gsap.to(outlineRef.current, { scale: 1.6, borderColor: 'rgba(129,140,248,0.6)', duration: 0.2 });
+      gsap.to(outlineRef.current, { scale: 1.6, borderColor: 'rgba(129,140,248,0.6)', duration: 0.2, force3D: true });
     const onLeave = () =>
-      gsap.to(outlineRef.current, { scale: 1, borderColor: 'rgba(255,255,255,0.4)', duration: 0.2 });
+      gsap.to(outlineRef.current, { scale: 1, borderColor: 'rgba(255,255,255,0.4)', duration: 0.2, force3D: true });
 
     window.addEventListener('mousemove', handleMove);
     interactiveEls.forEach((el) => {

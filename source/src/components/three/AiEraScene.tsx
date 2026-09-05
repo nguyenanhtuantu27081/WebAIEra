@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo, useState, forwardRef, useImperativeHandle } from 'react';
+import { useRef, useEffect, useMemo, useState, forwardRef, useImperativeHandle } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import AiEraCore from './AiEraCore';
@@ -34,9 +34,20 @@ function World({ cameraControllerRef, selected, setSelected, tier }: {
   const draggingRef = useRef(false);
   const rotRef = useRef({ x: 0, y: 0, z: 0 });
   const targetRotRef = useRef({ x: 0, y: 0, z: 0 });
+  const isVisibleRef = useRef(true);
+
+  // F.7: Pause render loop when tab is hidden
+  useEffect(() => {
+    const handleVisibility = () => {
+      isVisibleRef.current = document.visibilityState === 'visible';
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
+  }, []);
 
   useFrame(() => {
-    const t = performance.now() * 0.001;
+    // Skip all computation when tab is not visible (F.7)
+    if (!isVisibleRef.current) return;
 
     if (!draggingRef.current && selected === null) {
       targetRotRef.current.y += pointerRef.current.x * 0.00012;
@@ -78,12 +89,13 @@ function World({ cameraControllerRef, selected, setSelected, tier }: {
 
   return (
     <group ref={groupRef}>
-      <AiEraCore />
+      <AiEraCore segments={preset.geometrySegments} frameSkip={preset.frameSkip} />
       {fieldData.map((data, i) => (
         <BusinessNode
           key={i}
           data={data}
           index={i}
+          tier={tier}
           onFocus={(idx) => cameraControllerRef.current?.focusNode(idx)}
         />
       ))}
@@ -97,11 +109,14 @@ function World({ cameraControllerRef, selected, setSelected, tier }: {
   );
 }
 
-const AiEraScene = forwardRef<AiEraSceneHandle, { onNodeFocus?: (name: string, desc: string, index: number) => void }>(
-  function AiEraScene({ onNodeFocus }, ref) {
+const AiEraScene = forwardRef<AiEraSceneHandle, {
+  onNodeFocus?: (name: string, desc: string, index: number) => void;
+  forcedTier?: QualityTier;
+}>(
+  function AiEraScene({ onNodeFocus, forcedTier }, ref) {
     const cameraControllerRef = useRef<CameraControllerHandle | null>(null);
     const [selected, setSelected] = useState<number | null>(null);
-    const [tier, setTier] = useState<QualityTier>(detectQualityTier());
+    const tier: QualityTier = forcedTier ?? detectQualityTier();
 
     useImperativeHandle(ref, () => ({
       resetView: () => cameraControllerRef.current?.resetView(),
@@ -113,12 +128,17 @@ const AiEraScene = forwardRef<AiEraSceneHandle, { onNodeFocus?: (name: string, d
     };
 
     const preset = QUALITY_PRESETS[tier];
+    const isMobileTier = tier === 'low' || tier === 'mobile-medium';
 
     return (
       <Canvas
         camera={{ position: [0, 0.2, 14.5], fov: 48, near: 0.1, far: 120 }}
         dpr={preset.dpr}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        gl={{
+          antialias: !isMobileTier,        // A.6: no antialias on mobile (high DPI already smooth)
+          alpha: true,
+          powerPreference: isMobileTier ? 'low-power' : 'default', // A.6 + F.6: 'low-power' for mobile
+        }}
         onCreated={({ camera }) => {
           (window as any).__aiEraCamera = camera;
         }}
@@ -127,7 +147,9 @@ const AiEraScene = forwardRef<AiEraSceneHandle, { onNodeFocus?: (name: string, d
         <fog attach="fog" args={['#030305', 10, 50]} />
         <ambientLight intensity={0.36} color="#30304c" />
         <pointLight position={[4, 4, 6]} intensity={28} distance={36} decay={2} color="#8b8cff" />
-        <pointLight position={[-4, -3, 3]} intensity={15} distance={30} decay={2} color="#67e8f9" />
+        {preset.lights >= 2 && (
+          <pointLight position={[-4, -3, 3]} intensity={15} distance={30} decay={2} color="#67e8f9" />
+        )}
         <World
           cameraControllerRef={cameraControllerRef}
           selected={selected}

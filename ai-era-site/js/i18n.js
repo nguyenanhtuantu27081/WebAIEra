@@ -11,8 +11,8 @@ const translations = {
     'core-sub': 'Core Intelligence',
 
     // Intro
-    'intro-badge': 'SPATIAL INTELLIGENCE ECOSYSTEM',
-    'intro-h1': 'Intelligence in motion.',
+    'intro-badge': 'NỀN TẢNG GIẢI PHÁP AI THẾ HỆ MỚI',
+    'intro-h1': 'Trí tuệ cho mọi quyết định kinh doanh.',
     'intro-p': 'Khám phá hệ sinh thái AI đa chiều — nơi tự động hóa, AI agents, marketing, phân tích định lượng, AI SEO và SaaS xoay quanh một lõi trí tuệ chung.',
 
     // HUD
@@ -42,7 +42,7 @@ const translations = {
     'footer-title': 'Kết nối ngay với AI Era',
     'footer-chat-now': 'Chat ngay',
     'footer-phone-label': 'Điện thoại',
-    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-subtitle': 'NEXT-GEN AI SOLUTIONS PLATFORM',
     'footer-back-top': '↑ TRỞ VỀ AI ERA core',
   },
   en: {
@@ -54,8 +54,8 @@ const translations = {
     'core-sub': 'Core Intelligence',
 
     // Intro
-    'intro-badge': 'SPATIAL INTELLIGENCE ECOSYSTEM',
-    'intro-h1': 'Intelligence in motion.',
+    'intro-badge': 'NEXT-GEN AI SOLUTIONS PLATFORM',
+    'intro-h1': 'Intelligence for Every Decision.',
     'intro-p': 'Explore the multidimensional AI ecosystem — where automation, AI agents, marketing, quantitative analysis, AI SEO and SaaS revolve around a shared intelligence core.',
 
     // HUD

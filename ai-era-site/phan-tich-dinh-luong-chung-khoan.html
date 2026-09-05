@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#030305" />
   <script>
     (function(){
-      try {
-        var t = localStorage.getItem('aiera_theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
-      } catch(e){}
+      document.documentElement.setAttribute('data-theme', 'dark');
+      try { localStorage.setItem('aiera_theme', 'dark'); } catch(e){}
     })();
   </script>
   <meta name="description" data-i18n="quant-meta-desc" content="AI Era — Phân tích định lượng chứng khoán Việt Nam: mô hình factor-based, machine learning, tín hiệu mua/bán và quản lý rủi ro." />
   <title data-i18n="quant-meta-title">Phân tích định lượng chứng khoán — AI Era</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="alternate icon" href="./favicon.svg">
+  <!-- Favicon / Icons (Google Search, Apple Touch, Android & Browsers) -->
+  <link rel="icon" href="./favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
+  <link rel="icon" type="image/png" sizes="48x48" href="./favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+  <link rel="manifest" href="./site.webmanifest">
+  <meta name="theme-color" content="#030305">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -24,7 +28,7 @@
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
   </noscript>
-  <link rel="stylesheet" href="./css/bundle.min.css">
+  <link rel="stylesheet" href="./css/bundle.min.css?v=dark">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -99,14 +103,7 @@
           <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
           <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
         </div>
-        <div class="theme-switch" id="themeSwitch">
-          <button class="theme-btn active" data-theme-val="dark" aria-label="Dark Mode" title="Chế độ tối / Dark Mode">
-            <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          </button>
-          <button class="theme-btn" data-theme-val="light" aria-label="Light Mode" title="Chế độ sáng / Light Mode">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-          </button>
-        </div>
+        <!-- Theme Switch Hidden (Default Dark Mode) -->
       </div>
     </div>
 
@@ -145,7 +142,7 @@
 
     <h2 data-i18n="quant-h2-4">Liên hệ tư vấn</h2>
     <p data-i18n="quant-p6">Bạn muốn biết thêm về dịch vụ phân tích định lượng và tín hiệu chứng khoán Việt Nam? Liên hệ với AI Era để nhận tư vấn chi tiết về gói dịch vụ phù hợp với chiến lược đầu tư của bạn.</p>
-    <p><em data-i18n="quant-quote">AI Era — Intelligence in motion. Đưa dữ liệu vào từng quyết định đầu tư.</em></p>
+    <p><em data-i18n="quant-quote">AI Era — Trí tuệ cho mọi quyết định kinh doanh. Đưa dữ liệu vào từng quyết định đầu tư.</em></p>
   </article>
 
   <!-- Contact Footer -->

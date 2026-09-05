@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background glow -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#030305" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Main Ribbon 3D Purple/Violet Gradient -->
+    <linearGradient id="purpleRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d946ef" />
+      <stop offset="30%" stop-color="#a855f7" />
+      <stop offset="70%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <!-- Dark metallic undertone for 3D depth -->
+    <linearGradient id="darkShade" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#3b0764" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#4c1d95" />
+    </linearGradient>
+
+    <!-- Highlight Sheen -->
+    <linearGradient id="sheen" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="40%" stop-color="#f0abfc" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#818cf8" stop-opacity="0" />
+    </linearGradient>
+
+    <!-- Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <filter id="brainGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGlow)" />
+
+  <!-- INFINITY 3D RIBBON -->
+  <g filter="url(#neonGlow)">
+    <!-- Back Loop / Depth Shadow Layer -->
+    <path d="M 160 170 C 90 170 45 210 45 260 C 45 315 95 355 160 355 C 225 355 285 295 352 170 C 415 170 467 210 467 260 C 467 315 417 355 352 355 C 285 355 225 295 160 170 Z" 
+          fill="none" 
+          stroke="url(#darkShade)" 
+          stroke-width="52" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- Main Front 3D Ribbon Layer -->
+    <path d="M 160 170 C 90 170 45 210 45 260 C 45 315 95 355 160 355 C 225 355 285 295 352 170 C 415 170 467 210 467 260 C 467 315 417 355 352 355 C 285 355 225 295 160 170 Z" 
+          fill="none" 
+          stroke="url(#purpleRibbon)" 
+          stroke-width="40" 
+          stroke-linecap="round" 
+          stroke-linejoin="round" />
+
+    <!-- 3D Bevel & Light Reflection Ridge -->
+    <path d="M 160 182 C 100 182 60 215 60 256 C 60 300 100 338 158 338 C 215 338 272 285 345 182 C 405 182 450 215 450 256 C 450 300 410 338 350 338 C 290 338 230 285 160 182 Z" 
+          fill="none" 
+          stroke="url(#sheen)" 
+          stroke-width="8" 
+          stroke-linecap="round" 
+          opacity="0.85" />
+  </g>
+
+  <!-- AI TECH CONSTELLATION & BRAIN INSIDE LEFT LOOP -->
+  <g transform="translate(155, 258) scale(0.95)" filter="url(#brainGlow)">
+    <!-- Neural Network Node Points -->
+    <!-- Constellation outer dome -->
+    <path d="M -55 -40 A 65 65 0 0 1 50 -35" fill="none" stroke="#c084fc" stroke-width="2.5" stroke-dasharray="3,5" opacity="0.6"/>
+    <path d="M -68 -15 A 70 70 0 0 1 58 -10" fill="none" stroke="#e879f9" stroke-width="2" opacity="0.5"/>
+
+    <!-- Neural lines -->
+    <g stroke="#e879f9" stroke-width="1.8" opacity="0.75">
+      <line x1="-35" y1="-50" x2="-15" y2="-65" />
+      <line x1="-15" y1="-65" x2="15" y2="-68" />
+      <line x1="15" y1="-68" x2="42" y2="-52" />
+      <line x1="42" y1="-52" x2="58" y2="-25" />
+      
+      <line x1="-35" y1="-50" x2="-25" y2="-25" />
+      <line x1="-15" y1="-65" x2="0" y2="-30" />
+      <line x1="15" y1="-68" x2="22" y2="-28" />
+      <line x1="42" y1="-52" x2="25" y2="-15" />
+      
+      <line x1="-55" y1="-30" x2="-35" y2="-50" />
+      <line x1="-55" y1="-30" x2="-38" y2="-10" />
+      <line x1="-60" y1="0" x2="-38" y2="-10" />
+    </g>
+
+    <!-- Brain Icon Silhouette (Digital Circuit Style) -->
+    <!-- Left hemisphere -->
+    <path d="M -5 -25 C -15 -25 -25 -20 -25 -10 C -32 -10 -35 -2 -35 8 C -35 18 -28 25 -20 28 C -15 30 -10 32 -5 32 L -5 -25 Z" 
+          fill="#c084fc" fill-opacity="0.25" stroke="#f0abfc" stroke-width="3" stroke-linejoin="round" />
+    <!-- Right hemisphere -->
+    <path d="M 5 -25 C 15 -25 25 -20 25 -10 C 32 -10 35 -2 35 8 C 35 18 28 25 20 28 C 15 30 10 32 5 32 L 5 -25 Z" 
+          fill="#a855f7" fill-opacity="0.25" stroke="#c084fc" stroke-width="3" stroke-linejoin="round" />
+
+    <!-- Internal Brain Gyri / Circuits -->
+    <path d="M -5 -12 C -14 -12 -18 -5 -12 2 C -8 6 -15 15 -5 22 M -18 8 C -22 12 -20 20 -10 18" 
+          fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+    <path d="M 5 -12 C 14 -12 18 -5 12 2 C 8 6 15 15 5 22 M 18 8 C 22 12 20 20 10 18" 
+          fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" />
+
+    <!-- Network Glowing Dots -->
+    <circle cx="-35" cy="-50" r="4.5" fill="#ffffff" />
+    <circle cx="-15" cy="-65" r="5" fill="#f472b6" />
+    <circle cx="15" cy="-68" r="4" fill="#ffffff" />
+    <circle cx="42" cy="-52" r="5" fill="#67e8f9" />
+    <circle cx="58" cy="-25" r="4" fill="#e879f9" />
+    <circle cx="-55" cy="-30" r="4" fill="#a855f7" />
+    <circle cx="-60" cy="0" r="3.5" fill="#67e8f9" />
+
+    <circle cx="-25" cy="-25" r="3.5" fill="#ffffff" />
+    <circle cx="0" cy="-30" r="4" fill="#f472b6" />
+    <circle cx="22" cy="-28" r="3.5" fill="#ffffff" />
+  </g>
+
+  <!-- Sparkles / Starbursts -->
+  <!-- Main cross spark on center crossing -->
+  <g transform="translate(254, 260)">
+    <path d="M 0 -22 Q 0 0 22 0 Q 0 0 0 22 Q 0 0 -22 0 Q 0 0 0 -22 Z" fill="#ffffff" filter="url(#brainGlow)"/>
+    <circle cx="0" cy="0" r="4" fill="#ffffff" />
+  </g>
+
+  <!-- Small star on right loop edge -->
+  <g transform="translate(425, 195) scale(0.6)">
+    <path d="M 0 -18 Q 0 0 18 0 Q 0 0 0 18 Q 0 0 -18 0 Q 0 0 0 -18 Z" fill="#ffffff" />
+  </g>
+</svg>

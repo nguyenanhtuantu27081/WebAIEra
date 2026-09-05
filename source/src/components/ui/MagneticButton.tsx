@@ -22,12 +22,12 @@ export default function MagneticButton({
     const rect = wrapRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    gsap.to(btnRef.current, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: 'power2.out' });
+    gsap.to(btnRef.current, { x: x * 0.4, y: y * 0.4, duration: 0.3, ease: 'power2.out', force3D: true });
   };
 
   const handleMouseLeave = () => {
     if (!btnRef.current) return;
-    gsap.to(btnRef.current, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)' });
+    gsap.to(btnRef.current, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.3)', force3D: true });
   };
 
   const Tag: any = href ? 'a' : 'button';

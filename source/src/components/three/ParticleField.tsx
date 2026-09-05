@@ -11,7 +11,13 @@ export default function ParticleField({ tier = 'medium' }: { tier?: QualityTier 
 
   const preset = QUALITY_PRESETS[tier];
 
+  const frameCount = useRef(0);
+
   useFrame((state) => {
+    // F.5: Throttle particle updates — slow drift is imperceptible at lower fps
+    frameCount.current++;
+    if (preset.frameSkip > 0 && frameCount.current % (preset.frameSkip + 1) !== 0) return;
+
     const t = state.clock.elapsedTime;
     if (starsARef.current) {
       starsARef.current.rotation.y = t * 0.004;

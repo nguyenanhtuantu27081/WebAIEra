@@ -1,56 +1,33 @@
-'use client';
-
-import dynamic from 'next/dynamic';
+import { Metadata } from 'next';
+import { generateMetadata as buildMetadata, siteConfig } from '@/lib/seo/metadata';
 import Hero from '@/components/sections/Hero';
 import Ecosystem from '@/components/sections/Ecosystem';
 import Services from '@/components/sections/Services';
 import CTA from '@/components/sections/CTA';
+import HeroSceneSwitcher from '@/components/three/HeroSceneSwitcher';
 
-const AiEraScene = dynamic(() => import('@/components/three/AiEraScene'), {
-  ssr: false,
-  loading: () => <div className="fixed inset-0 z-0 bg-background" />,
-});
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  const isVi = locale === 'vi';
+  return buildMetadata({
+    title: isVi
+      ? 'AI Era — Giải pháp AI, Fintech & Phần mềm Doanh nghiệp'
+      : 'AI Era — Enterprise AI, Fintech & Software Solutions',
+    description: isVi
+      ? 'AI Era (AI Era Solution) cung cấp giải pháp AI Automation, AI Agent, Fintech, phân tích định lượng chứng khoán, thiết kế website SEO và phần mềm quản lý doanh nghiệp.'
+      : 'AI Era (AI Era Solution) delivers applied AI automation, intelligent agents, quantitative fintech, SEO web engineering, and vertical enterprise SaaS.',
+    path: '',
+    locale,
+  });
+}
 
-export default function HomePage() {
+export default function HomePage({ params: { locale } }: { params: { locale: string } }) {
   return (
     <>
-      <AiEraScene />
+      <HeroSceneSwitcher />
       <Hero />
       <Ecosystem />
       <Services />
       <CTA />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
-            name: 'AI Era',
-            url: 'https://ai-era.vn',
-            logo: 'https://ai-era.vn/logo.png',
-            description: 'AI Era cung cấp giải pháp AI Automation, AI Agent, Digital Marketing, Phân tích định lượng chứng khoán, Thiết kế website SEO và Phần mềm quản lý doanh nghiệp ngành.',
-            contactPoint: {
-              '@type': 'ContactPoint',
-              email: 'contact@ai-era.vn',
-              contactType: 'customer service',
-            },
-            sameAs: [],
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'WebSite',
-            name: 'AI Era',
-            url: 'https://ai-era.vn',
-            description: 'Hệ sinh thái AI cho doanh nghiệp Việt Nam — Automation, Agent, Marketing, Quantitative Equity, AI SEO và SaaS.',
-            inLanguage: 'vi-VN',
-          }),
-        }}
-      />
     </>
   );
 }

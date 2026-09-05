@@ -18,7 +18,7 @@ export default function CTA() {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">{t('title')}</h2>
           <p className="text-muted max-w-xl mx-auto mb-8">{t('subtitle')}</p>
           <a
-            href="mailto:contact@ai-era.vn"
+            href="mailto:contact@aiera.vn"
             className="inline-flex items-center px-8 py-4 rounded-full bg-white text-background font-semibold hover:bg-indigo-2 hover:text-background transition-colors"
           >
             {t('button')}

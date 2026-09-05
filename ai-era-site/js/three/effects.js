@@ -3,6 +3,7 @@ import { bloom } from './scene-setup.js';
 import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
 
 export function applyQualityEffects() {
+  if (!bloom) return;
   const tier = getQualityTier();
   const cfg = TIER_CONFIG[tier];
   bloom.strength = cfg.bloom;

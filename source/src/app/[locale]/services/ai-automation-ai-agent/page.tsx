@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
-import { generateMetadata as buildMetadata } from '@/lib/seo/metadata';
+import { generateMetadata as buildMetadata, siteConfig } from '@/lib/seo/metadata';
 import { serviceSchema, breadcrumbSchema } from '@/lib/seo/schema';
 import GlassCard from '@/components/ui/GlassCard';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 import CTA from '@/components/sections/CTA';
 import Link from 'next/link';
 
@@ -18,6 +19,10 @@ export default function AiAutomationPage({ params: { locale } }: { params: { loc
   return (
     <div className="relative z-10 pt-32 pb-24 px-6 md:px-10">
       <div className="max-w-4xl mx-auto">
+        <Breadcrumb items={[
+          { name: locale === "vi" ? "Trang chủ" : "Home", url: `/${locale}` },
+          { name: locale === "vi" ? "Dịch vụ" : "Services", url: `/${locale}/services` },
+        ]} />
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
           AI Automation & AI Agent
         </h1>
@@ -130,7 +135,7 @@ export default function AiAutomationPage({ params: { locale } }: { params: { loc
           __html: JSON.stringify(serviceSchema({
             name: 'AI Automation & AI Agent',
             description: 'Giải pháp AI Automation và triển khai AI Agent theo yêu cầu doanh nghiệp.',
-            url: `https://ai-era.vn/${locale}/services/ai-automation-ai-agent`,
+            url: `${siteConfig.url}/${locale}/services/ai-automation-ai-agent`,
           })),
         }}
       />
@@ -138,9 +143,9 @@ export default function AiAutomationPage({ params: { locale } }: { params: { loc
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbSchema([
-            { name: 'Home', url: `https://ai-era.vn/${locale}` },
-            { name: 'Services', url: `https://ai-era.vn/${locale}/services` },
-            { name: 'AI Automation & AI Agent', url: `https://ai-era.vn/${locale}/services/ai-automation-ai-agent` },
+            { name: 'Home', url: `${siteConfig.url}/${locale}` },
+            { name: 'Services', url: `${siteConfig.url}/${locale}/services` },
+            { name: 'AI Automation & AI Agent', url: `${siteConfig.url}/${locale}/services/ai-automation-ai-agent` },
           ])),
         }}
       />

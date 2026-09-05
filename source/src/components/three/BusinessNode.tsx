@@ -34,7 +34,13 @@ export default function BusinessNode({ data, index, onFocus, tier }: { data: typ
     );
   }, [index]);
 
+  const frameCount = useRef(0);
+
   useFrame((state) => {
+    // F.5: Throttle frame updates if tier has frameSkip
+    frameCount.current++;
+    if (preset.frameSkip > 0 && frameCount.current % (preset.frameSkip + 1) !== 0) return;
+
     const t = state.clock.elapsedTime;
     const phase = index * 1.21;
     if (groupRef.current) {

@@ -35,12 +35,13 @@ export default function GlassCard({
       duration: 0.3,
       ease: 'power2.out',
       transformPerspective: 1000,
+      force3D: true,
     });
   };
 
   const handleMouseLeave = () => {
     if (!tilt || !cardRef.current || prefersReducedMotion) return;
-    gsap.to(cardRef.current, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)' });
+    gsap.to(cardRef.current, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)', force3D: true });
   };
 
   return (

@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
-import { generateMetadata as buildMetadata } from '@/lib/seo/metadata';
+import { generateMetadata as buildMetadata, siteConfig } from '@/lib/seo/metadata';
 import { serviceSchema, breadcrumbSchema } from '@/lib/seo/schema';
 import GlassCard from '@/components/ui/GlassCard';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 import CTA from '@/components/sections/CTA';
 import Link from 'next/link';
 
@@ -18,6 +19,10 @@ export default function SeoWebDesignPage({ params: { locale } }: { params: { loc
   return (
     <div className="relative z-10 pt-32 pb-24 px-6 md:px-10">
       <div className="max-w-4xl mx-auto">
+        <Breadcrumb items={[
+          { name: locale === "vi" ? "Trang chủ" : "Home", url: `/${locale}` },
+          { name: locale === "vi" ? "Dịch vụ" : "Services", url: `/${locale}/services` },
+        ]} />
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
           Thiết kế website chuẩn SEO & AI SEO
         </h1>
@@ -116,6 +121,34 @@ export default function SeoWebDesignPage({ params: { locale } }: { params: { loc
         </div>
 
         <div className="mb-16">
+          <h2 className="text-2xl font-bold mb-6">Dự án tiêu biểu</h2>
+          <GlassCard>
+            <h3 className="text-lg font-semibold mb-3">
+              <a
+                href="https://arabeautycenter.com/"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo hover:text-indigo-2 transition-colors"
+              >
+                ARA Beauty Center
+              </a>
+            </h3>
+            <p className="text-sm text-muted leading-relaxed">
+              AI Era thiết kế và triển khai website chuẩn SEO cho{' '}
+              <a
+                href="https://arabeautycenter.com/"
+                target="_blank"
+                rel="noopener"
+                className="text-indigo hover:text-indigo-2 transition-colors"
+              >
+                ARA Beauty Center
+              </a>
+              , tối ưu kiến trúc thông tin, tốc độ tải và cấu trúc heading/schema chuẩn SEO cho ngành làm đẹp — spa & thẩm mỹ.
+            </p>
+          </GlassCard>
+        </div>
+
+        <div className="mb-16">
           <h2 className="text-2xl font-bold mb-6">Liên hệ tư vấn</h2>
           <p className="text-muted leading-relaxed mb-6">
             Bạn cần thiết kế website doanh nghiệp chuẩn SEO và AI SEO? Liên hệ AI Era để nhận báo giá và lộ trình phù hợp.
@@ -142,7 +175,7 @@ export default function SeoWebDesignPage({ params: { locale } }: { params: { loc
           __html: JSON.stringify(serviceSchema({
             name: 'Thiết kế website chuẩn SEO & AI SEO',
             description: 'Thiết kế website doanh nghiệp với kiến trúc semantic-first, tốc độ tối ưu và AI discovery.',
-            url: `https://ai-era.vn/${locale}/services/thiet-ke-website-chuan-seo`,
+            url: `${siteConfig.url}/${locale}/services/thiet-ke-website-chuan-seo`,
           })),
         }}
       />
@@ -150,9 +183,9 @@ export default function SeoWebDesignPage({ params: { locale } }: { params: { loc
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbSchema([
-            { name: 'Home', url: `https://ai-era.vn/${locale}` },
-            { name: 'Services', url: `https://ai-era.vn/${locale}/services` },
-            { name: 'Thiết kế website chuẩn SEO', url: `https://ai-era.vn/${locale}/services/thiet-ke-website-chuan-seo` },
+            { name: 'Home', url: `${siteConfig.url}/${locale}` },
+            { name: 'Services', url: `${siteConfig.url}/${locale}/services` },
+            { name: 'Thiết kế website chuẩn SEO', url: `${siteConfig.url}/${locale}/services/thiet-ke-website-chuan-seo` },
           ])),
         }}
       />

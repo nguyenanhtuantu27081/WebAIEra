@@ -29,7 +29,7 @@ export const starsA = makeStarLayer(cfg.particles, 42, .025, .58);
 export const starsB = makeStarLayer(Math.round(cfg.particles * .35), 55, .055, .28);
 
 // Subtle perspective grid rings
-const gridGroup = new THREE.Group();
+export const gridGroup = new THREE.Group();
 scene.add(gridGroup);
 for (let z = -36; z < 8; z += 4) {
   const r = new THREE.Mesh(

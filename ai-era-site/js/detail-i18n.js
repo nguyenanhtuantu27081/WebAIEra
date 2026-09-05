@@ -30,7 +30,7 @@ export const detailTranslations = {
     'auto-li-4': '<strong>Dữ liệu tập trung:</strong> Tất cả thao tác đều có log, dễ theo dõi, đối chiếu và tối ưu liên tục.',
     'auto-h2-4': 'Liên hệ tư vấn',
     'auto-p8': 'Bạn đang tìm giải pháp tự động hóa quy trình hoặc triển khai AI Agent cho doanh nghiệp? Liên hệ với AI Era để được đánh giá nhu cầu và đề xuất giải pháp phù hợp.',
-    'auto-quote': 'AI Era — Intelligence in motion. Biến quy trình thủ công thành hệ thống tự học, tự chạy.',
+    'auto-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Biến quy trình thủ công thành hệ thống tự học, tự chạy.',
 
     // 2. digital-marketing-ai-content
     'mkt-meta-desc': 'AI Era — Digital Marketing & AI Content đa nền tảng: quảng cáo Meta, TikTok, Google Maps, tự động hoá nội dung bằng AI.',
@@ -60,7 +60,7 @@ export const detailTranslations = {
     'mkt-li-4': '<strong>Báo cáo minh bạch:</strong> Theo dõi chi tiêu, hiệu quả và đề xuất điều chỉnh rõ ràng từng kênh.',
     'mkt-h2-4': 'Liên hệ tư vấn',
     'mkt-p9': 'Bạn cần triển khai digital marketing và tự động hóa nội dung cho doanh nghiệp? Liên hệ AI Era để nhận đề xuất chiến lược phù hợp.',
-    'mkt-quote': 'AI Era — Intelligence in motion. Đưa thương hiệu đến đúng khách hàng, đúng thời điểm, đúng kênh.',
+    'mkt-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Đưa thương hiệu đến đúng khách hàng, đúng thời điểm, đúng kênh.',
 
     // 3. landing-page-hosting
     'land-meta-desc': 'AI Era — Thiết kế Landing Page chuyển đổi cao kèm miễn phí Hosting, triển khai chiến dịch nhanh chóng.',
@@ -90,7 +90,7 @@ export const detailTranslations = {
     'land-li-4': 'Hướng đến một đối tượng khách hàng cụ thể (targeted audience)',
     'land-h2-4': 'Liên hệ tư vấn',
     'land-p9': 'Bạn cần thiết kế landing page chuyên nghiệp và tìm hosting phù hợp? Liên hệ AI Era để nhận đề xuất thiết kế và triển khai nhanh chóng.',
-    'land-quote': 'AI Era — Intelligence in motion. Một trang, một mục tiêu, một chiến dịch thành công.',
+    'land-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Một trang, một mục tiêu, một chiến dịch thành công.',
 
     // 4. phan-mem-quan-ly-doanh-nghiep
     'pm-meta-desc': 'AI Era — Phần mềm quản lý doanh nghiệp ngành: Spa, Nail, Thẩm mỹ viện, Nha khoa, Phòng khám, Gym.',
@@ -140,7 +140,7 @@ export const detailTranslations = {
     'pm-li-4': '<strong>Triển khai nhanh:</strong> Đội ngũ AI Era hỗ trợ cấu hình, đào tạo và vận hành, giảm thời gian áp dụng.',
     'pm-h2-8': 'Liên hệ tư vấn',
     'pm-p2': 'Bạn muốn ứng dụng phần mềm quản lý chuyên ngành cho doanh nghiệp? Liên hệ AI Era để nhận tư vấn và demo sản phẩm phù hợp.',
-    'pm-quote': 'AI Era — Intelligence in motion. Phần mềm không chỉ quản lý, mà còn giúp doanh nghiệp tăng trưởng.',
+    'pm-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Phần mềm không chỉ quản lý, mà còn giúp doanh nghiệp tăng trưởng.',
 
     // 5. phan-tich-dinh-luong-chung-khoan
     'quant-meta-desc': 'AI Era — Phân tích định lượng chứng khoán Việt Nam: mô hình factor-based, machine learning, tín hiệu mua/bán và quản lý rủi ro.',
@@ -168,7 +168,7 @@ export const detailTranslations = {
     'quant-li-8': '<strong>Cập nhật liên tục:</strong> Hệ thống theo dõi và tinh chỉnh mô hình theo biến động thị trường.',
     'quant-h2-4': 'Liên hệ tư vấn',
     'quant-p6': 'Bạn muốn biết thêm về dịch vụ phân tích định lượng và tín hiệu chứng khoán Việt Nam? Liên hệ với AI Era để nhận tư vấn chi tiết về gói dịch vụ phù hợp với chiến lược đầu tư của bạn.',
-    'quant-quote': 'AI Era — Intelligence in motion. Đưa dữ liệu vào từng quyết định đầu tư.',
+    'quant-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Đưa dữ liệu vào từng quyết định đầu tư.',
 
     // 6. thiet-ke-website-chuan-seo
     'seo-meta-desc': 'AI Era — Thiết kế website doanh nghiệp chuẩn SEO & AI SEO: kiến trúc semantic, tốc độ cao, tối ưu AI discovery.',
@@ -199,14 +199,14 @@ export const detailTranslations = {
     'seo-li-5': '<strong>Bảo trì & cải tiến:</strong> Theo dõi hiệu suất, cập nhật nội dung và tối ưu liên tục.',
     'seo-h2-4': 'Liên hệ tư vấn',
     'seo-p9': 'Bạn cần thiết kế website doanh nghiệp chuẩn SEO và AI SEO? Liên hệ AI Era để nhận báo giá và lộ trình phù hợp.',
-    'seo-quote': 'AI Era — Intelligence in motion. Website không chỉ đẹp, mà còn được tìm thấy đúng người.',
+    'seo-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Website không chỉ đẹp, mà còn được tìm thấy đúng người.',
 
     // Contact footer
     'footer-kicker': 'LIÊN HỆ VỚI CHÚNG TÔI',
     'footer-title': 'Kết nối ngay với AI Era',
     'footer-chat-now': 'Chat ngay',
     'footer-phone-label': 'Điện thoại',
-    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-subtitle': 'NEXT-GEN AI SOLUTIONS PLATFORM',
     'footer-back-top': '↑ VỀ ĐẦU TRANG'
   },
   en: {
@@ -237,7 +237,7 @@ export const detailTranslations = {
     'auto-li-4': '<strong>Centralized Auditability:</strong> Every action is logged, easy to track, reconcile, and continuously optimize.',
     'auto-h2-4': 'Contact for Consultation',
     'auto-p8': 'Looking for workflow automation or custom AI Agent deployment for your business? Contact AI Era for an assessment and tailored solution proposal.',
-    'auto-quote': 'AI Era — Intelligence in motion. Transforming manual workflows into self-learning, self-running systems.',
+    'auto-quote': 'AI Era — Intelligence for Every Decision. Transforming manual workflows into self-learning, self-running systems.',
 
     // 2. digital-marketing-ai-content
     'mkt-meta-desc': 'AI Era — Omnichannel Digital Marketing & AI Content: Meta, TikTok, Google Maps ads, automated multi-platform content with AI.',
@@ -267,7 +267,7 @@ export const detailTranslations = {
     'mkt-li-4': '<strong>Transparent Reporting:</strong> Clear metrics on spend, efficiency, and actionable recommendations per channel.',
     'mkt-h2-4': 'Contact for Consultation',
     'mkt-p9': 'Ready to accelerate digital marketing and automate content for your enterprise? Reach out to AI Era for an actionable strategic blueprint.',
-    'mkt-quote': 'AI Era — Intelligence in motion. Connecting brands to the right audience, at the right time, on the right channels.',
+    'mkt-quote': 'AI Era — Intelligence for Every Decision. Connecting brands to the right audience, at the right time, on the right channels.',
 
     // 3. landing-page-hosting
     'land-meta-desc': 'AI Era — High-converting Landing Page design with Free Hosting, rapid campaign deployment.',
@@ -297,7 +297,7 @@ export const detailTranslations = {
     'land-li-4': 'Targeting a distinct niche or persona with tailored messaging',
     'land-h2-4': 'Contact for Consultation',
     'land-p9': 'Need a bespoke landing page with complimentary hosting? Contact AI Era for design proposals and swift deployment.',
-    'land-quote': 'AI Era — Intelligence in motion. One page, one focus, one successful campaign.',
+    'land-quote': 'AI Era — Intelligence for Every Decision. One page, one focus, one successful campaign.',
 
     // 4. phan-mem-quan-ly-doanh-nghiep
     'pm-meta-desc': 'AI Era — Vertical business management software: Spa, Nail, Aesthetic Clinic, Dental, Medical Clinic, Gym.',
@@ -347,7 +347,7 @@ export const detailTranslations = {
     'pm-li-4': '<strong>Swift Onboarding:</strong> The AI Era team provides complete setup, onboarding, and continuous operational support.',
     'pm-h2-8': 'Contact for Consultation',
     'pm-p2': 'Interested in adopting specialized vertical software for your business? Connect with AI Era for personalized demos and consultations.',
-    'pm-quote': 'AI Era — Intelligence in motion. Software built not just to manage, but to empower business growth.',
+    'pm-quote': 'AI Era — Intelligence for Every Decision. Software built not just to manage, but to empower business growth.',
 
     // 5. phan-tich-dinh-luong-chung-khoan
     'quant-meta-desc': 'AI Era — Quantitative Stock Analysis in Vietnam: factor-based models, machine learning, buy/sell signals and risk management.',
@@ -375,7 +375,7 @@ export const detailTranslations = {
     'quant-li-8': '<strong>Continuous Calibration:</strong> Ongoing model refinement to stay ahead of evolving market regimes.',
     'quant-h2-4': 'Contact for Consultation',
     'quant-p6': 'Ready to explore quantitative intelligence for the Vietnamese stock market? Connect with AI Era for detailed advisory on investment strategies.',
-    'quant-quote': 'AI Era — Intelligence in motion. Grounding every investment decision in empirical data.',
+    'quant-quote': 'AI Era — Intelligence for Every Decision. Grounding every investment decision in empirical data.',
 
     // 6. thiet-ke-website-chuan-seo
     'seo-meta-desc': 'AI Era — SEO & AI SEO Enterprise Web Design: semantic architecture, blazing speed, optimized for AI discovery.',
@@ -406,14 +406,14 @@ export const detailTranslations = {
     'seo-li-5': '<strong>Maintenance & Evolution:</strong> Ongoing performance telemetry, content updates, and continuous optimization.',
     'seo-h2-4': 'Contact for Consultation',
     'seo-p9': 'Ready to build an SEO and AI-search optimized enterprise website? Contact AI Era for a customized quote and roadmap.',
-    'seo-quote': 'AI Era — Intelligence in motion. Websites crafted not only to look stunning, but to be discovered by the right audience.',
+    'seo-quote': 'AI Era — Intelligence for Every Decision. Websites crafted not only to look stunning, but to be discovered by the right audience.',
 
     // Contact footer
     'footer-kicker': 'GET IN TOUCH',
     'footer-title': 'Connect with AI Era',
     'footer-chat-now': 'Chat now',
     'footer-phone-label': 'Phone',
-    'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
+    'footer-subtitle': 'NEXT-GEN AI SOLUTIONS PLATFORM',
     'footer-back-top': '↑ BACK TO TOP'
   }
 };
@@ -456,21 +456,16 @@ export function applyDetailLang(lang) {
 const THEME_KEY = 'aiera_theme';
 
 export function getDetailTheme() {
-  try { return localStorage.getItem(THEME_KEY) || 'dark'; } catch { return 'dark'; }
+  return 'dark';
 }
 
 export function setDetailTheme(theme) {
-  const isLight = theme === 'light';
-  document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
-  document.querySelectorAll('.theme-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
-  });
-  try { localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark'); } catch {}
+  document.documentElement.setAttribute('data-theme', 'dark');
+  try { localStorage.setItem(THEME_KEY, 'dark'); } catch {}
 }
 
 export function initDetailPageI18n() {
   const currentLang = getCurrentLang();
-  const currentTheme = getDetailTheme();
 
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -480,13 +475,7 @@ export function initDetailPageI18n() {
     });
   });
 
-  document.querySelectorAll('.theme-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const targetTheme = btn.getAttribute('data-theme-val') || (getDetailTheme() === 'light' ? 'dark' : 'light');
-      setDetailTheme(targetTheme);
-    });
-  });
-
   applyDetailLang(currentLang);
-  setDetailTheme(currentTheme);
+  setDetailTheme('dark');
 }
+

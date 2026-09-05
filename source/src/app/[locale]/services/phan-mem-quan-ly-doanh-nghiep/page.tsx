@@ -1,7 +1,8 @@
 import { Metadata } from 'next';
-import { generateMetadata as buildMetadata } from '@/lib/seo/metadata';
+import { generateMetadata as buildMetadata, siteConfig } from '@/lib/seo/metadata';
 import { softwareApplicationSchema, breadcrumbSchema } from '@/lib/seo/schema';
 import GlassCard from '@/components/ui/GlassCard';
+import Breadcrumb from '@/components/ui/Breadcrumb';
 import CTA from '@/components/sections/CTA';
 import Link from 'next/link';
 
@@ -18,6 +19,10 @@ export default function EnterpriseSoftwarePage({ params: { locale } }: { params:
   return (
     <div className="relative z-10 pt-32 pb-24 px-6 md:px-10">
       <div className="max-w-4xl mx-auto">
+        <Breadcrumb items={[
+          { name: locale === "vi" ? "Trang chủ" : "Home", url: `/${locale}` },
+          { name: locale === "vi" ? "Dịch vụ" : "Services", url: `/${locale}/services` },
+        ]} />
         <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
           Phần mềm quản lý doanh nghiệp ngành
         </h1>
@@ -94,7 +99,7 @@ export default function EnterpriseSoftwarePage({ params: { locale } }: { params:
           __html: JSON.stringify(softwareApplicationSchema({
             name: 'Phần mềm quản lý doanh nghiệp ngành',
             description: 'Giải pháp phần mềm quản lý nghiệp vụ lõi cho Spa, Nail, Thẩm mỹ viện, Nha khoa, Phòng khám Đa khoa và Gym.',
-            url: `https://ai-era.vn/${locale}/services/phan-mem-quan-ly-doanh-nghiep`,
+            url: `${siteConfig.url}/${locale}/services/phan-mem-quan-ly-doanh-nghiep`,
           })),
         }}
       />
@@ -102,9 +107,9 @@ export default function EnterpriseSoftwarePage({ params: { locale } }: { params:
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbSchema([
-            { name: 'Home', url: `https://ai-era.vn/${locale}` },
-            { name: 'Services', url: `https://ai-era.vn/${locale}/services` },
-            { name: 'Phần mềm quản lý doanh nghiệp', url: `https://ai-era.vn/${locale}/services/phan-mem-quan-ly-doanh-nghiep` },
+            { name: 'Home', url: `${siteConfig.url}/${locale}` },
+            { name: 'Services', url: `${siteConfig.url}/${locale}/services` },
+            { name: 'Phần mềm quản lý doanh nghiệp', url: `${siteConfig.url}/${locale}/services/phan-mem-quan-ly-doanh-nghiep` },
           ])),
         }}
       />

@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 
 export const siteConfig = {
   name: 'AI Era',
-  description: 'AI Era cung cấp các giải pháp AI và digital marketing toàn diện cho doanh nghiệp Việt Nam.',
-  url: 'https://ai-era.vn',
-  ogImage: 'https://ai-era.vn/og-image.jpg',
+  description: 'AI Era (AI Era Solution) cung cấp các giải pháp AI, Fintech, AI Automation, AI Agent và Digital Marketing toàn diện cho doanh nghiệp Việt Nam.',
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiera.vn',
+  ogImage: `${process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiera.vn'}/og-image.jpg`,
   creator: 'AI Era',
 };
 
@@ -13,7 +13,7 @@ export const generateMetadata = ({
   description,
   path = '',
   ogImage,
-  locale = 'en',
+  locale = 'vi',
 }: {
   title: string;
   description: string;
@@ -25,6 +25,7 @@ export const generateMetadata = ({
   const image = ogImage || siteConfig.ogImage;
 
   return {
+    metadataBase: new URL(siteConfig.url),
     title,
     description,
     alternates: {

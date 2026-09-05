@@ -4,23 +4,26 @@ import { routing } from '@/lib/i18n/routing';
 export const dynamic = 'force-dynamic';
 
 export async function GET(): Promise<NextResponse> {
-  const baseUrl = 'https://ai-era.vn';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://aiera.vn';
   const pages = [
-    { url: '/', priority: 1.0, changefreq: 'daily' },
-    { url: '/services/phan-tich-dinh-luong-chung-khoan', priority: 0.8, changefreq: 'weekly' },
-    { url: '/services/ai-automation-ai-agent', priority: 0.8, changefreq: 'weekly' },
-    { url: '/services/thiet-ke-website-chuan-seo', priority: 0.8, changefreq: 'weekly' },
-    { url: '/services/landing-page-hosting', priority: 0.8, changefreq: 'weekly' },
-    { url: '/services/digital-marketing-ai-content', priority: 0.8, changefreq: 'weekly' },
-    { url: '/services/phan-mem-quan-ly-doanh-nghiep', priority: 0.8, changefreq: 'weekly' },
+    { url: '', priority: '1.0', changefreq: 'daily', lastmod: '2026-09-05' },
+    { url: '/services', priority: '0.9', changefreq: 'weekly', lastmod: '2026-09-05' },
+    { url: '/about', priority: '0.7', changefreq: 'monthly', lastmod: '2026-09-05' },
+    { url: '/contact', priority: '0.6', changefreq: 'monthly', lastmod: '2026-09-05' },
+    { url: '/services/phan-tich-dinh-luong-chung-khoan', priority: '0.8', changefreq: 'weekly', lastmod: '2026-09-05' },
+    { url: '/services/ai-automation-ai-agent', priority: '0.8', changefreq: 'weekly', lastmod: '2026-09-05' },
+    { url: '/services/thiet-ke-website-chuan-seo', priority: '0.8', changefreq: 'weekly', lastmod: '2026-09-05' },
+    { url: '/services/landing-page-hosting', priority: '0.8', changefreq: 'weekly', lastmod: '2026-09-05' },
+    { url: '/services/digital-marketing-ai-content', priority: '0.8', changefreq: 'weekly', lastmod: '2026-09-05' },
+    { url: '/services/phan-mem-quan-ly-doanh-nghiep', priority: '0.8', changefreq: 'weekly', lastmod: '2026-09-05' },
   ];
 
   const sitemap = pages
     .flatMap((page) =>
       routing.locales.map((locale) => ({
         url: `${baseUrl}/${locale}${page.url}`,
-        lastModified: new Date().toISOString(),
-        changeFrequency: page.changefreq as any,
+        lastModified: page.lastmod,
+        changeFrequency: page.changefreq,
         priority: page.priority,
         alternates: {
           languages: {

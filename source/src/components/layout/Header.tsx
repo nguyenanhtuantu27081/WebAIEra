@@ -28,7 +28,6 @@ export default function Header() {
 
       <div className="flex items-center gap-3">
         <LanguageSwitcher />
-        <ThemeToggle />
       </div>
     </header>
   );

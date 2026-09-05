@@ -70,6 +70,32 @@
   text-shadow:0 0 14px rgba(129,140,248,.8);
 }
 
+/* Light theme core label per light-mode-guide.md: gradient text, clean typography */
+[data-theme="light"] .core-label strong{
+  font-weight:700;
+  letter-spacing:-0.025em;
+  color: #161832;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 14px 28px rgba(139, 92, 246, 0.25));
+  animation:none;
+}
+
+[data-theme="light"] .core-label span{
+  color: var(--accent);
+  font-weight:700;
+  letter-spacing:.25em;
+  text-shadow:none;
+  background: var(--surface);
+  padding:3px 10px;
+  border-radius:var(--radius-pill);
+  display:inline-block;
+  border:1px solid var(--border);
+  box-shadow:0 8px 24px rgba(20, 20, 50, 0.06);
+}
+
 /* ----- Node Label Text ----- */
 .node-label small{
   color:#555562;

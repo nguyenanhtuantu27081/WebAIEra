@@ -7,6 +7,7 @@ import { ThemeProvider } from 'next-themes';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import CustomCursor from '@/components/ui/CustomCursor';
+import { organizationSchema, websiteSchema } from '@/lib/seo/schema';
 import '@/styles/globals.css';
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -46,9 +47,23 @@ export default async function LocaleLayout({
       suppressHydrationWarning
       className={`${plusJakarta.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteSchema),
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="dark" forcedTheme="dark" enableSystem={false}>
             <div className="relative min-h-screen flex flex-col">
               <CustomCursor />
               <Header />

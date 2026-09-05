@@ -46,7 +46,7 @@ export const coreWire = new THREE.LineSegments(
 coreGroup.add(coreWire);
 
 // Halo sprite
-const halo = new THREE.Sprite(new THREE.SpriteMaterial({
+export const halo = new THREE.Sprite(new THREE.SpriteMaterial({
   map: glowTex,
   color: 0x8b8cff,
   transparent: true,
@@ -58,6 +58,7 @@ halo.scale.set(6.7, 6.7, 1);
 coreGroup.add(halo);
 
 // Orbit rings (3)
+export const coreRings = [];
 [1.72, 2.08, 2.48].forEach((r, i) => {
   const torus = new THREE.Mesh(
     new THREE.TorusGeometry(r, .009 + i * .003, 8, 190),
@@ -70,6 +71,7 @@ coreGroup.add(halo);
   torus.rotation.set(.48 + i * .41, .22 + i * .62, .12 + i * .29);
   torus.userData.speed = (i % 2 ? -.0017 : .0021) * (i + 1);
   coreGroup.add(torus);
+  coreRings.push(torus);
 });
 
 // Neural sparks

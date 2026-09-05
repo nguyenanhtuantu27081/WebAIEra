@@ -4,15 +4,22 @@ import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-export default function AiEraCore() {
+export default function AiEraCore({ segments = 32, frameSkip = 0 }: { segments?: number; frameSkip?: number }) {
   const coreRef = useRef<THREE.Mesh>(null);
   const coreWireRef = useRef<THREE.LineSegments>(null);
   const haloRef = useRef<THREE.Sprite>(null);
   const torusRefs = useRef<THREE.Mesh[]>([]);
   const sparkRefs = useRef<THREE.Mesh[]>([]);
+  const frameCount = useRef(0);
+
+  // F.4: Reduce icosahedron subdivision based on segments prop
+  const coreSubdivision = segments > 16 ? 5 : segments > 10 ? 3 : 2;
+  const wireSubdivision = segments > 16 ? 2 : 1;
 
   useFrame((state) => {
     const t = state.clock.elapsedTime;
+
+    // Core rotation always runs (cheap, primary visual)
     if (coreRef.current) {
       coreRef.current.rotation.x = t * 0.09;
       coreRef.current.rotation.y = t * 0.14;
@@ -24,6 +31,11 @@ export default function AiEraCore() {
     if (haloRef.current) {
       haloRef.current.material.opacity = 0.53 + Math.sin(t * 2.05) * 0.09;
     }
+
+    // F.5: Throttle secondary animations (torus/spark) — skip frames on mobile
+    frameCount.current++;
+    if (frameSkip > 0 && frameCount.current % (frameSkip + 1) !== 0) return;
+
     torusRefs.current.forEach((torus, i) => {
       if (torus) {
         const speed = (i % 2 ? -0.0017 : 0.0021) * (i + 1);
@@ -53,10 +65,17 @@ export default function AiEraCore() {
     return new THREE.CanvasTexture(canvas);
   }, []);
 
+  // F.4: Reduce torus segments for mobile
+  const torusRadialSegments = segments > 16 ? 8 : 6;
+  const torusTubularSegments = segments > 16 ? 190 : segments > 10 ? 90 : 48;
+
+  // F.4: Reduce spark count for mobile
+  const sparkCount = segments > 16 ? 44 : segments > 10 ? 20 : 10;
+
   return (
     <group>
       <mesh ref={coreRef} castShadow>
-        <icosahedronGeometry args={[1.28, 5]} />
+        <icosahedronGeometry args={[1.28, coreSubdivision]} />
         <meshPhysicalMaterial
           color={0x11121e}
           metalness={0.7}
@@ -67,7 +86,7 @@ export default function AiEraCore() {
           emissiveIntensity={1.45}
         />
       </mesh>
-      <lineSegments ref={coreWireRef} geometry={new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.39, 2))}>
+      <lineSegments ref={coreWireRef} geometry={new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.39, wireSubdivision))}>
         <lineBasicMaterial color={0xa5b4fc} transparent opacity={0.19} />
       </lineSegments>
       <sprite ref={haloRef} scale={[6.7, 6.7, 1]}>
@@ -88,7 +107,7 @@ export default function AiEraCore() {
           }}
           rotation={[0.48 + i * 0.41, 0.22 + i * 0.62, 0.12 + i * 0.29]}
         >
-          <torusGeometry args={[r, 0.009 + i * 0.003, 8, 190]} />
+          <torusGeometry args={[r, 0.009 + i * 0.003, torusRadialSegments, torusTubularSegments]} />
           <meshBasicMaterial
             color={i === 1 ? 0x67e8f9 : 0x818cf8}
             transparent
@@ -96,7 +115,7 @@ export default function AiEraCore() {
           />
         </mesh>
       ))}
-      {Array.from({ length: 44 }).map((_, i) => {
+      {Array.from({ length: sparkCount }).map((_, i) => {
         const phi = Math.acos(2 * Math.random() - 1);
         const theta = Math.random() * Math.PI * 2;
         const radius = 1.55 + Math.random() * 1.17;
