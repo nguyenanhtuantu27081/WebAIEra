@@ -144,11 +144,11 @@ export const detailTranslations = {
     'pm-p2': 'Bạn muốn ứng dụng phần mềm quản lý chuyên ngành cho doanh nghiệp? Liên hệ AI Era để nhận tư vấn và demo sản phẩm phù hợp.',
     'pm-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Phần mềm không chỉ quản lý, mà còn giúp doanh nghiệp tăng trưởng.',
 
-    // 5. phan-tich-dinh-luong-chung-khoan
-    'quant-meta-desc': 'AI Era — Phân tích định lượng chứng khoán Việt Nam: mô hình factor-based, machine learning, tín hiệu mua/bán và quản lý rủi ro.',
-    'quant-meta-title': 'Phân tích định lượng chứng khoán — AI Era',
-    'quant-h1': 'Phân tích định lượng chứng khoán Việt Nam — Tín hiệu dữ liệu, Quyết định chính xác',
-    'quant-p1': 'AI Era cung cấp dịch vụ phân tích định lượng và đưa tín hiệu trên thị trường chứng khoán Việt Nam, kết hợp dữ liệu lịch sử, mô hình factor-based, machine learning và quản lý rủi ro để hỗ trợ nhà đầu tư ra quyết định có cơ sở khoa học.',
+    // 5. ai-quantitative-finance
+    'quant-meta-desc': 'AI Era — Công nghệ tài chính & Định lượng AI: mô hình factor-based, machine learning, tín hiệu mua/bán và quản lý rủi ro danh mục chuyên sâu.',
+    'quant-meta-title': 'Công nghệ tài chính & Định lượng AI — AI Era',
+    'quant-h1': 'Công nghệ tài chính & Định lượng AI — Tín hiệu dữ liệu, Quyết định chính xác',
+    'quant-p1': 'AI Era cung cấp giải pháp Công nghệ tài chính & Định lượng AI (Fintech & AI Quant Finance), kết hợp dữ liệu lịch sử, mô hình factor-based, machine learning và quản trị rủi ro để hỗ trợ nhà đầu tư ra quyết định có cơ sở khoa học.',
     'quant-h2-1': 'Dịch vụ chính',
     'quant-h3-1': 'Tín hiệu định lượng hàng ngày',
     'quant-p2': 'Hệ thống thu thập và xử lý dữ liệu thị trường, đưa ra tín hiệu mua/bán dựa trên mô hình định lượng được kiểm chứng trên dữ liệu lịch sử thị trường Việt Nam. Tín hiệu được cập nhật thường xuyên và kèm theo giải thích ngắn gọn về cơ sở đưa ra quyết định.',
@@ -173,9 +173,9 @@ export const detailTranslations = {
     'quant-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Đưa dữ liệu vào từng quyết định đầu tư.',
 
     // 6. thiet-ke-website-chuan-seo
-    'seo-meta-desc': 'AI Era — Thiết kế website doanh nghiệp chuẩn SEO & AI SEO: kiến trúc semantic, tốc độ cao, tối ưu AI discovery.',
-    'seo-meta-title': 'Thiết kế website chuẩn SEO & AI SEO — AI Era',
-    'seo-h1': 'Thiết kế website doanh nghiệp chuẩn SEO & AI SEO — Hiện diện bền vững trên Google và AI Search',
+    'seo-meta-desc': 'AI Era — Thiết kế website doanh nghiệp chuẩn SEO & AI Search / AI Overviews: kiến trúc semantic, tốc độ cao, tối ưu AI discovery.',
+    'seo-meta-title': 'Thiết kế website chuẩn SEO & AI Search / AI Overviews — AI Era',
+    'seo-h1': 'Thiết kế website doanh nghiệp chuẩn SEO & AI Search / AI Overviews — Hiện diện bền vững trên Google và AI Search',
     'seo-p1': 'AI Era thiết kế website doanh nghiệp với kiến trúc semantic-first, tốc độ tải tối ưu và tối ưu AI discovery, giúp doanh nghiệp không chỉ được tìm thấy trên Google mà còn xuất hiện trong AI Overviews, ChatGPT, Perplexity và các công cụ tìm kiếm AI.',
     'seo-h2-1': 'Thiết kế website chuẩn SEO',
     'seo-h3-1': 'Kiến trúc thông tin rõ ràng',
@@ -186,7 +186,7 @@ export const detailTranslations = {
     'seo-p4': 'Thiết kế responsive, điều hướng trực quan, form tối ưu chuyển đổi, đảm bảo trải nghiệm nhất quán trên desktop và mobile.',
     'seo-h3-4': 'Bảo mật & vận hành',
     'seo-p5': 'Cấu hình HTTPS, header bảo mật, sao lưu định kỳ và kế hoạch bảo trì để website hoạt động ổn định lâu dài.',
-    'seo-h2-2': 'AI SEO & AI discovery',
+    'seo-h2-2': 'AI Search / AI Overviews & AI discovery',
     'seo-h3-5': 'Tối ưu cho AI Overviews & AI Mode',
     'seo-p6': 'Tối ưu nội dung theo mô hình AI-first: trả lời trực tiếp câu hỏi người dùng, cấu trúc hóa dữ liệu, làm rõ entity và mối liên hệ giữa các khái niệm, giúp AI công cụ dễ dàng trích dẫn nguồn.',
     'seo-h3-6': 'Schema markup & structured data',
@@ -196,14 +196,68 @@ export const detailTranslations = {
     'seo-h2-3': 'Quy trình thiết kế website tại AI Era',
     'seo-li-1': '<strong>Nghiên cứu & chiến lược:</strong> Phân tích đối thủ, từ khóa mục tiêu và hành trình khách hàng.',
     'seo-li-2': '<strong>Thiết kế & xây dựng:</strong> Thiết kế UI/UX và phát triển website chuẩn SEO cơ bản.',
-    'seo-li-3': '<strong>Tối ưu nội dung & AI SEO:</strong> Viết nội dung theo E-E-A-T, tối ưu cấu trúc và schema.',
+    'seo-li-3': '<strong>Tối ưu nội dung & AI Search / AI Overviews:</strong> Viết nội dung theo E-E-A-T, tối ưu cấu trúc và schema.',
     'seo-li-4': '<strong>Kiểm tra & bàn giao:</strong> Kiểm tra kỹ thuật, tốc độ, SEO và AI discovery trước khi bàn giao.',
     'seo-li-5': '<strong>Bảo trì & cải tiến:</strong> Theo dõi hiệu suất, cập nhật nội dung và tối ưu liên tục.',
     'seo-h2-case': 'Dự án tiêu biểu',
     'seo-case-desc': 'AI Era thiết kế và triển khai website chuẩn SEO cho <a href="https://arabeautycenter.com/" target="_blank" rel="noopener" style="color:var(--indigo-2);">ARA Beauty Center</a>, tối ưu kiến trúc thông tin, tốc độ tải và cấu trúc heading/schema chuẩn SEO cho ngành làm đẹp — spa & thẩm mỹ.',
     'seo-h2-4': 'Liên hệ tư vấn',
-    'seo-p9': 'Bạn cần thiết kế website doanh nghiệp chuẩn SEO và AI SEO? Liên hệ AI Era để nhận báo giá và lộ trình phù hợp.',
+    'seo-p9': 'Bạn cần thiết kế website doanh nghiệp chuẩn SEO và AI Search / AI Overviews? Liên hệ AI Era để nhận báo giá và lộ trình phù hợp.',
     'seo-quote': 'AI Era — Trí tuệ cho mọi quyết định kinh doanh. Website không chỉ đẹp, mà còn được tìm thấy đúng người.',
+
+    // 7. services
+    'svc-meta-desc': 'AIERA Solutions — Toàn bộ dịch vụ: Fintech & Định lượng AI, AI Automation & AI Agent, Thiết kế website chuẩn SEO & AI Search, Landing Page & Hosting, Digital Marketing & Nội dung AI, Phần mềm quản lý doanh nghiệp ngành.',
+    'svc-meta-title': 'Dịch vụ — AIERA Solutions',
+    'svc-h1': 'Dịch vụ AI Era',
+    'svc-p1': 'AI Era cung cấp hệ sinh thái 6 nhóm dịch vụ xoay quanh 1 lõi trí tuệ chung: tài chính định lượng, tự động hoá & AI Agent, thiết kế web chuẩn SEO/AI Search, landing page & hosting, marketing số và phần mềm quản lý doanh nghiệp.',
+    'svc-card-1-title': 'Công nghệ tài chính & Định lượng AI',
+    'svc-card-1-desc': 'Mô hình định lượng, tín hiệu kỹ thuật và machine learning hỗ trợ nhà đầu tư trên thị trường chứng khoán Việt Nam.',
+    'svc-card-2-title': 'Tự động hóa AI & AI Agent',
+    'svc-card-2-desc': 'Tự động hoá quy trình nghiệp vụ và triển khai AI Agent xử lý khách hàng, dữ liệu và tác vụ đa bước.',
+    'svc-card-3-title': 'Thiết kế website chuẩn SEO & AI Search / AI Overviews',
+    'svc-card-3-desc': 'Kiến trúc semantic, tốc độ cao, tối ưu để xuất hiện trên Google lẫn AI Overviews/AI Search.',
+    'svc-card-4-title': 'Landing Page & Hosting',
+    'svc-card-4-desc': 'Thiết kế landing page chuyển đổi cao kèm gói hosting miễn phí, triển khai chiến dịch nhanh.',
+    'svc-card-5-title': 'Digital Marketing & Nội dung AI',
+    'svc-card-5-desc': 'Chạy quảng cáo Meta/TikTok/Google Maps, tự động hoá sản xuất nội dung bằng AI đa nền tảng.',
+    'svc-card-6-title': 'Phần mềm quản lý doanh nghiệp ngành',
+    'svc-card-6-desc': 'Giải pháp phần mềm quản lý nghiệp vụ lõi cho Spa, Nail, Nha khoa, Phòng khám, Gym.',
+
+    // 8. about
+    'about-meta-desc': 'AIERA Solutions (AI Era) — Công ty công nghệ AI tại Việt Nam, xây dựng hệ sinh thái giải pháp trí tuệ nhân tạo cho doanh nghiệp: Fintech, AI Automation, AI Search/SEO, phần mềm quản lý ngành.',
+    'about-meta-title': 'Giới thiệu — AIERA Solutions',
+    'about-h1': 'Giới thiệu AIERA Solutions',
+    'about-p1': 'AIERA Solutions (thường gọi AI Era, AIERA, ai era) là công ty công nghệ Việt Nam xây dựng hệ sinh thái giải pháp trí tuệ nhân tạo cho doanh nghiệp — từ tài chính định lượng, tự động hoá & AI Agent, đến thiết kế website chuẩn SEO/AI Search và phần mềm quản lý doanh nghiệp ngành.',
+    'about-h2-1': 'Sứ mệnh',
+    'about-p2': 'Đưa trí tuệ nhân tạo vào mọi quyết định kinh doanh — giúp doanh nghiệp Việt Nam tiếp cận công nghệ AI một cách thực tế, đo lường được hiệu quả, không chạy theo xu hướng.',
+    'about-h2-2': 'Lĩnh vực hoạt động',
+    'about-p3': 'AI Era hoạt động xoay quanh 6 nhóm dịch vụ chính: Công nghệ tài chính & Định lượng AI, Tự động hóa AI & AI Agent, Thiết kế website chuẩn SEO & AI Search, Landing Page & Hosting, Digital Marketing & Nội dung AI, và Phần mềm quản lý doanh nghiệp ngành. Xem chi tiết tại trang Dịch vụ.',
+    'about-h2-3': 'Liên hệ',
+    'about-p4': 'Bạn muốn tìm hiểu thêm về AI Era? Xem thông tin liên hệ tại trang Liên hệ hoặc dùng khung chat nhanh ở cuối trang.',
+
+    // 9. contact
+    'contact-meta-desc': 'Liên hệ AIERA Solutions — Zalo, Telegram, WhatsApp, Điện thoại (+84) 977 511 663, Email info@aiera.vn. Tư vấn giải pháp AI cho doanh nghiệp.',
+    'contact-meta-title': 'Liên hệ — AIERA Solutions',
+    'contact-h1': 'Liên hệ AI Era',
+    'contact-p1': 'Liên hệ AI Era qua các kênh dưới đây để được tư vấn giải pháp AI phù hợp với doanh nghiệp của bạn.',
+    'contact-p2': 'Hoặc dùng khung chat nhanh ở cuối trang này.',
+
+    // 10. privacy
+    'privacy-meta-desc': 'Chính sách bảo mật AIERA Solutions — cách thu thập, sử dụng và bảo vệ thông tin cá nhân của khách hàng.',
+    'privacy-meta-title': 'Chính sách bảo mật — AIERA Solutions',
+    'privacy-h1': 'Chính sách bảo mật',
+    'privacy-p1': 'AI Era cam kết bảo vệ thông tin cá nhân của khách hàng và đối tác. Chính sách này mô tả cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu.',
+    'privacy-h2-1': 'Thông tin thu thập',
+    'privacy-p2': 'AI Era có thể thu thập họ tên, số điện thoại, email và nội dung trao đổi khi bạn liên hệ qua Zalo, Telegram, form hoặc email — chỉ để phục vụ tư vấn và chăm sóc khách hàng.',
+    'privacy-h2-2': 'Mục đích sử dụng dữ liệu',
+    'privacy-p3': 'Dữ liệu được dùng để phản hồi yêu cầu tư vấn, cung cấp dịch vụ đã đăng ký, và không được bán hoặc chia sẻ cho bên thứ ba ngoài mục đích vận hành dịch vụ, trừ khi có yêu cầu của pháp luật.',
+    'privacy-h2-3': 'Liên hệ về quyền riêng tư',
+    'privacy-p4': 'Mọi thắc mắc về chính sách bảo mật, liên hệ qua info@aiera.vn.',
+
+    // Nav links
+    'nav-services': 'Dịch vụ',
+    'nav-about': 'Giới thiệu',
+    'nav-contact': 'Liên hệ',
 
     // Contact footer
     'footer-kicker': 'LIÊN HỆ VỚI CHÚNG TÔI',
@@ -355,11 +409,11 @@ export const detailTranslations = {
     'pm-p2': 'Interested in adopting specialized vertical software for your business? Connect with AI Era for personalized demos and consultations.',
     'pm-quote': 'AI Era — Intelligence for Every Decision. Software built not just to manage, but to empower business growth.',
 
-    // 5. phan-tich-dinh-luong-chung-khoan
-    'quant-meta-desc': 'AI Era — Quantitative Stock Analysis in Vietnam: factor-based models, machine learning, buy/sell signals and risk management.',
-    'quant-meta-title': 'Quantitative Stock Analysis — AI Era',
-    'quant-h1': 'Quantitative Stock Analysis for Vietnam — Data Signals, Precision Decisions',
-    'quant-p1': 'AI Era delivers quantitative analysis and signal intelligence tailored for the Vietnamese stock market, synthesizing historical data, factor-based modeling, machine learning, and disciplined risk management to empower scientific investing.',
+    // 5. ai-quantitative-finance
+    'quant-meta-desc': 'AI Era — Fintech & AI Quant Finance: factor-based models, machine learning, algorithmic signals and disciplined risk management.',
+    'quant-meta-title': 'Fintech & AI Quant Finance — AI Era',
+    'quant-h1': 'Fintech & AI Quant Finance — Data Signals, Precision Decisions',
+    'quant-p1': 'AI Era delivers Fintech & AI Quant Finance intelligence, synthesizing historical data, factor-based modeling, machine learning, and disciplined risk management to empower scientific investing.',
     'quant-h2-1': 'Core Services',
     'quant-h3-1': 'Daily Quantitative Signals',
     'quant-p2': 'Automated market data processing generating actionable buy/sell signals backtested on Vietnamese financial markets, delivered with clear technical rationales.',
@@ -384,8 +438,8 @@ export const detailTranslations = {
     'quant-quote': 'AI Era — Intelligence for Every Decision. Grounding every investment decision in empirical data.',
 
     // 6. thiet-ke-website-chuan-seo
-    'seo-meta-desc': 'AI Era — SEO & AI SEO Enterprise Web Design: semantic architecture, blazing speed, optimized for AI discovery.',
-    'seo-meta-title': 'SEO & AI SEO Web Design — AI Era',
+    'seo-meta-desc': 'AI Era — SEO & AI Search / AI Overviews Enterprise Web Design: semantic architecture, blazing speed, optimized for AI discovery.',
+    'seo-meta-title': 'SEO & AI Search / AI Overviews Web Design — AI Era',
     'seo-h1': 'Enterprise Web Design for SEO & AI Discovery — Enduring Visibility across Google and AI Search',
     'seo-p1': 'AI Era crafts enterprise websites with semantic-first architecture, high-performance optimization, and AI discovery readiness — ensuring your brand ranks not just on Google, but thrives in AI Overviews, ChatGPT, Perplexity, and emerging AI search engines.',
     'seo-h2-1': 'SEO-Optimized Web Architecture',
@@ -397,7 +451,7 @@ export const detailTranslations = {
     'seo-p4': 'Fully responsive layouts, effortless navigation, and conversion-focused touchpoints guaranteeing flawless consistency across desktop and mobile.',
     'seo-h3-4': 'Security & Ongoing Reliability',
     'seo-p5': 'Hardened HTTPS, secure response headers, scheduled backups, and proactive maintenance frameworks for uninterrupted operational longevity.',
-    'seo-h2-2': 'AI SEO & AI Discovery Engine',
+    'seo-h2-2': 'AI Search / AI Overviews & AI Discovery Engine',
     'seo-h3-5': 'Optimized for AI Overviews & Generative Search',
     'seo-p6': 'Content formatted for AI engines: direct answers, clear entity definitions, and interconnected knowledge graphs making it effortless for AI agents to cite your brand as an authoritative source.',
     'seo-h3-6': 'Rich Schema Markup & Structured Data',
@@ -407,7 +461,7 @@ export const detailTranslations = {
     'seo-h2-3': 'Our Web Development Process',
     'seo-li-1': '<strong>Research & Strategy:</strong> Competitor analysis, keyword intent discovery, and user journey mapping.',
     'seo-li-2': '<strong>Design & Development:</strong> High-end UI/UX design and semantic development adhering to technical SEO standards.',
-    'seo-li-3': '<strong>Content & AI SEO:</strong> E-E-A-T-aligned copywriting, structured schema, and entity optimization.',
+    'seo-li-3': '<strong>Content & AI Search / AI Overviews:</strong> E-E-A-T-aligned copywriting, structured schema, and entity optimization.',
     'seo-li-4': '<strong>Quality Assurance:</strong> Rigorous technical audits for performance, mobile readiness, and AI discovery prior to launch.',
     'seo-li-5': '<strong>Maintenance & Evolution:</strong> Ongoing performance telemetry, content updates, and continuous optimization.',
     'seo-h2-case': 'Featured Projects',
@@ -415,6 +469,60 @@ export const detailTranslations = {
     'seo-h2-4': 'Contact for Consultation',
     'seo-p9': 'Ready to build an SEO and AI-search optimized enterprise website? Contact AI Era for a customized quote and roadmap.',
     'seo-quote': 'AI Era — Intelligence for Every Decision. Websites crafted not only to look stunning, but to be discovered by the right audience.',
+
+    // 7. services
+    'svc-meta-desc': 'AIERA Solutions — Full service range: Fintech & AI Quant Finance, AI Automation & AI Agent, SEO-First Web Design & AI Search, Landing Page & Hosting, Digital Marketing & AI Content, Enterprise Industry Software.',
+    'svc-meta-title': 'Services — AIERA Solutions',
+    'svc-h1': 'AI Era Services',
+    'svc-p1': 'AI Era offers a connected ecosystem of 6 service lines built on one shared AI core: quantitative finance, automation & AI Agents, SEO/AI Search web design, landing pages & hosting, digital marketing, and enterprise management software.',
+    'svc-card-1-title': 'Fintech & AI Quant Finance',
+    'svc-card-1-desc': 'Quantitative models, technical signals and machine learning supporting investors in the Vietnam stock market.',
+    'svc-card-2-title': 'AI Automation & AI Agent',
+    'svc-card-2-desc': 'Business process automation and AI Agent deployment for customer handling, data and multi-step tasks.',
+    'svc-card-3-title': 'SEO-First Web Design & AI Search / AI Overviews',
+    'svc-card-3-desc': 'Semantic, high-speed architecture optimized to appear on Google and AI Overviews/AI Search.',
+    'svc-card-4-title': 'Landing Page & Hosting',
+    'svc-card-4-desc': 'High-conversion landing page design with free hosting, fast campaign rollout.',
+    'svc-card-5-title': 'Digital Marketing & AI Content',
+    'svc-card-5-desc': 'Meta/TikTok/Google Maps ads management and AI-driven content automation across platforms.',
+    'svc-card-6-title': 'Enterprise Industry Software',
+    'svc-card-6-desc': 'Core management software solutions for Spas, Nail Salons, Dental Clinics, Medical Clinics and Gyms.',
+
+    // 8. about
+    'about-meta-desc': 'AIERA Solutions (AI Era) — a Vietnamese AI technology company building an intelligent ecosystem for businesses: Fintech, AI Automation, AI Search/SEO, industry management software.',
+    'about-meta-title': 'About — AIERA Solutions',
+    'about-h1': 'About AIERA Solutions',
+    'about-p1': 'AIERA Solutions (also known as AI Era, AIERA, ai era) is a Vietnamese technology company building an AI solutions ecosystem for businesses — from quantitative finance and AI Automation & Agents to SEO/AI Search web design and enterprise management software.',
+    'about-h2-1': 'Mission',
+    'about-p2': 'Bringing AI into every business decision — helping Vietnamese businesses adopt AI practically, with measurable results, not just trends.',
+    'about-h2-2': 'Areas of Operation',
+    'about-p3': 'AI Era operates across 6 core service lines: Fintech & AI Quant Finance, AI Automation & AI Agent, SEO-First Web Design & AI Search, Landing Page & Hosting, Digital Marketing & AI Content, and Enterprise Industry Software. See the Services page for details.',
+    'about-h2-3': 'Contact',
+    'about-p4': 'Want to learn more about AI Era? See our Contact page or use the quick chat panel at the bottom of the page.',
+
+    // 9. contact
+    'contact-meta-desc': 'Contact AIERA Solutions — Zalo, Telegram, WhatsApp, Phone (+84) 977 511 663, Email info@aiera.vn. AI solution consulting for businesses.',
+    'contact-meta-title': 'Contact — AIERA Solutions',
+    'contact-h1': 'Contact AI Era',
+    'contact-p1': 'Reach AI Era through the channels below for AI solution consulting tailored to your business.',
+    'contact-p2': 'Or use the quick chat panel at the bottom of this page.',
+
+    // 10. privacy
+    'privacy-meta-desc': 'AIERA Solutions Privacy Policy — how we collect, use, and protect customer personal information.',
+    'privacy-meta-title': 'Privacy Policy — AIERA Solutions',
+    'privacy-h1': 'Privacy Policy',
+    'privacy-p1': 'AI Era is committed to protecting the personal information of customers and partners. This policy describes how we collect, use, store, and protect data.',
+    'privacy-h2-1': 'Information We Collect',
+    'privacy-p2': 'AI Era may collect your name, phone number, email, and conversation content when you contact us via Zalo, Telegram, a form, or email — solely to support consulting and customer care.',
+    'privacy-h2-2': 'How We Use Data',
+    'privacy-p3': 'Data is used to respond to consulting requests and provide subscribed services, and is not sold or shared with third parties beyond service operation purposes, except where required by law.',
+    'privacy-h2-3': 'Privacy Contact',
+    'privacy-p4': 'For any privacy policy questions, contact info@aiera.vn.',
+
+    // Nav links
+    'nav-services': 'Services',
+    'nav-about': 'About',
+    'nav-contact': 'Contact',
 
     // Contact footer
     'footer-kicker': 'GET IN TOUCH',

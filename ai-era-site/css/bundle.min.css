@@ -57,6 +57,7 @@
   --gradient-text: linear-gradient(150deg, #1B1D3D 0%, #2A2B57 45%, #4C3E8F 100%);
 }
 
+
 /* === base.css === */
 /* ============================================
    AI Era — Base / Reset
@@ -111,6 +112,7 @@ body{
 [data-theme="light"] .vignette{
   display:none;
 }
+
 
 /* === typography.css === */
 /* ============================================
@@ -269,6 +271,7 @@ body{
   font-size:.72rem;color:#8a8a93;line-height:1.6;
 }
 
+
 /* === layout.css === */
 /* ============================================
    AI Era — Layout
@@ -333,6 +336,7 @@ nav{
   display:flex;align-items:center;gap:9px;
 }
 
+
 /* === components.css === */
 /* ============================================
    AI Era — Components
@@ -384,39 +388,118 @@ nav{
 /* ----- Focus Panel (glassmorphism) ----- */
 .focus-panel{
   position:fixed;right:var(--space-lg);bottom:var(--space-lg);z-index:22;
-  width:min(370px,calc(100vw - 56px));
-  border:1px solid var(--border);
-  background:var(--surface-2);
-  backdrop-filter:blur(24px) saturate(160%);
-  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  width:min(380px,calc(100vw - 48px));
+  border:1px solid rgba(255,255,255,0.12);
+  background:rgba(12,14,24,0.85);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
   border-radius:var(--radius-lg);
-  padding:var(--space-md);
+  padding:22px 20px 20px;
+  box-shadow:0 20px 48px -12px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.06);
   transform:translateY(22px);opacity:0;pointer-events:none;
   transition:.35s cubic-bezier(.2,.8,.2,1);
 }
 .focus-panel.show{transform:none;opacity:1;pointer-events:auto}
-.focus-panel button{
-  margin-top:var(--space-sm);
-  border:1px solid var(--border);border-radius:var(--radius-pill);
-  padding:8px 13px;
-  background:#fff;color:#030305;
-  font-weight:700;font-size:.69rem;cursor:none;
-  transition:background .2s,transform .15s;
-}
-.focus-panel button:hover{
-  background:#e4d9ff;
-  transform:scale(1.04);
+
+/* Focus actions container */
+.focus-actions{
+  display:flex;
+  flex-direction:column;
+  gap:9px;
+  margin-top:18px;
 }
 
-/* Focus detail link */
+/* PRIMARY CTA: Focus detail link (Eye-catching, high-converting) */
 .focus-detail-link{
-  display:inline-block;margin-top:12px;
-  color:var(--indigo-2);font-size:.72rem;font-weight:600;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  box-sizing:border-box;
+  padding:11px 18px;
+  background:linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%);
+  background-size:200% 200%;
+  color:#ffffff !important;
+  font-family:var(--font-sans);
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.02em;
   text-decoration:none;
-  transition:color .2s;
+  border-radius:var(--radius-pill);
+  border:1px solid rgba(255,255,255,0.25);
+  box-shadow:0 4px 20px rgba(99,102,241,0.45), 0 0 14px rgba(6,182,212,0.3);
+  cursor:none;
+  transition:all .25s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+  overflow:hidden;
 }
-.focus-detail-link:hover{color:var(--cyan)}
-.focus-detail-link::after{content:" →"}
+.focus-detail-link::after{
+  content:"→";
+  display:inline-block;
+  margin-left:7px;
+  font-size:.92rem;
+  transition:transform .2s ease;
+}
+.focus-detail-link:hover{
+  background-position:100% 50%;
+  color:#ffffff !important;
+  transform:translateY(-2px);
+  box-shadow:0 8px 28px rgba(99,102,241,0.65), 0 0 22px rgba(6,182,212,0.5);
+  border-color:rgba(255,255,255,0.4);
+}
+.focus-detail-link:hover::after{
+  transform:translateX(4px);
+}
+.focus-detail-link:active{
+  transform:translateY(0) scale(.98);
+}
+
+/* SECONDARY BUTTON: Return to AI Era core (Subtle ghost button) */
+.focus-panel button,
+.focus-back-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  box-sizing:border-box;
+  margin-top:0;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:var(--radius-pill);
+  padding:8px 14px;
+  background:rgba(255,255,255,0.04);
+  color:rgba(255,255,255,0.62);
+  font-family:var(--font-sans);
+  font-weight:500;
+  font-size:.73rem;
+  letter-spacing:.01em;
+  cursor:none;
+  transition:all .2s ease;
+}
+.focus-panel button::before,
+.focus-back-btn::before{
+  content:"←";
+  display:inline-block;
+  margin-right:6px;
+  font-size:.82rem;
+  opacity:.65;
+  transition:transform .2s ease, opacity .2s ease;
+}
+.focus-panel button:hover,
+.focus-back-btn:hover{
+  background:rgba(255,255,255,0.09);
+  color:#ffffff;
+  border-color:rgba(255,255,255,0.25);
+  transform:translateY(-1px);
+}
+.focus-panel button:hover::before,
+.focus-back-btn:hover::before{
+  opacity:1;
+  transform:translateX(-3px);
+}
+.focus-panel button:active,
+.focus-back-btn:active{
+  transform:translateY(0);
+}
 
 /* ----- Control Buttons ----- */
 .control{
@@ -772,10 +855,9 @@ body.dragging .cursor-outline{
   background: radial-gradient(circle, rgba(61, 79, 224, 0.12) 0%, rgba(246, 247, 251, 0) 70%);
 }
 [data-theme="light"] .focus-panel{
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(20, 20, 50, 0.08);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  box-shadow: 0 16px 40px -10px rgba(20, 20, 50, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 [data-theme="light"] .focus-kicker{
   color: var(--accent);
@@ -790,21 +872,26 @@ body.dragging .cursor-outline{
   font-weight: 500;
   line-height: 1.65;
 }
-[data-theme="light"] .focus-panel button{
-  background: var(--text);
-  color: #ffffff;
-  border: 1px solid var(--text);
-}
-[data-theme="light"] .focus-panel button:hover{
-  background: var(--accent);
-  border-color: var(--accent);
-}
 [data-theme="light"] .focus-detail-link{
-  color: var(--accent);
-  font-weight: 700;
+  background: linear-gradient(135deg, #4f46e5 0%, #2563eb 50%, #0284c7 100%);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 18px rgba(79, 70, 229, 0.35), 0 2px 8px rgba(2, 132, 199, 0.25);
 }
 [data-theme="light"] .focus-detail-link:hover{
-  color: var(--accent2);
+  box-shadow: 0 8px 25px rgba(79, 70, 229, 0.5), 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+[data-theme="light"] .focus-panel button,
+[data-theme="light"] .focus-back-btn{
+  background: rgba(0, 0, 0, 0.03);
+  color: #64748b;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+[data-theme="light"] .focus-panel button:hover,
+[data-theme="light"] .focus-back-btn:hover{
+  background: rgba(0, 0, 0, 0.06);
+  color: #0f172a;
+  border-color: rgba(0, 0, 0, 0.22);
 }
 /* Node Cards per Section 3.3 */
 [data-theme="light"] .node-label{
@@ -858,6 +945,177 @@ body.dragging .cursor-outline{
 [data-theme="light"] .cursor-outline{
   border-color: rgba(61, 79, 224, 0.35);
 }
+
+/* ----- Service Grid & Cards (services.html) ----- */
+.service-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:16px;
+  margin:28px 0 40px;
+}
+.service-card{
+  display:flex;
+  flex-direction:column;
+  padding:22px;
+  border-radius:var(--radius-md);
+  border:1px solid var(--border);
+  background:var(--surface);
+  text-decoration:none;
+  transition:all .28s cubic-bezier(.2,.8,.2,1);
+}
+.service-card:hover{
+  border-color:rgba(129,140,248,.45);
+  background:rgba(129,140,248,.06);
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(0,0,0,.35);
+}
+[data-theme="light"] .service-card:hover{
+  border-color:rgba(79,70,229,.45);
+  background:rgba(79,70,229,.04);
+  box-shadow:0 12px 28px rgba(79,70,229,.08);
+}
+.service-card h3{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--text);
+  margin:0 0 8px 0;
+  transition:color .25s ease;
+}
+.service-card:hover h3{
+  color:var(--cyan);
+}
+[data-theme="light"] .service-card:hover h3{
+  color:#0284c7;
+}
+.service-card p{
+  font-size:.84rem;
+  line-height:1.65;
+  color:var(--muted);
+  margin:0;
+}
+
+/* ----- Header Nav Links & Footer Links ----- */
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+.nav-link{
+  font-size:.84rem;
+  font-weight:600;
+  color:var(--muted);
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.nav-link:hover{
+  color:#fff;
+}
+[data-theme="light"] .nav-link:hover{
+  color:#0f172a;
+}
+@media(max-width:640px){
+  .nav-links{gap:12px;}
+  .nav-link{font-size:.78rem;}
+}
+
+.footer-links{
+  max-width:760px;
+  margin:40px auto 20px;
+  padding:20px 24px 0;
+  border-top:1px solid var(--border);
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  font-size:.78rem;
+}
+.footer-links a{
+  color:var(--muted);
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.footer-links a:hover{
+  color:var(--indigo-2);
+}
+[data-theme="light"] .footer-links a:hover{
+  color:#4f46e5;
+}
+
+
+
+/* === theme.css === */
+/* ============================================
+   AI Era — Theme (Day/Night — future expansion)
+   ============================================ */
+
+/* Currently dark-only; light theme tokens can be added here under
+   @media (prefers-color-scheme: light) or a [data-theme="light"] selector. */
+
+
+/* === animations.css === */
+/* ============================================
+   AI Era — Animations / Keyframes
+   ============================================ */
+
+/* AI Era gradient shift — 9s cycle, 4-color gradient panning */
+@keyframes aiEraGradientShift{
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Reduced motion override */
+@media (prefers-reduced-motion: reduce){
+  .core-label strong{ animation:none; }
+}
+
+
+/* === responsive.css === */
+/* ============================================
+   AI Era — Responsive / Touch
+   ============================================ */
+
+@media(max-width:900px){
+  nav{padding:17px 18px}
+  .nav-center{display:none}
+  .intro{left:18px;top:90px;max-width:280px}
+  .intro p{display:none}
+  .hud{display:none}
+  .controls{left:18px;bottom:18px}
+  .node-label{font-size:.61rem;padding:8px 9px}
+  .node-label small{display:none}
+  .focus-panel{right:14px;bottom:62px;width:calc(100vw - 28px)}
+  .lang-btn{padding:5px 8px;font-size:.56rem}
+  .lang-switch{gap:2px;padding:2px}
+}
+
+@media(max-width:767px){
+  .hud{font-size:.6rem}
+  .contact-cta-btn{
+    padding:5px 15px 5px 7px;
+    gap:9px;
+  }
+  .contact-cta-canvas-wrap, #contactBtnCanvas{
+    width:42px;height:42px;min-width:42px;
+  }
+  .contact-cta-title{
+    font-size:.82rem;
+  }
+  .focus-panel{
+    width:100%;
+    right:0;
+    bottom:0;
+    top:auto;
+    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  }
+}
+
+/* Touch devices — hide custom cursor */
+@media(pointer:coarse){
+  body{cursor:auto}
+  .contact-cta-btn, .focus-detail-link, .focus-back-btn, .focus-panel button{cursor:pointer}
+  .cursor-dot,.cursor-outline{display:none}
+}
+
 
 /* === contact-footer.css === */
 /* ============================================
@@ -1222,66 +1480,3 @@ body.dragging .cursor-outline{
   color: #ffffff;
 }
 
-/* === animations.css === */
-/* ============================================
-   AI Era — Animations / Keyframes
-   ============================================ */
-
-/* AI Era gradient shift — 9s cycle, 4-color gradient panning */
-@keyframes aiEraGradientShift{
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Reduced motion override */
-@media (prefers-reduced-motion: reduce){
-  .core-label strong{ animation:none; }
-}
-
-/* === responsive.css === */
-/* ============================================
-   AI Era — Responsive / Touch
-   ============================================ */
-
-@media(max-width:900px){
-  nav{padding:17px 18px}
-  .nav-center{display:none}
-  .intro{left:18px;top:90px;max-width:280px}
-  .intro p{display:none}
-  .hud{display:none}
-  .controls{left:18px;bottom:18px}
-  .node-label{font-size:.61rem;padding:8px 9px}
-  .node-label small{display:none}
-  .focus-panel{right:14px;bottom:62px;width:calc(100vw - 28px)}
-  .lang-btn{padding:5px 8px;font-size:.56rem}
-  .lang-switch{gap:2px;padding:2px}
-}
-
-@media(max-width:767px){
-  .hud{font-size:.6rem}
-  .contact-cta-btn{
-    padding:5px 15px 5px 7px;
-    gap:9px;
-  }
-  .contact-cta-canvas-wrap, #contactBtnCanvas{
-    width:42px;height:42px;min-width:42px;
-  }
-  .contact-cta-title{
-    font-size:.82rem;
-  }
-  .focus-panel{
-    width:100%;
-    right:0;
-    bottom:0;
-    top:auto;
-    border-radius:var(--radius-lg) var(--radius-lg) 0 0;
-  }
-}
-
-/* Touch devices — hide custom cursor */
-@media(pointer:coarse){
-  body{cursor:auto}
-  .contact-cta-btn{cursor:pointer}
-  .cursor-dot,.cursor-outline{display:none}
-}
