@@ -1328,6 +1328,10 @@ body.dragging .cursor-outline{
 .contact-item--telegram .contact-item__icon svg{color:#38bdf8}
 .contact-item--whatsapp{--item-glow:#22c55e}
 .contact-item--whatsapp .contact-item__icon svg{color:#22c55e}
+.contact-item--messenger{--item-glow:#a855f7}
+.contact-item--messenger .contact-item__icon svg{color:#a855f7}
+.contact-item--linkedin{--item-glow:#0a66c2}
+.contact-item--linkedin .contact-item__icon svg{color:#0a66c2}
 .contact-item--phone{--item-glow:#a5b4fc}
 .contact-item--phone .contact-item__icon svg{color:#a5b4fc}
 .contact-item--email{--item-glow:#67e8f9}
