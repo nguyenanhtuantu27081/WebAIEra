@@ -92,7 +92,7 @@ body{
 
 /* WebGL canvas container */
 #webgl{position:fixed;inset:0;z-index:0}
-#webgl canvas{display:block;width:100%;height:100%}
+#webgl canvas{display:block;width:100%;height:100%;touch-action:none}
 
 /* Grain overlay */
 .grain{
@@ -278,7 +278,7 @@ body{
    ============================================ */
 
 /* ----- Navigation ----- */
-nav{
+.site-nav{
   position:fixed;left:0;right:0;top:0;z-index:30;
   display:flex;align-items:center;justify-content:space-between;
   padding:22px var(--space-xl);
@@ -1005,10 +1005,24 @@ body.dragging .cursor-outline{
   font-weight:600;
   color:var(--muted);
   text-decoration:none;
+  position:relative;
+  padding-left:14px;
   transition:color .2s ease;
 }
+.nav-link::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:50%;
+  transform:translateY(-50%);
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--node-color, var(--indigo-2));
+  box-shadow:0 0 8px var(--node-color, var(--indigo-2));
+}
 .nav-link:hover{
-  color:#fff;
+  color:var(--cyan);
 }
 [data-theme="light"] .nav-link:hover{
   color:#0f172a;
@@ -1018,19 +1032,410 @@ body.dragging .cursor-outline{
   .nav-link{font-size:.78rem;}
 }
 
+/* ----- Constellation Bar (thay thế .footer-links cũ) ----- */
 .footer-links{
-  display:none;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  max-width:760px;
+  margin:56px auto 0;
+  padding:18px 20px;
+  border-top:1px solid var(--border);
+}
+.footer-links a{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 13px;
+  border-radius:var(--radius-pill);
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.02);
+  color:var(--muted);
+  font-size:.72rem;
+  font-weight:600;
+  text-decoration:none;
+  letter-spacing:.01em;
+  transition:all .25s cubic-bezier(.2,.8,.2,1);
+}
+.footer-links a::before{
+  content:"";
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--node-color, var(--indigo-2));
+  box-shadow:0 0 6px var(--node-color, var(--indigo-2));
+  flex-shrink:0;
+}
+.footer-links a:hover{
+  color:#fff;
+  border-color:color-mix(in srgb, var(--node-color, var(--indigo-2)) 55%, transparent);
+  background:rgba(129,140,248,.06);
+  transform:translateY(-2px);
+}
+[data-theme="light"] .footer-links a{
+  background:#fff;
+  color:var(--text-muted);
+}
+
+/* ----- Hamburger Menu & Dropdown Panel (Three.js 3D Icon) ----- */
+.menu-toggle{
+  display:none !important;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  height:38px;
+  padding:0;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);
+  backdrop-filter:blur(8px);
+  cursor:pointer;
+  position:relative;
+  transition:border-color .25s ease, background-color .25s ease, transform .2s ease;
+}
+.menu-toggle:hover{
+  border-color:rgba(129,140,248,.45);
+  background:rgba(129,140,248,.08);
+  transform:scale(1.04);
+}
+.menu-toggle:active{
+  transform:scale(0.96);
+}
+[data-theme="light"] .menu-toggle{
+  border-color:rgba(0,0,0,.1);
+  background:rgba(0,0,0,.03);
+}
+[data-theme="light"] .menu-toggle:hover{
+  border-color:rgba(99,102,241,.4);
+  background:rgba(99,102,241,.06);
+}
+
+.menu-canvas-wrap{
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.menu-canvas-wrap canvas{
+  display:block;
+  width:26px;
+  height:26px;
+}
+
+/* Dropdown Menu Panel */
+.site-menu-panel{
+  position:fixed;
+  top:76px;
+  right:var(--space-xl);
+  width:280px;
+  max-width:calc(100vw - 32px);
+  background:rgba(8,8,16,.88);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+  padding:12px;
+  box-shadow:0 24px 60px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.05);
+  z-index:40;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transform:translateY(-10px) scale(0.97);
+  transform-origin:top right;
+  transition:opacity .25s cubic-bezier(.2,.8,.2,1), transform .25s cubic-bezier(.2,.8,.2,1), visibility .25s ease;
+}
+.site-menu-panel.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+}
+[data-theme="light"] .site-menu-panel{
+  background:rgba(255,255,255,.94);
+  border-color:rgba(0,0,0,.08);
+  box-shadow:0 20px 50px rgba(0,0,0,.15), 0 0 0 1px rgba(0,0,0,.04);
+}
+
+.site-menu-links{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+.site-menu-links a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 14px;
+  border-radius:10px;
+  color:var(--text);
+  font-size:.84rem;
+  font-weight:500;
+  text-decoration:none;
+  transition:background-color .2s ease, color .2s ease, transform .2s ease;
+}
+.site-menu-links a::before{
+  content:"";
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--node-color, var(--indigo-2));
+  box-shadow:0 0 8px var(--node-color, var(--indigo-2));
+  flex-shrink:0;
+}
+.site-menu-links a:hover{
+  background:rgba(129,140,248,.1);
+  color:#fff;
+  transform:translateX(3px);
+}
+[data-theme="light"] .site-menu-links a{
+  color:var(--text);
+}
+[data-theme="light"] .site-menu-links a:hover{
+  background:rgba(99,102,241,.08);
+  color:var(--indigo);
+}
+
+@media(max-width:640px){
+  .site-menu-panel{
+    right:16px;
+    left:16px;
+    width:auto;
+  }
 }
 
 
 
-/* === theme.css === */
+
+/* === page-detail.css === */
 /* ============================================
-   AI Era — Theme (Day/Night — future expansion)
+   AI Era — Page Detail Layout (shared across all sub-pages)
+   Extracted from inline <style> blocks per design-system guide Mục 4
    ============================================ */
 
-/* Currently dark-only; light theme tokens can be added here under
-   @media (prefers-color-scheme: light) or a [data-theme="light"] selector. */
+/* ----- Detail page body overrides ----- */
+body.page-detail,
+body:has(.page){
+  cursor:auto;
+  overflow:auto;
+  min-height:100vh;
+  padding:0;
+  background:var(--bg);
+  color:var(--text);
+  transition:background-color .35s ease, color .35s ease;
+}
+
+/* ----- Page container ----- */
+.page{
+  max-width:760px;
+  margin:0 auto;
+  padding:104px 24px 60px;
+}
+
+/* ----- Page header (back-link + controls) ----- */
+.page-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:32px;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.page-controls{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* ----- Page typography ----- */
+.page h1{
+  font-size:clamp(1.8rem,4vw,2.6rem);
+  line-height:1.15;
+  letter-spacing:-.04em;
+  font-weight:800;
+  margin-bottom:20px;
+  background:linear-gradient(100deg,#fff 0%,#a5b4fc 50%,#67e8f9 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+[data-theme="light"] .page h1{
+  background:linear-gradient(100deg,#0f172a 0%,#4338ca 50%,#0284c7 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.page h2{
+  font-size:1.2rem;
+  font-weight:700;
+  color:var(--indigo-2);
+  margin:32px 0 12px;
+  letter-spacing:-.02em;
+}
+[data-theme="light"] .page h2{
+  color:#4f46e5;
+}
+.page h3{
+  font-size:1rem;
+  font-weight:600;
+  color:var(--text);
+  margin:20px 0 8px;
+}
+.page p,
+.page li{
+  font-size:.88rem;
+  line-height:1.75;
+  color:var(--muted);
+}
+[data-theme="light"] .page p,
+[data-theme="light"] .page li{
+  color:#334155;
+}
+.page ul{
+  padding-left:20px;
+  margin:8px 0;
+}
+.page em{
+  color:#8a8a93;
+  font-style:italic;
+}
+[data-theme="light"] .page em{
+  color:#64748b;
+}
+.page a{
+  color:var(--indigo-2);
+  text-decoration:none;
+}
+.page a:hover{
+  color:var(--cyan);
+  text-decoration:underline;
+}
+[data-theme="light"] .page a{
+  color:#4f46e5;
+}
+[data-theme="light"] .page a:hover{
+  color:#0284c7;
+}
+
+/* ----- Back link ----- */
+.back-link{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  color:var(--indigo-2);
+  text-decoration:none;
+  font-size:.78rem;
+  font-weight:600;
+  transition:color .2s ease;
+}
+.back-link::before{
+  content:"← ";
+}
+[data-theme="light"] .back-link{
+  color:#4f46e5;
+}
+.back-link:hover{
+  color:var(--cyan);
+}
+[data-theme="light"] .back-link:hover{
+  color:#0284c7;
+}
+
+/* ----- Blockquote (service pages) ----- */
+.page blockquote{
+  border-left:3px solid var(--indigo);
+  padding:12px 16px;
+  margin:24px 0;
+  font-style:italic;
+  color:var(--muted);
+  background:var(--surface);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+}
+[data-theme="light"] .page blockquote{
+  border-left-color:#4f46e5;
+  background:#f8f9fc;
+  color:#475569;
+}
+
+/* ----- Breadcrumb navigation ----- */
+.breadcrumb{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:.82rem;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+.breadcrumb a{
+  color:var(--indigo-2);
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.breadcrumb a:hover{
+  color:var(--cyan);
+  text-decoration:underline;
+}
+.breadcrumb-sep{
+  color:rgba(255,255,255,.3);
+}
+[data-theme="light"] .breadcrumb-sep{
+  color:rgba(0,0,0,.3);
+}
+.breadcrumb span[aria-current="page"]{
+  color:var(--text);
+  font-weight:500;
+}
+
+/* ----- Related services section ----- */
+.related-services{
+  margin-top:48px;
+  padding-top:32px;
+  border-top:1px solid var(--border);
+}
+.related-services h2{
+  font-size:1.15rem;
+  margin-bottom:16px;
+  color:var(--indigo-2);
+}
+.related-services ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.related-services li{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.related-services li::before{
+  content:"→";
+  color:var(--indigo-2);
+  font-weight:bold;
+}
+.related-services a{
+  color:var(--text);
+  text-decoration:none;
+  font-weight:500;
+  transition:color .2s ease, transform .2s ease;
+}
+.related-services a:hover{
+  color:var(--cyan);
+  transform:translateX(4px);
+}
+[data-theme="light"] .related-services a{
+  color:var(--text);
+}
+[data-theme="light"] .related-services a:hover{
+  color:#0284c7;
+}
+
 
 
 /* === animations.css === */
@@ -1049,6 +1454,15 @@ body.dragging .cursor-outline{
 @media (prefers-reduced-motion: reduce){
   .core-label strong{ animation:none; }
 }
+
+
+/* === theme.css === */
+/* ============================================
+   AI Era — Theme (Day/Night — future expansion)
+   ============================================ */
+
+/* Currently dark-only; light theme tokens can be added here under
+   @media (prefers-color-scheme: light) or a [data-theme="light"] selector. */
 
 
 /* === responsive.css === */
