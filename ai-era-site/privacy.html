@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
@@ -10,13 +10,13 @@
       try { localStorage.setItem('aiera_theme', 'dark'); } catch(e){}
     })();
   </script>
-  <meta name="description" data-i18n="privacy-meta-desc" content="ChÃ­nh sÃ¡ch báº£o máº­t AIERA Solutions â€” cÃ¡ch thu tháº­p, sá»­ dá»¥ng vÃ  báº£o vá»‡ thÃ´ng tin cÃ¡ nhÃ¢n cá»§a khÃ¡ch hÃ ng." />
-  <title data-i18n="privacy-meta-title">ChÃ­nh sÃ¡ch báº£o máº­t â€” AIERA Solutions</title>
+  <meta name="description" data-i18n="privacy-meta-desc" content="Chính sách bảo mật AIERA Solutions — cách thu thập, sử dụng và bảo vệ thông tin cá nhân của khách hàng." />
+  <title data-i18n="privacy-meta-title">Chính sách bảo mật — AIERA Solutions</title>
   <link rel="canonical" href="https://aiera.vn/privacy.html" />
   <meta name="robots" content="noindex, follow" />
   <meta property="og:site_name" content="AIERA Solutions" />
-  <meta property="og:title" content="ChÃ­nh sÃ¡ch báº£o máº­t â€” AIERA Solutions" />
-  <meta property="og:description" content="ChÃ­nh sÃ¡ch báº£o máº­t AIERA Solutions â€” cÃ¡ch thu tháº­p, sá»­ dá»¥ng vÃ  báº£o vá»‡ thÃ´ng tin cÃ¡ nhÃ¢n." />
+  <meta property="og:title" content="Chính sách bảo mật — AIERA Solutions" />
+  <meta property="og:description" content="Chính sách bảo mật AIERA Solutions — cách thu thập, sử dụng và bảo vệ thông tin cá nhân." />
   <meta property="og:url" content="https://aiera.vn/privacy.html" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://aiera.vn/icon-512.png" />
@@ -35,7 +35,7 @@
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
   </noscript>
-  <link rel="stylesheet" href="./css/bundle.min.css?v=dark">
+  <link rel="stylesheet" href="./css/bundle.min.css?v=20260911.1">
 
   <script type="application/ld+json">
   {
@@ -45,105 +45,86 @@
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "AIERA Solutions", "item": "https://aiera.vn/" },
-          { "@type": "ListItem", "position": 2, "name": "ChÃ­nh sÃ¡ch báº£o máº­t", "item": "https://aiera.vn/privacy.html" }
+          { "@type": "ListItem", "position": 2, "name": "Chính sách bảo mật", "item": "https://aiera.vn/privacy.html" }
         ]
       }
     ]
   }
   </script>
-
-  <style>
-    body{cursor:auto;overflow:auto;min-height:100vh;padding:0;background:var(--bg);color:var(--text);transition:background-color .35s ease, color .35s ease}
-    .page{max-width:760px;margin:0 auto;padding:80px 24px 60px}
-    .page-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;gap:12px;flex-wrap:wrap}
-    .page-controls{display:flex;align-items:center;gap:8px}
-    .page h1{font-size:clamp(1.8rem,4vw,2.6rem);line-height:1.15;letter-spacing:-.04em;font-weight:800;margin-bottom:20px;
-      background:linear-gradient(100deg,#fff 0%,#a5b4fc 50%,#67e8f9 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    [data-theme="light"] .page h1{
-      background:linear-gradient(100deg,#0f172a 0%,#4338ca 50%,#0284c7 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
-    .page h2{font-size:1.2rem;font-weight:700;color:var(--indigo-2);margin:32px 0 12px;letter-spacing:-.02em}
-    [data-theme="light"] .page h2{color:#4f46e5}
-    .page p{font-size:.88rem;line-height:1.75;color:var(--muted)}
-    [data-theme="light"] .page p{color:#334155}
-    .page a{color:var(--indigo-2);text-decoration:none}
-    .page a:hover{color:var(--cyan);text-decoration:underline}
-    [data-theme="light"] .page a{color:#4f46e5}
-    [data-theme="light"] .page a:hover{color:#0284c7}
-    .back-link{display:inline-block;color:var(--indigo-2);text-decoration:none;font-size:.78rem;font-weight:600}
-    [data-theme="light"] .back-link{color:#4f46e5}
-    .back-link:hover{color:var(--cyan)}
-    [data-theme="light"] .back-link:hover{color:#0284c7}
-    .back-link::before{content:"â† "}
-    .lang-switch{display:flex;align-items:center;gap:3px;padding:3px;border-radius:var(--radius-pill);border:1px solid var(--border);background:rgba(8,8,14,.58);backdrop-filter:blur(14px)}
-    [data-theme="light"] .lang-switch{background:rgba(255,255,255,.85);border-color:rgba(148,163,184,.3)}
-    .lang-btn{border:none;outline:none;cursor:pointer;font:600 .62rem var(--font-mono);color:#8a8a93;letter-spacing:.06em;padding:6px 11px;border-radius:var(--radius-pill);background:transparent;transition:all .28s cubic-bezier(.2,.8,.2,1)}
-    .lang-btn:hover{color:#dcdce2;background:rgba(129,140,248,.08)}
-    [data-theme="light"] .lang-btn:hover{color:#0f172a;background:rgba(99,102,241,.08)}
-    .lang-btn.active{color:#fff;background:linear-gradient(135deg,rgba(129,140,248,.32),rgba(103,232,249,.22));box-shadow:0 0 14px rgba(129,140,248,.18)}
-    [data-theme="light"] .lang-btn.active{color:#fff;background:linear-gradient(135deg,#4f46e5,#0284c7)}
-  </style>
+  <script type="importmap">
+  {
+    "imports":{
+      "three":"https://cdn.jsdelivr.net/npm/three@0.185.0/build/three.module.js",
+      "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.185.0/examples/jsm/"
+    }
+  }
+  </script>
 </head>
 <body id="top">
-  <article class="page">
-    <div class="page-header">
-      <a href="./index.html" class="back-link" data-i18n="back-link">Quay láº¡i AI Era Ecosystem</a>
-      <div class="page-controls">
-        <div class="lang-switch" id="langSwitch">
-          <button data-lang="vi" class="lang-btn active" aria-label="Tiáº¿ng Viá»‡t">VI</button>
-          <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
-        </div>
+  <!-- Navigation -->
+  <nav class="site-nav">
+    <a href="./" class="logo" style="text-decoration:none;color:inherit;">
+      <img src="./logo.svg" alt="AI Era Solutions - AI Era Logo" class="logo-img" width="32" height="32">AI ERA<span>.VN</span>
+    </a>
+    <div class="nav-controls" style="display:flex;align-items:center;gap:8px;">
+      <div class="lang-switch" id="langSwitch">
+        <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
+        <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
       </div>
+      <button class="menu-toggle" id="menuToggle" aria-label="Mở menu điều hướng" aria-expanded="false" aria-controls="siteMenuPanel">
+        <div class="menu-canvas-wrap">
+          <canvas id="menuCanvas" width="26" height="26"></canvas>
+        </div>
+      </button>
     </div>
+  </nav>
 
-    <h1 data-i18n="privacy-h1">ChÃ­nh sÃ¡ch báº£o máº­t</h1>
-    <p data-i18n="privacy-p1">AI Era cam káº¿t báº£o vá»‡ thÃ´ng tin cÃ¡ nhÃ¢n cá»§a khÃ¡ch hÃ ng vÃ  Ä‘á»‘i tÃ¡c. ChÃ­nh sÃ¡ch nÃ y mÃ´ táº£ cÃ¡ch chÃºng tÃ´i thu tháº­p, sá»­ dá»¥ng, lÆ°u trá»¯ vÃ  báº£o vá»‡ dá»¯ liá»‡u.</p>
+  <!-- Site Menu Dropdown Panel -->
+  <div class="site-menu-panel" id="siteMenuPanel" hidden aria-label="Menu điều hướng chính">
+        <ul class="site-menu-links">
+      <li><a href="./fintech-ai-quant-finance.html" style="--node-color:#67e8f9">Fintech &amp; Định lượng AI</a></li>
+      <li><a href="./ai-automation-ai-agent.html" style="--node-color:#818cf8">AI Automation &amp; AI Agent</a></li>
+      <li><a href="./thiet-ke-website-chuan-seo.html" style="--node-color:#c084fc">Thiết kế website chuẩn SEO</a></li>
+      <li><a href="./landing-page-hosting.html" style="--node-color:#a5b4fc">Landing Page &amp; Hosting</a></li>
+      <li><a href="./digital-marketing-ai-content.html" style="--node-color:#67e8f9">Digital Marketing &amp; AI Content</a></li>
+      <li><a href="./phan-mem-quan-ly-doanh-nghiep.html" style="--node-color:#818cf8">Phần mềm quản lý doanh nghiệp</a></li>
+    </ul>
+  </div>
+  <article class="page">
 
-    <h2 data-i18n="privacy-h2-1">ThÃ´ng tin thu tháº­p</h2>
-    <p data-i18n="privacy-p2">AI Era cÃ³ thá»ƒ thu tháº­p há» tÃªn, sá»‘ Ä‘iá»‡n thoáº¡i, email vÃ  ná»™i dung trao Ä‘á»•i khi báº¡n liÃªn há»‡ qua Zalo, Telegram, form hoáº·c email â€” chá»‰ Ä‘á»ƒ phá»¥c vá»¥ tÆ° váº¥n vÃ  chÄƒm sÃ³c khÃ¡ch hÃ ng.</p>
+    <h1 data-i18n="privacy-h1">Chính sách bảo mật</h1>
+    <p data-i18n="privacy-p1">AI Era cam kết bảo vệ thông tin cá nhân của khách hàng và đối tác. Chính sách này mô tả cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ dữ liệu.</p>
 
-    <h2 data-i18n="privacy-h2-2">Má»¥c Ä‘Ã­ch sá»­ dá»¥ng dá»¯ liá»‡u</h2>
-    <p data-i18n="privacy-p3">Dá»¯ liá»‡u Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ pháº£n há»“i yÃªu cáº§u tÆ° váº¥n, cung cáº¥p dá»‹ch vá»¥ Ä‘Ã£ Ä‘Äƒng kÃ½, vÃ  khÃ´ng Ä‘Æ°á»£c bÃ¡n hoáº·c chia sáº» cho bÃªn thá»© ba ngoÃ i má»¥c Ä‘Ã­ch váº­n hÃ nh dá»‹ch vá»¥, trá»« khi cÃ³ yÃªu cáº§u cá»§a phÃ¡p luáº­t.</p>
+    <h2 data-i18n="privacy-h2-1">Thông tin thu thập</h2>
+    <p data-i18n="privacy-p2">AI Era có thể thu thập họ tên, số điện thoại, email và nội dung trao đổi khi bạn liên hệ qua Zalo, Telegram, form hoặc email — chỉ để phục vụ tư vấn và chăm sóc khách hàng.</p>
 
-    <h2 data-i18n="privacy-h2-3">LiÃªn há»‡ vá» quyá»n riÃªng tÆ°</h2>
-    <p data-i18n="privacy-p4">Má»i tháº¯c máº¯c vá» chÃ­nh sÃ¡ch báº£o máº­t, liÃªn há»‡ qua <a href="mailto:info@aiera.vn">info@aiera.vn</a>.</p>
+    <h2 data-i18n="privacy-h2-2">Mục đích sử dụng dữ liệu</h2>
+    <p data-i18n="privacy-p3">Dữ liệu được dùng để phản hồi yêu cầu tư vấn, cung cấp dịch vụ đã đăng ký, và không được bán hoặc chia sẻ cho bên thứ ba ngoài mục đích vận hành dịch vụ, trừ khi có yêu cầu của pháp luật.</p>
 
-    <!-- Footer Links Navigation -->
+    <h2 data-i18n="privacy-h2-3">Liên hệ về quyền riêng tư</h2>
+    <p data-i18n="privacy-p4">Mọi thắc mắc về chính sách bảo mật, liên hệ qua <a href="mailto:info@aiera.vn">info@aiera.vn</a>.</p>
   </article>
-
-  <nav class="footer-links" aria-label="Site links">
-  <a href="./index.html">Trang chá»§</a>
-  <a href="./services.html">Dá»‹ch vá»¥</a>
-  <a href="./about.html">Giá»›i thiá»‡u</a>
-  <a href="./contact.html">LiÃªn há»‡</a>
-  <a href="./fintech-ai-quant-finance.html">Fintech &amp; Äá»‹nh lÆ°á»£ng AI</a>
-  <a href="./ai-automation-ai-agent.html">AI Automation &amp; AI Agent</a>
-  <a href="./thiet-ke-website-chuan-seo.html">Thiáº¿t káº¿ website chuáº©n SEO</a>
-  <a href="./landing-page-hosting.html">Landing Page &amp; Hosting</a>
-  <a href="./digital-marketing-ai-content.html">Digital Marketing &amp; Ná»™i dung AI</a>
-  <a href="./phan-mem-quan-ly-doanh-nghiep.html">Pháº§n má»m quáº£n lÃ½ doanh nghiá»‡p</a>
-  <a href="./privacy.html" rel="nofollow">ChÃ­nh sÃ¡ch báº£o máº­t</a>
-</nav>
 
   <!-- Contact Footer -->
   <footer class="contact-footer" id="contactFooter">
     <div class="contact-footer__canvas"></div>
     <div class="contact-footer__fade"></div>
     <div class="contact-footer__content">
-      <div class="contact-footer__kicker"><i></i> <span data-i18n="footer-kicker">LIÃŠN Há»† Vá»šI CHÃšNG TÃ”I</span></div>
-      <h2 class="contact-footer__title" data-i18n="footer-title">Káº¿t ná»‘i ngay vá»›i AI Era</h2>
+      <div class="contact-footer__kicker"><i></i> <span data-i18n="footer-kicker">LIÊN HỆ VỚI CHÚNG TÔI</span></div>
+      <h2 class="contact-footer__title" data-i18n="footer-title">Kết nối ngay với AI Era</h2>
       <div class="contact-footer__grid">
         <a href="https://zalo.me/84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--zalo" id="contact-zalo"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm8.98 30.7c-.1.3-.45.5-.76.5H18.6c-1.14 0-2.02-.65-2.02-1.65 0-.63.35-1.24 1.06-1.97l8.68-9.25c.2-.22.3-.44.3-.62 0-.37-.34-.67-.76-.67H18.1c-.32 0-.66-.2-.76-.5l-.37-1.1c-.1-.3.1-.6.42-.6h13.2c1.14 0 2.06.74 2.06 1.65 0 .6-.32 1.18-.98 1.87l-8.8 9.35c-.18.2-.27.4-.27.6 0 .37.34.67.76.67h9.97c.32 0 .66.2.76.5l.37 1.1c.1.3-.1.6-.42.6l-.37-1.1.37 1.1z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Zalo</span><span class="contact-item__value" data-i18n="footer-chat-now">Chat ngay</span></span></a>
         <a href="https://t.me/+84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--telegram" id="contact-telegram"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm9.2 13.7-3.1 14.6c-.23 1.02-.84 1.27-1.7.79l-4.7-3.47-2.27 2.18c-.25.25-.46.46-.95.46l.34-4.77 8.7-7.86c.38-.34-.08-.52-.58-.19l-10.75 6.77-4.63-1.45c-1.01-.31-1.03-.97.21-1.44l18.1-6.98c.84-.31 1.57.2 1.3 1.44l.03-.04z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Telegram</span><span class="contact-item__value" data-i18n="footer-chat-now">Chat ngay</span></span></a>
-        <a href="https://wa.me/84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--whatsapp" id="contact-whatsapp"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm0 36.5c-3.36 0-6.48-.98-9.12-2.67l-.65-.4-5.73 1.61 1.53-5.56-.42-.67A16.42 16.42 0 017.5 24c0-9.11 7.39-16.5 16.5-16.5S40.5 14.89 40.5 24 33.11 40.5 24 40.5zm9.06-12.35c-.5-.25-2.94-1.45-3.4-1.62-.45-.16-.78-.25-1.11.25-.33.5-1.28 1.62-1.57 1.95-.29.33-.58.37-1.08.12-.5-.25-2.1-.77-4-2.47-1.48-1.32-2.48-2.95-2.77-3.45-.29-.5-.03-.77.22-1.02.22-.22.5-.58.75-.87.25-.29.33-.5.5-.83.16-.33.08-.62-.04-.87-.12-.25-1.11-2.68-1.52-3.67-.4-.97-.81-.84-1.11-.85h-.95c-.33 0-.87.12-1.32.62-.45.5-1.74 1.7-1.74 4.15 0 2.45 1.78 4.82 2.03 5.15.25.33 3.5 5.35 8.49 7.5 1.19.51 2.11.82 2.84 1.05 1.19.38 2.27.33 3.13.2.95-.14 2.94-1.2 3.35-2.36.42-1.16.42-2.15.29-2.36-.12-.2-.45-.33-.95-.58z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">WhatsApp</span><span class="contact-item__value" data-i18n="footer-chat-now">Chat ngay</span></span></a><a href="https://www.messenger.com/t/61593970812261" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--messenger" id="contact-messenger"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.4 4 22.8c0 5.92 2.87 11.23 7.37 14.77v7.43l7.08-3.92c1.75.49 3.6.75 5.55.75 11.05 0 20-8.4 20-18.8S35.05 4 24 4zm2.25 25.4-5.63-6.01-10.98 6.01 12.08-12.83 5.77 6.01 10.84-6.01-12.08 12.83z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Messenger</span><span class="contact-item__value" data-i18n="footer-chat-now">Chat ngay</span></span></a><a href="https://www.linkedin.com/company/ai-era-vn/" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--linkedin" id="contact-linkedin"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M42 4H6C4.9 4 4 4.9 4 6v36c0 1.1.9 2 2 2h36c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM15.8 38.2h-6V19.4h6v18.8zm-3-21.4c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm25.4 21.4h-6v-9.3c0-2.2 0-5.1-3.1-5.1-3.1 0-3.6 2.4-3.6 4.9v9.5h-6V19.4h5.8v2.6h.1c.8-1.5 2.8-3.1 5.7-3.1 6.1 0 7.2 4 7.2 9.2v10.1h-.1z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">LinkedIn</span><span class="contact-item__value">AI Era</span></span></a>
-        <a href="tel:+84977511663" class="contact-item contact-item--phone" id="contact-phone"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M13.25 21.6c2.78 5.47 7.2 9.84 12.7 12.6l4.24-4.24c.52-.52 1.3-.7 1.98-.46 2.2.72 4.56 1.1 7.02 1.1 1.1 0 2 .9 2 2v6.8c0 1.1-.9 2-2 2C19.42 41.4 6.6 28.58 6.6 12.8c0-1.1.9-2 2-2h6.8c1.1 0 2 .9 2 2 0 2.46.38 4.82 1.1 7.02.24.68.06 1.46-.46 1.98l-4.8 4.24z"/></svg></span><span class="contact-item__text"><span class="contact-item__label" data-i18n="footer-phone-label">Äiá»‡n thoáº¡i</span><span class="contact-item__value">(+84) 977 511 663</span></span></a>
+        <a href="https://wa.me/84977511663" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--whatsapp" id="contact-whatsapp"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.95 4 24c0 3.82 1.1 7.39 2.98 10.42L4.2 43.8l9.68-2.72A19.88 19.88 0 0024 44c11.05 0 20-8.95 20-20S35.05 4 24 4zm0 36.5c-3.36 0-6.48-.98-9.12-2.67l-.65-.4-5.73 1.61 1.53-5.56-.42-.67A16.42 16.42 0 017.5 24c0-9.11 7.39-16.5 16.5-16.5S40.5 14.89 40.5 24 33.11 40.5 24 40.5zm9.06-12.35c-.5-.25-2.94-1.45-3.4-1.62-.45-.16-.78-.25-1.11.25-.33.5-1.28 1.62-1.57 1.95-.29.33-.58.37-1.08.12-.5-.25-2.1-.77-4-2.47-1.48-1.32-2.48-2.95-2.77-3.45-.29-.5-.03-.77.22-1.02.22-.22.5-.58.75-.87.25-.29.33-.5.5-.83.16-.33.08-.62-.04-.87-.12-.25-1.11-2.68-1.52-3.67-.4-.97-.81-.84-1.11-.85h-.95c-.33 0-.87.12-1.32.62-.45.5-1.74 1.7-1.74 4.15 0 2.45 1.78 4.82 2.03 5.15.25.33 3.5 5.35 8.49 7.5 1.19.51 2.11.82 2.84 1.05 1.19.38 2.27.33 3.13.2.95-.14 2.94-1.2 3.35-2.36.42-1.16.42-2.15.29-2.36-.12-.2-.45-.33-.95-.58z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">WhatsApp</span><span class="contact-item__value" data-i18n="footer-chat-now">Chat ngay</span></span></a><a href="https://www.messenger.com/t/61593970812261" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--messenger" id="contact-messenger"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M24 4C12.95 4 4 12.4 4 22.8c0 5.92 2.87 11.23 7.37 14.77v7.43l7.08-3.92c1.75.49 3.6.75 5.55.75 11.05 0 20-8.4 20-18.8S35.05 4 24 4zm2.25 25.4-5.63-6.01-10.98 6.01 12.08-12.83 5.77 6.01 10.84-6.01-12.08 12.83z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Messenger</span><span class="contact-item__value" data-i18n="footer-chat-now">Chat ngay</span></span></a><a href="https://www.linkedin.com/company/ai-era-vn/" target="_blank" rel="noopener noreferrer" class="contact-item contact-item--linkedin" id="contact-linkedin"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M42 4H6C4.9 4 4 4.9 4 6v36c0 1.1.9 2 2 2h36c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zM15.8 38.2h-6V19.4h6v18.8zm-3-21.4c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5zm25.4 21.4h-6v-9.3c0-2.2 0-5.1-3.1-5.1-3.1 0-3.6 2.4-3.6 4.9v9.5h-6V19.4h5.8v2.6h.1c.8-1.5 2.8-3.1 5.7-3.1 6.1 0 7.2 4 7.2 9.2v10.1h-.1z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">LinkedIn</span><span class="contact-item__value">AI Era</span></span></a>
+        <a href="tel:+84977511663" class="contact-item contact-item--phone" id="contact-phone"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M13.25 21.6c2.78 5.47 7.2 9.84 12.7 12.6l4.24-4.24c.52-.52 1.3-.7 1.98-.46 2.2.72 4.56 1.1 7.02 1.1 1.1 0 2 .9 2 2v6.8c0 1.1-.9 2-2 2C19.42 41.4 6.6 28.58 6.6 12.8c0-1.1.9-2 2-2h6.8c1.1 0 2 .9 2 2 0 2.46.38 4.82 1.1 7.02.24.68.06 1.46-.46 1.98l-4.8 4.24z"/></svg></span><span class="contact-item__text"><span class="contact-item__label" data-i18n="footer-phone-label">Điện thoại</span><span class="contact-item__value">(+84) 977 511 663</span></span></a>
         <a href="mailto:info@aiera.vn" class="contact-item contact-item--email" id="contact-email"><span class="contact-item__icon"><svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="M40 8H8c-2.2 0-4 1.8-4 4v24c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4V12c0-2.2-1.8-4-4-4zm0 8L24 26 8 16v-4l16 10 16-10v4z"/></svg></span><span class="contact-item__text"><span class="contact-item__label">Email</span><span class="contact-item__value">info@aiera.vn</span></span></a>
       </div>
       <div class="contact-footer__bottom">
-        <span class="contact-footer__copyright">Â© 2025 AI ERA .VN</span>
+        <span class="contact-footer__copyright">© 2025 AI ERA SOLUTIONS · aiera.vn</span>
         <span class="contact-footer__dot"></span>
-        <span class="contact-footer__copyright" data-i18n="footer-subtitle">INTELLIGENCE ECOSYSTEM</span>
+        <span class="contact-footer__copyright" data-i18n="footer-subtitle">NEXT-GEN AI SOLUTIONS PLATFORM</span>
         <span class="contact-footer__dot"></span>
-        <a href="#top" class="contact-footer__back-top"><span data-i18n="footer-back-top">â†‘ Vá»€ Äáº¦U TRANG</span></a>
+        <a href="#top" class="contact-footer__back-top"><span data-i18n="footer-back-top">↑ VỀ ĐẦU TRANG</span></a>
       </div>
     </div>
   </footer>
@@ -152,8 +133,10 @@
     import { initDetailPageI18n } from './js/detail-i18n.js';
     initDetailPageI18n();
   </script>
-  <script type="module" src="./js/contact-footer.js"></script>
+  <script type="module" src="./js/contact-footer.js?v=20260911.1"></script>
+  <script type="module" src="./js/menu-init.js?v=20260911.1"></script>
 </body>
 </html>
+
 
 
