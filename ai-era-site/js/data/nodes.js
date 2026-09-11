@@ -10,11 +10,11 @@ export const NODES = [
     url: "./fintech-ai-quant-finance.html"
   },
   {
-    id: "ai-automation-agent",
-    name: "AI Automation & AI Agent",
-    shortDesc: "Tự động hoá quy trình nghiệp vụ và triển khai AI Agent xử lý khách hàng, dữ liệu và tác vụ đa bước.",
+    id: "phan-mem-quan-ly-nganh",
+    name: "Phần mềm quản lý doanh nghiệp ngành",
+    shortDesc: "Giải pháp phần mềm quản lý nghiệp vụ lõi cho Spa, Nail, Nha khoa, Phòng khám, Gym.",
     color: 0x818cf8,
-    url: "./ai-automation-ai-agent.html"
+    url: "./phan-mem-quan-ly-doanh-nghiep.html"
   },
   {
     id: "landing-page-hosting",
@@ -38,10 +38,10 @@ export const NODES = [
     url: "./digital-marketing-ai-content.html"
   },
   {
-    id: "phan-mem-quan-ly-nganh",
-    name: "Phần mềm quản lý doanh nghiệp ngành",
-    shortDesc: "Giải pháp phần mềm quản lý nghiệp vụ lõi cho Spa, Nail, Nha khoa, Phòng khám, Gym.",
+    id: "ai-automation-agent",
+    name: "AI Automation & AI Agent",
+    shortDesc: "Tự động hoá quy trình nghiệp vụ và triển khai AI Agent xử lý khách hàng, dữ liệu và tác vụ đa bước.",
     color: 0x818cf8,
-    url: "./phan-mem-quan-ly-doanh-nghiep.html"
+    url: "./ai-automation-ai-agent.html"
   }
 ];
