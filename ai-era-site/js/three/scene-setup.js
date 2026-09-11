@@ -13,9 +13,17 @@ const cfg = TIER_CONFIG[tier];
 export const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x030305, .022);
 
-// Camera
+// Camera — initial distance adapts to viewport aspect ratio
+function getInitialCameraZ() {
+  const aspect = innerWidth / innerHeight;
+  if (aspect < 0.6) return 17.5;
+  if (aspect < 0.8) return 16.5;
+  if (aspect < 1.05) return 15.5;
+  if (innerWidth < 1100) return 15.0;
+  return 14.5;
+}
 export const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, .1, 120);
-camera.position.set(0, .2, 14.5);
+camera.position.set(0, .2, getInitialCameraZ());
 
 // Renderer — A.6: antialias and powerPreference now tier-dependent
 const mount = document.querySelector('#webgl');
@@ -69,7 +77,7 @@ scene.add(world);
 export function onResize() {
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
+  renderer.setPixelRatio(Math.min(devicePixelRatio, cfg.dpr));
   renderer.setSize(innerWidth, innerHeight);
   composer.setSize(innerWidth, innerHeight);
-  renderer.setPixelRatio(Math.min(devicePixelRatio, cfg.dpr));
 }
