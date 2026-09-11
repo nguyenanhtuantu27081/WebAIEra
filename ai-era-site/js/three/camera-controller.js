@@ -5,15 +5,15 @@ import { camera, renderer, world } from './scene-setup.js';
 import { coreGroup } from './core.js';
 import { nodes, labelEls } from './nodes.js';
 import { NODES } from '../data/nodes.js';
-import { getCurrentLang, nodeTranslations } from '../i18n.js';
+import { onLanguageChange, getCurrentLang, nodeTranslations, focusTranslations } from '../i18n.js';
 
 // ----- DOM refs -----
 const focusPanel = document.querySelector('#focusPanel');
 const focusTitle = document.querySelector('#focusTitle');
-const focusText = document.querySelector('#focusText');
-const focusLink = document.querySelector('#focusLink');
-const nodeNum = document.querySelector('#nodeNum');
-const focusVal = document.querySelector('#focusVal');
+const focusText  = document.querySelector('#focusText');
+const focusLink  = document.querySelector('#focusLink');
+const focusVal   = document.querySelector('#focusVal');
+// #nodeNum removed — element does not exist in current HTML
 
 // ----- State -----
 export let pointer = { x: 0, y: 0, px: innerWidth / 2, py: innerHeight / 2 };
@@ -22,10 +22,25 @@ let rot = { x: 0, y: 0, z: 0 };
 let targetRot = { x: 0, y: 0, z: 0 };
 let dragLastAngle = 0;
 
-let targetCameraDistance = 14.5;
-let cameraDistance = 14.5;
+export function getBaseCameraDistance() {
+  const aspect = innerWidth / innerHeight;
+  if (aspect < 0.6) return 17.5; // Narrow phones
+  if (aspect < 0.8) return 16.5; // Standard phones
+  if (aspect < 1.05) return 15.5; // Tablets portrait
+  if (innerWidth < 1100) return 15.0; // Small laptops
+  return 14.5; // Standard desktop
+}
+
+let targetCameraDistance = getBaseCameraDistance();
+let cameraDistance = getBaseCameraDistance();
 export let selected = -1;
 let flight = null;
+
+export function onCameraResize() {
+  if (selected < 0 && !flight) {
+    targetCameraDistance = getBaseCameraDistance();
+  }
+}
 
 const currentLook = new THREE.Vector3(0, 0, 0);
 const targetLook = new THREE.Vector3(0, 0, 0);
@@ -59,9 +74,15 @@ function startFlight(toPos, toLook, duration = 1600, onDone = null) {
 }
 
 // ----- Focus / Reset (step 8) -----
+function getFocusTranslation(key) {
+  const lang = getCurrentLang();
+  return focusTranslations[lang]?.[key] ?? focusTranslations.en[key];
+}
+
 function focusNode(i) {
   selected = i;
   const n = nodes[i];
+  if (!n) return; // guard: node not yet built
   const data = NODES[i];
   const wp = n.group.getWorldPosition(new THREE.Vector3());
   const outward = wp.clone().normalize();
@@ -76,23 +97,23 @@ function focusNode(i) {
   const nodeDesc = tr ? tr[i].shortDesc : data.shortDesc;
 
   labelEls.forEach((el, j) => el.classList.toggle('active', j === i));
-  focusTitle.textContent = nodeName;
-  focusText.textContent = nodeDesc;
-  if (focusLink) focusLink.setAttribute('href', data.url);
-  nodeNum.textContent = String(i + 1).padStart(2, '0');
-  focusVal.textContent = `NODE 0${i + 1}`;
-  focusPanel.classList.add('show');
+  if (focusTitle) focusTitle.textContent = nodeName;
+  if (focusText)  focusText.textContent  = nodeDesc;
+  if (focusLink)  focusLink.setAttribute('href', data.url);
+  if (focusVal)   focusVal.textContent   = getFocusTranslation('focusLabel');
+  if (focusPanel) focusPanel.classList.add('show');
 }
 
 function resetView() {
   selected = -1;
   targetRot.x = targetRot.y = targetRot.z = 0;
   targetLook.set(0, 0, 0);
-  startFlight(new THREE.Vector3(0, .2, 14.5), new THREE.Vector3(0, 0, 0), 1350);
+  const baseDist = getBaseCameraDistance();
+  startFlight(new THREE.Vector3(0, .2, baseDist), new THREE.Vector3(0, 0, 0), 1350);
   labelEls.forEach(el => el.classList.remove('active'));
-  focusVal.textContent = 'CORE';
-  focusPanel.classList.remove('show');
-  targetCameraDistance = 14.5;
+  if (focusVal)   focusVal.textContent = getFocusTranslation('core');
+  if (focusPanel) focusPanel.classList.remove('show');
+  targetCameraDistance = baseDist;
 }
 
 // ----- Init event listeners -----
@@ -114,6 +135,7 @@ export function initControls() {
   // Drag rotate (step 5) — 360° on X/Y, Shift+drag for Z
   renderer.domElement.addEventListener('pointerdown', e => {
     if (e.button !== 0) return;
+    if (e.cancelable && e.pointerType === 'touch') e.preventDefault();
     dragging = true;
     lastX = e.clientX;
     lastY = e.clientY;
@@ -129,6 +151,9 @@ export function initControls() {
   });
 
   addEventListener('pointermove', e => {
+    // Prevent page scroll during drag (single-finger touch on mobile)
+    if (e.cancelable && e.pointerType === 'touch') e.preventDefault();
+
     pointer.px = e.clientX;
     pointer.py = e.clientY;
     pointer.x = (e.clientX / innerWidth - .5) * 2;
@@ -168,7 +193,7 @@ export function initControls() {
     selected = -1;
     focusPanel.classList.remove('show');
     labelEls.forEach(el => el.classList.remove('active'));
-    focusVal.textContent = 'FREE';
+    focusVal.textContent = getFocusTranslation('free');
     targetCameraDistance = THREE.MathUtils.clamp(
       targetCameraDistance + e.deltaY * 0.012,
       2.5,  // closer — "fly into" particle field
@@ -195,6 +220,10 @@ export function initControls() {
   // Pinch-zoom for mobile (step 12)
   let pinchStartDist = null;
   renderer.domElement.addEventListener('touchmove', e => {
+    // Chặn cuộn trang thật khi thao tác trong vùng canvas 3D
+    // (bổ sung cho CSS touch-action:none — một số browser/webview
+    // vẫn cần preventDefault tường minh để không kích hoạt scroll gốc)
+    if (e.cancelable) e.preventDefault();
     if (e.touches.length === 2) {
       const [a, b] = e.touches;
       const dist = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
@@ -203,7 +232,7 @@ export function initControls() {
       targetCameraDistance = THREE.MathUtils.clamp(targetCameraDistance + delta, 2.5, 46);
       pinchStartDist = dist;
     }
-  }, { passive: true });
+  }, { passive: false });
   renderer.domElement.addEventListener('touchend', () => { pinchStartDist = null; });
 }
 
@@ -261,3 +290,18 @@ export function updateCamera(t) {
 
   return { cameraDistance, rot, currentLook };
 }
+
+// Language change listener - update focus panel when language changes
+onLanguageChange((lang) => {
+  if (selected >= 0) {
+    const tr = nodeTranslations[lang];
+    const data = NODES[selected];
+    const nodeName = tr ? tr[selected].name : data.name;
+    const nodeDesc = tr ? tr[selected].shortDesc : data.shortDesc;
+    if (focusTitle) focusTitle.textContent = nodeName;
+    if (focusText)  focusText.textContent  = nodeDesc;
+    if (focusVal)   focusVal.textContent   = `${getFocusTranslation('node')} 0${selected + 1}`;
+  } else {
+    if (focusVal) focusVal.textContent = getFocusTranslation('core');
+  }
+});
