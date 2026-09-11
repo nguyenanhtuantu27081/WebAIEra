@@ -801,6 +801,9 @@ body.dragging .cursor-outline{
 }
 
 /* Dropdown Menu Panel */
+.site-menu-panel[hidden]{
+  display:none !important;
+}
 .site-menu-panel{
   position:fixed;
   top:76px;
