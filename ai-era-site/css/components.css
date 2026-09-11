@@ -739,7 +739,7 @@ body.dragging .cursor-outline{
 
 /* ----- Hamburger Menu & Dropdown Panel (Three.js 3D Icon) ----- */
 .menu-toggle{
-  display:none !important;
+  display:inline-flex;
   align-items:center;
   justify-content:center;
   width:38px;
@@ -774,11 +774,27 @@ body.dragging .cursor-outline{
   width:26px;
   height:26px;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
+  gap:4px;
   pointer-events:none;
+  position:relative;
+}
+.menu-canvas-wrap::before,
+.menu-canvas-wrap::after{
+  content:"";
+  display:block;
+  width:16px;
+  height:2px;
+  background:#a5b4fc;
+  border-radius:2px;
+  box-shadow:0 0 4px rgba(165,180,252,0.6);
 }
 .menu-canvas-wrap canvas{
+  position:absolute;
+  top:0;
+  left:0;
   display:block;
   width:26px;
   height:26px;
