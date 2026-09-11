@@ -4,16 +4,16 @@
 const translations = {
   vi: {
     // Nav
-    'nav-status': 'SYSTEM ONLINE · 6 NODES',
+    'nav-status': 'SYSTEM ONLINE · 6 DỊCH VỤ',
 
     // Core label
     'core-name': 'AI Era',
     'core-sub': 'Core Intelligence',
 
     // Intro
-    'intro-badge': 'AIERA SOLUTIONS · NỀN TẢNG GIẢI PHÁP AI THẾ HỆ MỚI',
+    'intro-badge': 'AI ERA · NỀN TẢNG GIẢI PHÁP AI THẾ HỆ MỚI',
     'intro-h1': 'Trí tuệ cho mọi quyết định kinh doanh.',
-    'intro-p': 'Khám phá hệ sinh thái AIERA (AI Era Solutions) đa chiều — nơi tự động hóa, AI agents, marketing, phân tích định lượng, AI SEO và SaaS xoay quanh một lõi trí tuệ chung.',
+    'intro-p': 'AIERA Solutions (AI Era) là công ty công nghệ Việt Nam xây dựng hệ sinh thái giải pháp trí tuệ nhân tạo cho doanh nghiệp — tự động hóa, AI Agent, phân tích định lượng tài chính, AI SEO và phần mềm quản lý, cùng xoay quanh một lõi trí tuệ chung.',
 
     // HUD
     'hud-title': 'Spatial telemetry',
@@ -33,7 +33,7 @@ const translations = {
     'cta-status': 'TƯ VẤN 24/7',
 
     // Focus panel
-    'focus-kicker-prefix': 'AI ERA / NODE ',
+    'focus-kicker-prefix': 'AI ERA',
     'focus-link': 'Xem chi tiết',
     'focus-back': 'Quay về lõi AI Era',
 
@@ -47,16 +47,16 @@ const translations = {
   },
   en: {
     // Nav
-    'nav-status': 'SYSTEM ONLINE · 6 NODES',
+    'nav-status': 'SYSTEM ONLINE · 6 SERVICES',
 
     // Core label
     'core-name': 'AI Era',
     'core-sub': 'Core Intelligence',
 
     // Intro
-    'intro-badge': 'AIERA SOLUTIONS · NEXT-GEN AI PLATFORM',
+    'intro-badge': 'AI ERA · NEXT-GEN AI PLATFORM',
     'intro-h1': 'Intelligence for Every Decision.',
-    'intro-p': 'Explore the AIERA (AI Era Solutions) multidimensional ecosystem — where automation, AI agents, marketing, quantitative analysis, AI SEO and SaaS revolve around a shared intelligence core.',
+    'intro-p': 'AIERA Solutions (AI Era) is a Vietnamese technology company building an AI ecosystem for businesses — automation, AI agents, quantitative finance analysis, AI SEO and management software, all powered by one shared intelligence core.',
 
     // HUD
     'hud-title': 'Spatial telemetry',
@@ -76,7 +76,7 @@ const translations = {
     'cta-status': 'ONLINE 24/7',
 
     // Focus panel
-    'focus-kicker-prefix': 'AI ERA / NODE ',
+    'focus-kicker-prefix': 'AI ERA',
     'focus-link': 'View details',
     'focus-back': 'Return to AI Era core',
 
@@ -93,21 +93,37 @@ const translations = {
 // Node translations (kept separate so nodes.js can import directly)
 export const nodeTranslations = {
   vi: [
-    { name: 'Phân tích định lượng chứng khoán', shortDesc: 'Mô hình định lượng, tín hiệu kỹ thuật và machine learning hỗ trợ nhà đầu tư ra quyết định trên thị trường chứng khoán Việt Nam.' },
-    { name: 'AI Automation & AI Agent', shortDesc: 'Tự động hoá quy trình nghiệp vụ và triển khai AI Agent xử lý khách hàng, dữ liệu và tác vụ đa bước.' },
-    { name: 'Thiết kế website chuẩn SEO & AI SEO', shortDesc: 'Kiến trúc semantic, tốc độ cao, tối ưu AI discovery giúp doanh nghiệp hiện diện bền vững trên Google và AI search.' },
-    { name: 'Landing Page & Hosting', shortDesc: 'Thiết kế landing page chuyển đổi cao kèm gói hosting miễn phí, triển khai chiến dịch nhanh, chi phí tối ưu.' },
-    { name: 'Digital Marketing & AI Content', shortDesc: 'Chạy quảng cáo Meta/TikTok/Google Maps, tự động hoá nội dung bằng AI đa nền tảng.' },
+    { name: 'Công nghệ tài chính & Định lượng AI', shortDesc: 'Mô hình định lượng, tín hiệu kỹ thuật và machine learning hỗ trợ nhà đầu tư ra quyết định trên thị trường chứng khoán Việt Nam.' },
     { name: 'Phần mềm quản lý doanh nghiệp ngành', shortDesc: 'Giải pháp phần mềm quản lý nghiệp vụ lõi cho Spa, Nail, Nha khoa, Phòng khám, Gym.' },
+    { name: 'Landing Page & Hosting', shortDesc: 'Thiết kế landing page chuyển đổi cao kèm gói hosting miễn phí, triển khai chiến dịch nhanh, chi phí tối ưu.' },
+    { name: 'Thiết kế website chuẩn SEO & AI Search / AI Overviews', shortDesc: 'Kiến trúc semantic, tốc độ cao, tối ưu AI discovery giúp doanh nghiệp hiện diện bền vững trên Google và AI search.' },
+    { name: 'Digital Marketing & Nội dung AI', shortDesc: 'Chạy quảng cáo Meta/TikTok/Google Maps, tự động hoá nội dung bằng AI đa nền tảng.' },
+    { name: 'Tự động hóa AI & AI Agent', shortDesc: 'Tự động hoá quy trình nghiệp vụ và triển khai AI Agent xử lý khách hàng, dữ liệu và tác vụ đa bước.' },
   ],
   en: [
-    { name: 'Quantitative Stock Analysis', shortDesc: 'Quantitative models, technical signals and machine learning powering smarter investment decisions on the Vietnamese stock market.' },
-    { name: 'AI Automation & AI Agent', shortDesc: 'Automate business processes and deploy AI Agents that handle customers, data and multi-step tasks.' },
-    { name: 'SEO-Optimised Website & AI SEO', shortDesc: 'Semantic architecture, high performance, AI-discovery optimisation for sustainable presence on Google and AI search.' },
-    { name: 'Landing Page & Hosting', shortDesc: 'High-conversion landing pages with free hosting, rapid campaign deployment and cost-effective pricing.' },
-    { name: 'Digital Marketing & AI Content', shortDesc: 'Run Meta / TikTok / Google Maps ads and automate multi-platform content with AI.' },
+    { name: 'Fintech & AI Quant Finance', shortDesc: 'Quantitative models, algorithmic signals and machine learning powering smarter investment decisions on financial markets.' },
     { name: 'Enterprise Industry Software', shortDesc: 'Core management software for Spa, Nail, Dental, Clinic and Gym businesses.' },
+    { name: 'Landing Page & Hosting', shortDesc: 'High-conversion landing pages with free hosting, rapid campaign deployment and cost-effective pricing.' },
+    { name: 'SEO-Optimised Website & AI Search / AI Overviews', shortDesc: 'Semantic architecture, high performance, AI-discovery optimisation for sustainable presence on Google and AI search.' },
+    { name: 'Digital Marketing & AI Content', shortDesc: 'Run Meta / TikTok / Google Maps ads and automate multi-platform content with AI.' },
+    { name: 'AI Automation & AI Agent', shortDesc: 'Automate business processes and deploy AI Agents that handle customers, data and multi-step tasks.' },
   ]
+};
+
+// Focus/HUD translations
+export const focusTranslations = {
+  vi: {
+    core: 'CORE',
+    free: 'FREE',
+    node: 'NODE',
+    focusLabel: 'FOCUS'
+  },
+  en: {
+    core: 'CORE',
+    free: 'FREE',
+    node: 'NODE',
+    focusLabel: 'FOCUS'
+  }
 };
 
 /* ---------- helpers ---------- */

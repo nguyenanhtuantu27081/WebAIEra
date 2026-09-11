@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
@@ -39,61 +39,93 @@
   <!-- Schema.org Graph: Organization + WebSite (Google Knowledge Graph & Sitelinks Searchbox) -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://aiera.vn/#organization",
-        "name": "AIERA Solutions",
-        "alternateName": [
-          "aiera",
-          "AIERA",
-          "AIERA Solutions",
-          "aiera solutions",
-          "AI Era",
-          "AI Era Solutions",
-          "aiera.vn",
-          "AIERA VN"
-        ],
-        "url": "https://aiera.vn/",
-        "logo": "https://aiera.vn/icon-512.png",
-        "image": "https://aiera.vn/icon-512.png",
-        "description": "AIERA (AI Era Solutions) — Nền tảng giải pháp trí tuệ nhân tạo toàn diện: Tài chính, Bảo hiểm, Fintech, AI Automation, AI Agent, AI SEO và Phần mềm doanh nghiệp.",
-        "email": "info@aiera.vn",
-        "telephone": "+84977511663",
-        "sameAs": [
-          "https://www.facebook.com/aiera.vn",
-          "https://zalo.me/84977511663"
-        ]
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://aiera.vn/#organization",
+      "name": "AIERA Solutions",
+      "alternateName": [
+        "aiera",
+        "AIERA",
+        "AIERA Solutions",
+        "aiera solutions",
+        "AI Era",
+        "AI Era Solutions",
+        "aiera.vn",
+        "AIERA VN"
+      ],
+      "url": "https://aiera.vn/",
+      "logo": "https://aiera.vn/icon-512.png",
+      "image": "https://aiera.vn/icon-512.png",
+      "description": "AIERA (AI Era Solutions) — Nền tảng giải pháp trí tuệ nhân tạo toàn diện: Tài chính, Bảo hiểm, Fintech, AI Automation, AI Agent, AI SEO và Phần mềm doanh nghiệp.",
+      "email": "info@aiera.vn",
+      "telephone": "+84977511663",
+      "sameAs": [
+        "https://www.facebook.com/aiera.vn",
+        "https://zalo.me/84977511663",
+        "https://www.linkedin.com/company/ai-era-vn/"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://aiera.vn/#website",
+      "url": "https://aiera.vn/",
+      "name": "AIERA Solutions",
+      "alternateName": [
+        "AIERA",
+        "aiera",
+        "aiera solutions",
+        "AI Era",
+        "AI Era Solutions",
+        "aiera.vn"
+      ],
+      "publisher": {
+        "@id": "https://aiera.vn/#organization"
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://aiera.vn/#website",
-        "url": "https://aiera.vn/",
-        "name": "AIERA Solutions",
-        "alternateName": [
-          "AIERA",
-          "aiera",
-          "aiera solutions",
-          "AI Era",
-          "AI Era Solutions",
-          "aiera.vn"
-        ],
-        "publisher": {
-          "@id": "https://aiera.vn/#organization"
+      "inLanguage": [
+        "vi",
+        "en"
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Dịch vụ AIERA Solutions",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "url": "https://aiera.vn/fintech-ai-quant-finance.html"
         },
-        "inLanguage": ["vi", "en"],
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://aiera.vn/tim-kiem?q={search_term_string}"
-          },
-          "query-input": "required name=search_term_string"
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "url": "https://aiera.vn/ai-automation-ai-agent.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "url": "https://aiera.vn/thiet-ke-website-chuan-seo.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "url": "https://aiera.vn/landing-page-hosting.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "url": "https://aiera.vn/digital-marketing-ai-content.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "url": "https://aiera.vn/phan-mem-quan-ly-doanh-nghiep.html"
         }
-      }
-    ]
-  }
+      ]
+    }
+  ]
+}
   </script>
 
   <!-- Resource Hints (CDN, Google Fonts) -->
@@ -165,30 +197,41 @@
   <div class="vignette"></div>
 
   <!-- Navigation -->
-  <nav>
+    <!-- Navigation -->
+  <nav class="site-nav">
     <a href="./" class="logo" style="text-decoration:none;color:inherit;">
       <img src="./logo.svg" alt="AI Era Solutions - AI Era Logo" class="logo-img" width="32" height="32">AI ERA<span>.VN</span>
     </a>
-    <div class="nav-links" style="display:flex;gap:16px;">
-      <a href="./services.html" data-i18n="nav-services">Dịch vụ</a>
-      <a href="./about.html" data-i18n="nav-about">Giới thiệu</a>
-      <a href="./contact.html" data-i18n="nav-contact">Liên hệ</a>
-    </div>
     <div class="nav-controls" style="display:flex;align-items:center;gap:8px;">
       <div class="lang-switch" id="langSwitch">
         <button data-lang="vi" class="lang-btn active" aria-label="Tiếng Việt">VI</button>
         <button data-lang="en" class="lang-btn" aria-label="English">EN</button>
       </div>
-      <!-- Theme Switch Hidden (Default Dark Mode) -->
+      <button class="menu-toggle" id="menuToggle" aria-label="Mở menu điều hướng" aria-expanded="false" aria-controls="siteMenuPanel">
+        <div class="menu-canvas-wrap">
+          <canvas id="menuCanvas" width="26" height="26"></canvas>
+        </div>
+      </button>
     </div>
-    <!--<div class="nav-status" data-i18n="nav-status">SYSTEM ONLINE</div>-->
   </nav>
+
+  <!-- Site Menu Dropdown Panel -->
+  <div class="site-menu-panel" id="siteMenuPanel" hidden aria-label="Menu điều hướng chính">
+        <ul class="site-menu-links">
+      <li><a href="./fintech-ai-quant-finance.html" style="--node-color:#67e8f9">Fintech &amp; Định lượng AI</a></li>
+      <li><a href="./ai-automation-ai-agent.html" style="--node-color:#818cf8">AI Automation &amp; AI Agent</a></li>
+      <li><a href="./thiet-ke-website-chuan-seo.html" style="--node-color:#c084fc">Thiết kế website chuẩn SEO</a></li>
+      <li><a href="./landing-page-hosting.html" style="--node-color:#a5b4fc">Landing Page &amp; Hosting</a></li>
+      <li><a href="./digital-marketing-ai-content.html" style="--node-color:#67e8f9">Digital Marketing &amp; AI Content</a></li>
+      <li><a href="./phan-mem-quan-ly-doanh-nghiep.html" style="--node-color:#818cf8">Phần mềm quản lý doanh nghiệp</a></li>
+    </ul>
+  </div>
 
   <!-- Intro Section -->
   <section class="intro">
-    <div class="badge"><i></i> <span data-i18n="intro-badge">AI ERA SOLUTIONS · NỀN TẢNG GIẢI PHÁP AI THẾ HỆ MỚI</span></div>
+    <div class="badge"><i></i> <span data-i18n="intro-badge">AI ERA · NỀN TẢNG GIẢI PHÁP AI THẾ HỆ MỚI</span></div>
     <h1 data-i18n="intro-h1">Trí tuệ cho mọi quyết định kinh doanh.</h1>
-    <p data-i18n="intro-p">Khám phá hệ sinh thái AIERA (AI Era Solutions) đa chiều — nơi tự động hóa, AI agents, marketing, phân tích định lượng, AI SEO và SaaS xoay quanh một lõi trí tuệ chung.</p>
+    <p data-i18n="intro-p">AIERA Solutions (AI Era) là công ty công nghệ Việt Nam xây dựng hệ sinh thái giải pháp trí tuệ nhân tạo cho doanh nghiệp — tự động hóa, AI Agent, phân tích định lượng tài chính, AI SEO và phần mềm quản lý, cùng xoay quanh một lõi trí tuệ chung.</p>
   </section>
 
   <!-- HUD Panel -->
@@ -245,20 +288,6 @@
 
   <!-- Spacer for spatial 3D viewport height -->
   <div class="spatial-hero" id="top"></div>
-
-  <nav class="footer-links" aria-label="Site links">
-  <a href="./index.html">Trang chủ</a>
-  <a href="./services.html">Dịch vụ</a>
-  <a href="./about.html">Giới thiệu</a>
-  <a href="./contact.html">Liên hệ</a>
-  <a href="./fintech-ai-quant-finance.html">Fintech &amp; Định lượng AI</a>
-  <a href="./ai-automation-ai-agent.html">AI Automation &amp; AI Agent</a>
-  <a href="./thiet-ke-website-chuan-seo.html">Thiết kế website chuẩn SEO</a>
-  <a href="./landing-page-hosting.html">Landing Page &amp; Hosting</a>
-  <a href="./digital-marketing-ai-content.html">Digital Marketing &amp; Nội dung AI</a>
-  <a href="./phan-mem-quan-ly-doanh-nghiep.html">Phần mềm quản lý doanh nghiệp</a>
-  <a href="./privacy.html" rel="nofollow">Chính sách bảo mật</a>
-</nav>
 
   <!-- Contact Footer -->
   <footer class="contact-footer" id="contactFooter">
@@ -337,7 +366,11 @@
   <!-- App Entry -->
   <script type="module" src="./js/main.js"></script>
   <script type="module" src="./js/contact-footer.js"></script>
+  <script type="module" src="./js/menu-init.js"></script>
 </body>
 </html>
+
+
+
 
 

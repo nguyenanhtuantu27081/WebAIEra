@@ -34,7 +34,7 @@ export default function QuantEquityPage({ params: { locale } }: { params: { loca
           <GlassCard>
             <h3 className="text-lg font-semibold mb-3">Tín hiệu định lượng hàng ngày</h3>
             <p className="text-sm text-muted leading-relaxed">
-              Hệ thống thu thập và xử lý dữ liệu thị trường, đưa ra tín hiệu mua/bán dựa trên mô hình định lượng được kiểm chửa trên văn bản lịch sử thị trường Việt Nam.
+              Hệ thống thu thập và xử lý dữ liệu thị trường, đưa ra tín hiệu mua/bán dựa trên mô hình định lượng được kiểm chứng trên dữ liệu lịch sử thị trường Việt Nam.
             </p>
           </GlassCard>
           <GlassCard>

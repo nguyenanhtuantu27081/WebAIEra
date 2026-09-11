@@ -19,8 +19,8 @@
       "title": "Spatial telemetry",
       "status": "LIVE",
       "distance": "KHOẢNG CÁCH CAMERA",
-      "rotationX": "XOẠY X",
-      "rotationY": "XOẠY Y",
+      "rotationX": "XOAY X",
+      "rotationY": "XOAY Y",
       "focus": "TIÊU ĐIỂM",
       "controls": {
         "drag": "KÉO · XOAY 360°",

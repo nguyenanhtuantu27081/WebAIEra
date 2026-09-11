@@ -4,10 +4,10 @@
 export const NODES = [
   {
     id: "phan-tich-dinh-luong",
-    name: "Phân tích định lượng chứng khoán",
+    name: "Công nghệ tài chính & Định lượng AI",
     shortDesc: "Mô hình định lượng, tín hiệu kỹ thuật và machine learning hỗ trợ nhà đầu tư ra quyết định trên thị trường chứng khoán Việt Nam.",
     color: 0x67e8f9,
-    url: "./phan-tich-dinh-luong-chung-khoan.html"
+    url: "./fintech-ai-quant-finance.html"
   },
   {
     id: "ai-automation-agent",
@@ -17,18 +17,18 @@ export const NODES = [
     url: "./ai-automation-ai-agent.html"
   },
   {
-    id: "thiet-ke-website-seo",
-    name: "Thiết kế website chuẩn SEO & AI SEO",
-    shortDesc: "Kiến trúc semantic, tốc độ cao, tối ưu AI discovery giúp doanh nghiệp hiện diện bền vững trên Google và AI search.",
-    color: 0xc084fc,
-    url: "./thiet-ke-website-chuan-seo.html"
-  },
-  {
     id: "landing-page-hosting",
     name: "Landing Page & Hosting",
     shortDesc: "Thiết kế landing page chuyển đổi cao kèm gói hosting miễn phí, triển khai chiến dịch nhanh, chi phí tối ưu.",
     color: 0xa5b4fc,
     url: "./landing-page-hosting.html"
+  },
+  {
+    id: "thiet-ke-website-seo",
+    name: "Thiết kế website chuẩn SEO & AI Search / AI Overviews",
+    shortDesc: "Kiến trúc semantic, tốc độ cao, tối ưu AI discovery giúp doanh nghiệp hiện diện bền vững trên Google và AI search.",
+    color: 0xc084fc,
+    url: "./thiet-ke-website-chuan-seo.html"
   },
   {
     id: "digital-marketing-ai-content",
