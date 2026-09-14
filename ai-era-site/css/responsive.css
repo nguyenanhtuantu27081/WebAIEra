@@ -40,6 +40,6 @@
 /* Touch devices — hide custom cursor */
 @media(pointer:coarse){
   body{cursor:auto}
-  .contact-cta-btn{cursor:pointer}
+  .contact-cta-btn, .focus-detail-link, .focus-back-btn, .focus-panel button{cursor:pointer}
   .cursor-dot,.cursor-outline{display:none}
 }

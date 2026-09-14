@@ -328,7 +328,7 @@ body{
 }
 
 /* ----- Labels Container ----- */
-#labels{position:fixed;inset:0;z-index:12;pointer-events:none}
+#labels{position:fixed;inset:0;z-index:24;pointer-events:none}
 
 /* ----- Controls bar ----- */
 .controls{
@@ -387,7 +387,7 @@ body{
 
 /* ----- Focus Panel (glassmorphism) ----- */
 .focus-panel{
-  position:fixed;right:var(--space-lg);bottom:var(--space-lg);z-index:22;
+  position:fixed;right:var(--space-lg);bottom:var(--space-lg);z-index:26;
   width:min(380px,calc(100vw - 48px));
   border:1px solid rgba(255,255,255,0.12);
   background:rgba(12,14,24,0.85);
@@ -1079,7 +1079,7 @@ body.dragging .cursor-outline{
 
 /* ----- Hamburger Menu & Dropdown Panel (Three.js 3D Icon) ----- */
 .menu-toggle{
-  display:inline-flex;
+  display:none;
   align-items:center;
   justify-content:center;
   width:38px;
@@ -1751,6 +1751,12 @@ body:has(.page){
 .contact-item--phone .contact-item__icon svg{color:#a5b4fc}
 .contact-item--email{--item-glow:#67e8f9}
 .contact-item--email .contact-item__icon svg{color:#67e8f9}
+
+/* ----- Footer Services Line (link tĩnh, tối giản cho SEO) ----- */
+.contact-footer__services{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:5px 10px;padding-top:18px;width:100%;font:400 .62rem var(--font-mono);letter-spacing:.04em}
+.contact-footer__services-label{color:#444450}
+.contact-footer__services a{color:#5a5a68;text-decoration:none;transition:color .2s ease}
+.contact-footer__services a:hover{color:var(--indigo-2)}
 
 /* ----- Footer Bottom ----- */
 .contact-footer__bottom{

@@ -208,10 +208,31 @@
 .contact-item--telegram .contact-item__icon svg{color:#38bdf8}
 .contact-item--whatsapp{--item-glow:#22c55e}
 .contact-item--whatsapp .contact-item__icon svg{color:#22c55e}
+.contact-item--messenger{--item-glow:#a855f7}
+.contact-item--messenger .contact-item__icon svg{color:#a855f7}
+.contact-item--linkedin{--item-glow:#0a66c2}
+.contact-item--linkedin .contact-item__icon svg{color:#0a66c2}
 .contact-item--phone{--item-glow:#a5b4fc}
 .contact-item--phone .contact-item__icon svg{color:#a5b4fc}
 .contact-item--email{--item-glow:#67e8f9}
 .contact-item--email .contact-item__icon svg{color:#67e8f9}
+
+/* ----- Footer Services Line (link tĩnh, tối giản cho SEO) ----- */
+.contact-footer__services{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+  gap:5px 10px;
+  padding-top:18px;
+  width:100%;
+  font:400 .62rem var(--font-mono);
+  letter-spacing:.04em;
+}
+.contact-footer__services-label{color:#444450}
+.contact-footer__services a{
+  color:#5a5a68;
+  text-decoration:none;
+  transition:color .2s ease;
+}
+.contact-footer__services a:hover{color:var(--indigo-2);}
 
 /* ----- Footer Bottom ----- */
 .contact-footer__bottom{

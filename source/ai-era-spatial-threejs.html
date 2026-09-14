@@ -174,10 +174,36 @@
     .focus-kicker{color:#a5b4fc;font:500 .61rem "JetBrains Mono",monospace;letter-spacing:.08em}
     .focus-panel h2{font-size:1.35rem;letter-spacing:-.04em;margin:9px 0 8px}
     .focus-panel p{font-size:.78rem;line-height:1.65;color:var(--muted)}
-    .focus-panel button{
-      margin-top:14px;border:1px solid var(--border);border-radius:999px;padding:8px 13px;
-      background:#fff;color:#030305;font-weight:700;font-size:.69rem;cursor:none;
+    .focus-actions{display:flex;flex-direction:column;gap:9px;margin-top:18px}
+    .focus-detail-link{
+      display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;
+      padding:11px 18px;background:linear-gradient(135deg, #6366f1 0%, #3b82f6 50%, #06b6d4 100%);
+      color:#ffffff !important;font-size:.82rem;font-weight:700;letter-spacing:.02em;text-decoration:none;
+      border-radius:999px;border:1px solid rgba(255,255,255,0.25);
+      box-shadow:0 4px 20px rgba(99,102,241,0.45), 0 0 14px rgba(6,182,212,0.3);
+      cursor:none;transition:all .25s cubic-bezier(.2,.8,.2,1);
     }
+    .focus-detail-link::after{content:"→";display:inline-block;margin-left:7px;font-size:.92rem;transition:transform .2s ease}
+    .focus-detail-link:hover{
+      transform:translateY(-2px);box-shadow:0 8px 28px rgba(99,102,241,0.65), 0 0 22px rgba(6,182,212,0.5);
+      border-color:rgba(255,255,255,0.4);
+    }
+    .focus-detail-link:hover::after{transform:translateX(4px)}
+    .focus-detail-link:active{transform:translateY(0) scale(.98)}
+    .focus-panel button, .focus-back-btn{
+      display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;margin-top:0;
+      border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:8px 14px;
+      background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.62);
+      font-weight:500;font-size:.73rem;letter-spacing:.01em;cursor:none;transition:all .2s ease;
+    }
+    .focus-panel button::before, .focus-back-btn::before{
+      content:"←";display:inline-block;margin-right:6px;font-size:.82rem;opacity:.65;transition:transform .2s ease;
+    }
+    .focus-panel button:hover, .focus-back-btn:hover{
+      background:rgba(255,255,255,0.09);color:#ffffff;border-color:rgba(255,255,255,0.25);transform:translateY(-1px);
+    }
+    .focus-panel button:hover::before, .focus-back-btn:hover::before{opacity:1;transform:translateX(-3px)}
+    .focus-panel button:active, .focus-back-btn:active{transform:translateY(0)}
 
     .cursor-dot,.cursor-outline{
       position:fixed;left:0;top:0;border-radius:50%;pointer-events:none;z-index:10000;
@@ -253,10 +279,13 @@
   </div>
 
   <div class="focus-panel" id="focusPanel">
-    <div class="focus-kicker">AI ERA / NODE <span id="nodeNum">01</span></div>
+    <div class="focus-kicker">AI ERA</div>
     <h2 id="focusTitle">AI Automation</h2>
     <p id="focusText"></p>
-    <button id="backBtn">Return to AI Era core</button>
+    <div class="focus-actions">
+      <a id="focusLink" href="#" class="focus-detail-link">Xem chi tiết</a>
+      <button id="backBtn" class="focus-back-btn">Return to AI Era core</button>
+    </div>
   </div>
 
   <div class="spatial-hero" id="top"></div>
@@ -311,8 +340,16 @@ const rotYVal = document.querySelector('#rotYVal');
 const scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0x030305, .022);
 
+function getBaseCamDist(){
+  const aspect=innerWidth/innerHeight;
+  if(aspect<0.6) return 17.5;
+  if(aspect<0.8) return 16.5;
+  if(aspect<1.05) return 15.5;
+  if(innerWidth<1100) return 15.0;
+  return 14.5;
+}
 const camera = new THREE.PerspectiveCamera(48, innerWidth/innerHeight, .1, 120);
-camera.position.set(0, .2, 14.5);
+camera.position.set(0, .2, getBaseCamDist());
 
 const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'high-performance'});
 renderer.setSize(innerWidth,innerHeight);
@@ -399,21 +436,36 @@ for(let i=0;i<44;i++){
 
 // ---------- ecosystem nodes ----------
 const fieldData=[
-  {name:'AI Automation',color:0x818cf8,desc:'Autonomous workflows, orchestration and intelligent process automation that connect tools, data and decisions.'},
-  {name:'AI Agent',color:0x67e8f9,desc:'Goal-driven AI agents that reason, use tools, collaborate and execute multi-step operations across digital systems.'},
-  {name:'Digital Marketing',color:0xc084fc,desc:'AI-assisted growth systems for content, campaigns, audience intelligence, conversion and lifecycle optimization.'},
-  {name:'Quantitative Equity Analysis',color:0x60a5fa,desc:'Data-driven equity research combining quantitative signals, factor models, screening and machine-assisted analysis.'},
-  {name:'AI-driven SEO web design',color:0x5eead4,desc:'Search-first web experiences combining technical SEO, semantic architecture, AI discovery and conversion-focused design.'},
-  {name:'SaaS iSpa',color:0xf0abfc,desc:'Vertical SaaS infrastructure for spa operations, customer journeys, automation, analytics and intelligent service management.'}
+  {name:'AI Automation',color:0x818cf8,desc:'Autonomous workflows, orchestration and intelligent process automation that connect tools, data and decisions.',url:'../ai-era-site/ai-automation-ai-agent.html'},
+  {name:'AI Agent',color:0x67e8f9,desc:'Goal-driven AI agents that reason, use tools, collaborate and execute multi-step operations across digital systems.',url:'../ai-era-site/ai-automation-ai-agent.html'},
+  {name:'Digital Marketing',color:0xc084fc,desc:'AI-assisted growth systems for content, campaigns, audience intelligence, conversion and lifecycle optimization.',url:'../ai-era-site/digital-marketing-ai-content.html'},
+  {name:'Fintech & AI Quant Finance',color:0x60a5fa,desc:'Data-driven financial research combining quantitative signals, factor models, screening and machine-assisted analysis.',url:'../ai-era-site/fintech-ai-quant-finance.html'},
+  {name:'AI-driven SEO web design',color:0x5eead4,desc:'Search-first web experiences combining technical SEO, semantic architecture, AI discovery and conversion-focused design.',url:'../ai-era-site/thiet-ke-website-chuan-seo.html'},
+  {name:'SaaS iSpa',color:0xf0abfc,desc:'Vertical SaaS infrastructure for spa operations, customer journeys, automation, analytics and intelligent service management.',url:'../ai-era-site/phan-mem-quan-ly-doanh-nghiep.html'}
 ];
 
 const nodes=[];
 const labelEls=[];
-const orbitX=5.8, orbitY=3.75;
+function getResponsiveOrbits(){
+  const w=innerWidth, h=innerHeight, aspect=w/h;
+  let oX=5.8, oY=3.75;
+  if(aspect<0.7){ const t=Math.max(0,Math.min(1,(aspect-0.42)/0.28)); oX=2.85+t*0.75; oY=4.2-t*0.3; }
+  else if(aspect<1.05){ const t=(aspect-0.7)/0.35; oX=3.6+t*1.3; oY=3.9-t*0.2; }
+  else if(w<1280){ const t=Math.max(0,(w-900)/380); oX=4.8+t*1.0; oY=3.4+t*0.35; }
+  return {orbitX:oX,orbitY:oY};
+}
+function updateNodeOrbits(){
+  const {orbitX,orbitY}=getResponsiveOrbits();
+  nodes.forEach((n,i)=>{
+    const a=i/nodes.length*Math.PI*2-Math.PI/2;
+    n.base.set(Math.cos(a)*orbitX,Math.sin(a)*orbitY,Math.sin(a*1.7)*1.05);
+  });
+}
+const initOrb=getResponsiveOrbits();
 
 fieldData.forEach((d,i)=>{
   const a=i/fieldData.length*Math.PI*2-Math.PI/2;
-  const base=new THREE.Vector3(Math.cos(a)*orbitX,Math.sin(a)*orbitY,Math.sin(a*1.7)*1.05);
+  const base=new THREE.Vector3(Math.cos(a)*initOrb.orbitX,Math.sin(a)*initOrb.orbitY,Math.sin(a*1.7)*1.05);
 
   const group=new THREE.Group();
   group.position.copy(base); world.add(group);
@@ -526,6 +578,8 @@ function focusNode(i){
   labelEls.forEach((el,j)=>el.classList.toggle('active',j===i));
   focusTitle.textContent=n.name;
   focusText.textContent=n.desc;
+  const focusLink = document.querySelector('#focusLink');
+  if (focusLink && n.url) focusLink.setAttribute('href', n.url);
   nodeNum.textContent=String(i+1).padStart(2,'0');
   focusVal.textContent=`NODE 0${i+1}`;
   focusPanel.classList.add('show');
@@ -535,11 +589,12 @@ function resetView(){
   selected=-1;
   targetRot.x=targetRot.y=targetRot.z=0;
   targetLook.set(0,0,0);
-  startFlight(new THREE.Vector3(0,.2,14.5),new THREE.Vector3(0,0,0),1350);
+  const bd=getBaseCamDist();
+  startFlight(new THREE.Vector3(0,.2,bd),new THREE.Vector3(0,0,0),1350);
   labelEls.forEach(el=>el.classList.remove('active'));
   focusVal.textContent='CORE';
   focusPanel.classList.remove('show');
-  cameraDistance=14.5;
+  cameraDistance=bd;
 }
 document.querySelector('#resetBtn').onclick=resetView;
 document.querySelector('#backBtn').onclick=resetView;
@@ -603,19 +658,26 @@ function cursorLoop(){
 cursorLoop();
 
 function projectLabels(){
+  const w=innerWidth, h=innerHeight;
   nodes.forEach((n,i)=>{
     const wp=n.group.getWorldPosition(new THREE.Vector3());
     const p=wp.clone().project(camera);
-    const x=(p.x*.5+.5)*innerWidth;
-    const y=(-p.y*.5+.5)*innerHeight;
+    let x=(p.x*.5+.5)*w;
+    let y=(-p.y*.5+.5)*h;
     const facing=p.z<1 && p.z>-1;
+    if(w<900){
+      const halfW=(n.el.offsetWidth||100)/2+10;
+      const halfH=(n.el.offsetHeight||28)/2+6;
+      x=Math.max(halfW,Math.min(w-halfW,x));
+      y=Math.max(halfH+50,Math.min(h-halfH-60,y));
+    }
     n.el.style.left=x+'px';n.el.style.top=y+'px';
     n.el.style.opacity=facing?'1':'0';
     n.el.style.pointerEvents=facing?'auto':'none';
   });
   const cp=coreGroup.getWorldPosition(new THREE.Vector3()).project(camera);
-  coreLabel.style.left=((cp.x*.5+.5)*innerWidth)+'px';
-  coreLabel.style.top=((-cp.y*.5+.5)*innerHeight)+'px';
+  coreLabel.style.left=((cp.x*.5+.5)*w)+'px';
+  coreLabel.style.top=((-cp.y*.5+.5)*h)+'px';
   coreLabel.style.opacity=(cp.z<1&&cp.z>-1&&selected<0)?'1':'.2';
 }
 
@@ -704,6 +766,8 @@ addEventListener('resize',()=>{
   renderer.setSize(innerWidth,innerHeight);
   composer.setSize(innerWidth,innerHeight);
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  updateNodeOrbits();
+  if(selected<0 && !flight) cameraDistance=getBaseCamDist();
 });
 </script>
 </body>

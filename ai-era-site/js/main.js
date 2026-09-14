@@ -2,9 +2,9 @@
 import * as THREE from 'three';
 import { scene, camera, renderer, composer, onResize } from './three/scene-setup.js';
 import { coreGroup, animateCore } from './three/core.js';
-import { nodes, animateNodes, projectLabels } from './three/nodes.js';
+import { nodes, animateNodes, projectLabels, updateNodeOrbits } from './three/nodes.js';
 import { animateStarfield } from './three/starfield.js';
-import { initControls, updateCamera, pointer, selected } from './three/camera-controller.js';
+import { initControls, updateCamera, pointer, selected, onCameraResize } from './three/camera-controller.js';
 import { updateHUD } from './three/hud.js';
 import { applyQualityEffects } from './three/effects.js';
 import { initCursor } from './cursor.js';
@@ -80,7 +80,12 @@ if ('requestIdleCallback' in window) {
 }
 
 // Window resize
-addEventListener('resize', onResize, { passive: true });
+function handleWindowResize() {
+  onResize();
+  updateNodeOrbits();
+  onCameraResize();
+}
+addEventListener('resize', handleWindowResize, { passive: true });
 
 // Contact footer close button — scroll back to top
 const closeBtn = document.getElementById('contactClose');

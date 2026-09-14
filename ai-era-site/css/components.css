@@ -47,7 +47,7 @@
 
 /* ----- Focus Panel (glassmorphism) ----- */
 .focus-panel{
-  position:fixed;right:var(--space-lg);bottom:var(--space-lg);z-index:22;
+  position:fixed;right:var(--space-lg);bottom:var(--space-lg);z-index:26;
   width:min(380px,calc(100vw - 48px));
   border:1px solid rgba(255,255,255,0.12);
   background:rgba(12,14,24,0.85);
@@ -739,7 +739,7 @@ body.dragging .cursor-outline{
 
 /* ----- Hamburger Menu & Dropdown Panel (Three.js 3D Icon) ----- */
 .menu-toggle{
-  display:inline-flex;
+  display:none; /* TẠM ẨN - chưa cần thiết. Đổi lại "inline-flex" khi cần dùng menu. */
   align-items:center;
   justify-content:center;
   width:38px;

@@ -3,7 +3,7 @@
    ============================================ */
 
 /* ----- Navigation ----- */
-nav{
+.site-nav{
   position:fixed;left:0;right:0;top:0;z-index:30;
   display:flex;align-items:center;justify-content:space-between;
   padding:22px var(--space-xl);
@@ -53,7 +53,10 @@ nav{
 }
 
 /* ----- Labels Container ----- */
-#labels{position:fixed;inset:0;z-index:12;pointer-events:none}
+/* z-index phải > .intro(18), .hud(18), .controls(20), .focus-panel(22)
+   để node label luôn nổi trên các panel UI, không bị che mất/che click.
+   Vẫn < .site-nav(30) để header/hamburger menu không bị đè lên. */
+#labels{position:fixed;inset:0;z-index:24;pointer-events:none}
 
 /* ----- Controls bar ----- */
 .controls{
