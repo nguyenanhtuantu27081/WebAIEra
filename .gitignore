@@ -39,3 +39,9 @@ next-env.d.ts
 
 # Archives
 *.zip
+
+# Scratch and local helper scripts
+scratch_scan.ps1
+check_source.js
+ai-era-site/*.py
+

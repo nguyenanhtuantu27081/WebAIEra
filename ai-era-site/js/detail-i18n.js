@@ -4,6 +4,13 @@ import { getCurrentLang, setLanguage } from './i18n.js';
 export const detailTranslations = {
   vi: {
     'back-link': '← Quay lại AI Era Ecosystem',
+    'breadcrumb-home': 'Trang chủ',
+    'auto-breadcrumb-current': 'AI Automation & AI Agent',
+    'mkt-breadcrumb-current': 'Digital Marketing & Nội dung AI',
+    'land-breadcrumb-current': 'Landing Page & Hosting',
+    'pm-breadcrumb-current': 'Phần mềm quản lý doanh nghiệp',
+    'quant-breadcrumb-current': 'Công nghệ tài chính & Định lượng AI',
+    'seo-breadcrumb-current': 'Thiết kế website chuẩn SEO',
     // 1. ai-automation-ai-agent
     'auto-meta-desc': 'AI Era — AI Automation & AI Agent: tự động hoá quy trình nghiệp vụ, triển khai AI Agent xử lý khách hàng và tác vụ đa bước.',
     'auto-meta-title': 'AI Automation & AI Agent — AI Era',
@@ -222,11 +229,19 @@ export const detailTranslations = {
     'footer-title': 'Kết nối ngay với AI Era',
     'footer-chat-now': 'Chat ngay',
     'footer-phone-label': 'Điện thoại',
+    'footer-services-label': 'Dịch vụ',
     'footer-subtitle': 'NEXT-GEN AI SOLUTIONS PLATFORM',
     'footer-back-top': '↑ VỀ ĐẦU TRANG'
   },
   en: {
     'back-link': '← Return to AI Era Ecosystem',
+    'breadcrumb-home': 'Home',
+    'auto-breadcrumb-current': 'AI Automation & AI Agent',
+    'mkt-breadcrumb-current': 'Digital Marketing & AI Content',
+    'land-breadcrumb-current': 'Landing Page & Hosting',
+    'pm-breadcrumb-current': 'Enterprise Industry Software',
+    'quant-breadcrumb-current': 'Fintech & AI Quant Finance',
+    'seo-breadcrumb-current': 'SEO-Optimised Website',
     // 1. ai-automation-ai-agent
     'auto-meta-desc': 'AI Era — AI Automation & AI Agent: automate business processes, deploy AI Agents for customer support and multi-step tasks.',
     'auto-meta-title': 'AI Automation & AI Agent — AI Era',
@@ -445,6 +460,7 @@ export const detailTranslations = {
     'footer-title': 'Connect with AI Era',
     'footer-chat-now': 'Chat now',
     'footer-phone-label': 'Phone',
+    'footer-services-label': 'Services',
     'footer-subtitle': 'NEXT-GEN AI SOLUTIONS PLATFORM',
     'footer-back-top': '↑ BACK TO TOP'
   }

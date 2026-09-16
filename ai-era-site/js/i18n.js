@@ -42,6 +42,7 @@ const translations = {
     'footer-title': 'Kết nối ngay với AI Era',
     'footer-chat-now': 'Chat ngay',
     'footer-phone-label': 'Điện thoại',
+    'footer-services-label': 'Dịch vụ',
     'footer-subtitle': 'AIERA SOLUTIONS · NEXT-GEN AI PLATFORM',
     'footer-back-top': '↑ TRỞ VỀ AI ERA core',
   },
@@ -85,6 +86,7 @@ const translations = {
     'footer-title': 'Connect with AI Era',
     'footer-chat-now': 'Chat now',
     'footer-phone-label': 'Phone',
+    'footer-services-label': 'Services',
     'footer-subtitle': 'INTELLIGENCE ECOSYSTEM',
     'footer-back-top': '↑ RETURN TO AI ERA CORE',
   }

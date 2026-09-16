@@ -50,6 +50,43 @@ export function getResponsiveOrbits() {
   return { orbitX, orbitY };
 }
 
+// Node ở chỉ số này LUÔN nằm thẳng đứng phía trên hạt nhân (do công thức góc bên dưới
+// chia đều 6 node quanh vòng tròn, bắt đầu từ -90°). Trên màn hình hẹp/dọc (điện thoại),
+// vị trí trên-cùng này dễ đè lên dòng tiêu đề hero. Kéo riêng node này gần hạt nhân hơn
+// (chỉ áp dụng ở màn hình hẹp) để né tiêu đề mà không ảnh hưởng 5 node còn lại.
+//
+// LƯU Ý: tiêu đề hero tiếng Việt ("Trí tuệ cho mọi quyết định kinh doanh.") dài hơn
+// bản tiếng Anh nên thường xuống 3 dòng thay vì 2 dòng trên điện thoại → cần độ dịch
+// chuyển LỚN HƠN cho 'vi' so với 'en'. Vì lý do này, 2 hằng số dưới đây phụ thuộc
+// vào ngôn ngữ hiện tại chứ không phải 1 giá trị cố định.
+const TOP_NODE_INDEX = 3;
+const MOBILE_ASPECT_BREAKPOINT = 0.7;
+
+// { pullIn: tỉ lệ khoảng cách còn lại của riêng node trên-cùng, worldOffsetY: dịch cả cụm xuống }
+const MOBILE_CLEARANCE = {
+  vi: { pullIn: 0.66, worldOffsetY: -0.95 }, // tiêu đề 3 dòng -> cần né nhiều hơn
+  en: { pullIn: 0.76, worldOffsetY: -0.55 }, // tiêu đề 2 dòng
+};
+
+function getMobileClearance() {
+  const lang = getCurrentLang();
+  return MOBILE_CLEARANCE[lang] || MOBILE_CLEARANCE.en;
+}
+
+function getTopNodePullIn() {
+  const aspect = window.innerWidth / window.innerHeight;
+  return aspect < MOBILE_ASPECT_BREAKPOINT ? getMobileClearance().pullIn : 1;
+}
+
+// Dời toàn bộ cụm node + hạt nhân xuống dưới một chút trên màn hình hẹp/dọc,
+// để cụm né được vùng tiêu đề hero cố định phía trên (chỉ dịch theo world unit,
+// không ảnh hưởng bố cục desktop).
+function getWorldYOffset() {
+  const aspect = window.innerWidth / window.innerHeight;
+  if (aspect < MOBILE_ASPECT_BREAKPOINT) return getMobileClearance().worldOffsetY;
+  return 0;
+}
+
 export const nodes = [];
 export const labelEls = [];
 
@@ -60,23 +97,29 @@ function getNodeName(i, lang) {
 
 export function updateNodeOrbits() {
   const { orbitX, orbitY } = getResponsiveOrbits();
+  const pullIn = getTopNodePullIn();
+  world.position.y = getWorldYOffset();
   nodes.forEach((n, i) => {
     const a = i / nodes.length * Math.PI * 2 - Math.PI / 2;
+    const scale = i === TOP_NODE_INDEX ? pullIn : 1;
     n.base.set(
-      Math.cos(a) * orbitX,
-      Math.sin(a) * orbitY,
+      Math.cos(a) * orbitX * scale,
+      Math.sin(a) * orbitY * scale,
       Math.sin(a * 1.7) * 1.05
     );
   });
 }
 
 const initOrbits = getResponsiveOrbits();
+const initPullIn = getTopNodePullIn();
+world.position.y = getWorldYOffset();
 
 NODES.forEach((d, i) => {
   const a = i / NODES.length * Math.PI * 2 - Math.PI / 2;
+  const scale = i === TOP_NODE_INDEX ? initPullIn : 1;
   const base = new THREE.Vector3(
-    Math.cos(a) * initOrbits.orbitX,
-    Math.sin(a) * initOrbits.orbitY,
+    Math.cos(a) * initOrbits.orbitX * scale,
+    Math.sin(a) * initOrbits.orbitY * scale,
     Math.sin(a * 1.7) * 1.05
   );
 
@@ -169,6 +212,9 @@ onLanguageChange((lang) => {
     const nameEl = n.el.querySelector('.node-label-name');
     if (nameEl) nameEl.textContent = getNodeName(i, lang);
   });
+  // Tiêu đề hero đổi độ dài theo ngôn ngữ (VI thường dài hơn, xuống 3 dòng trên mobile)
+  // -> tính lại vị trí node/hạt nhân để né đúng theo ngôn ngữ mới.
+  updateNodeOrbits();
 });
 
 // Animate nodes — called every frame
