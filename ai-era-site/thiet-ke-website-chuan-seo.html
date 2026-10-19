@@ -41,6 +41,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
   </noscript>
   <link rel="stylesheet" href="./css/bundle.min.css?v=20260914.1">
+  <link rel="stylesheet" href="./css/grid-beam-background.css?v=1.0.0">
 
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -108,7 +109,14 @@
 }
   </script>
 </head>
-<body id="top">
+<body id="top" class="has-ux226-grid">
+  <!-- UX-226 decorative background; kept separate from page content. -->
+  <div class="grid-beam-background" aria-hidden="true">
+    <div class="grid-beam-background__grid"></div>
+    <div class="grid-beam-background__grid-glow"></div>
+    <div class="grid-beam-background__ambient-glow"></div>
+    <canvas class="grid-beam-background__canvas"></canvas>
+  </div>
   <!-- Navigation -->
   <nav class="site-nav">
     <a href="./" class="logo" style="text-decoration:none;color:inherit;">
@@ -232,6 +240,7 @@
   </script>
   <script type="module" src="./js/contact-footer.js?v=20260914.1"></script>
   <script type="module" src="./js/menu-init.js?v=20260914.1"></script>
+  <script src="./js/grid-beam-background.js?v=1.0.0" defer></script>
 </body>
 </html>
 

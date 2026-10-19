@@ -1,0 +1,107 @@
+/*
+ * AI Era — UX-226 Grid-Beam Background
+ * Adapted from Lucian UX/UI Prompt #226.
+ * Decorative layer only; must never block page interaction.
+ */
+.grid-beam-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  color: #f2f4ff;
+  --ux226-mx: -200px;
+  --ux226-my: -200px;
+}
+
+/* Base grid: preserve UX-226's 34px spacing and .07 white line alpha. */
+.grid-beam-background__grid,
+.grid-beam-background__grid-glow {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .07) 1px, transparent 1px);
+  background-size: 34px 34px;
+  background-position: -1px -1px;
+}
+
+/* UX-226 base grid radial fade.
+   Requested scope: visible grid footprint is about 30% of the viewport area.
+   31% x 31% elliptical radii yield approximately pi * .31 * .31 = 30% area.
+   The grid fades softly toward the edge instead of ending with a hard boundary. */
+.grid-beam-background__grid {
+  -webkit-mask-image: radial-gradient(31% 31% at 50% 45%, #000 0%, transparent 100%);
+  mask-image: radial-gradient(31% 31% at 50% 45%, #000 0%, transparent 100%);
+}
+
+/* Brighter 90px cursor hotspot, matching .u226-gl. */
+.grid-beam-background__grid-glow {
+  background-image:
+    linear-gradient(rgba(129, 140, 248, .55) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, .55) 1px, transparent 1px);
+  -webkit-mask-image: radial-gradient(90px 90px at var(--ux226-mx) var(--ux226-my), #000, transparent);
+  mask-image: radial-gradient(90px 90px at var(--ux226-mx) var(--ux226-my), #000, transparent);
+  transition: opacity .4s;
+}
+
+/* Central violet glow from the source demo. */
+.grid-beam-background__ambient-glow {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 260px;
+  height: 180px;
+  margin: -90px 0 0 -130px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(99, 102, 241, .35), transparent);
+  filter: blur(10px);
+}
+
+/* Canvas draws moving horizontal/vertical beams. */
+.grid-beam-background__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Content should paint above the background; keep fixed nav/menu/footer interactive. */
+body.has-ux226-grid > .site-nav,
+body.has-ux226-grid > .site-menu-panel,
+body.has-ux226-grid > .page,
+body.has-ux226-grid > .contact-footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* Keep text contrast on legal/policy pages without deleting the effect. */
+body.has-ux226-grid[data-page-type="legal"] .grid-beam-background__grid {
+  opacity: .78;
+}
+body.has-ux226-grid[data-page-type="legal"] .grid-beam-background__ambient-glow {
+  opacity: .65;
+}
+
+/* Responsive: preserve grid character but prevent a dense appearance on narrow screens. */
+@media (max-width: 640px) {
+  .grid-beam-background__grid,
+  .grid-beam-background__grid-glow {
+    background-size: 34px 34px;
+  }
+  .grid-beam-background__ambient-glow {
+    width: 220px;
+    height: 150px;
+    margin: -75px 0 0 -110px;
+  }
+}
+
+/* Source demo disables motion for users who request reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  .grid-beam-background__grid-glow {
+    transition: none;
+  }
+}
