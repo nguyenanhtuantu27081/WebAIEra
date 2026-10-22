@@ -6,6 +6,7 @@ import { coreGroup } from './core.js';
 import { nodes, labelEls } from './nodes.js';
 import { NODES } from '../data/nodes.js';
 import { onLanguageChange, getCurrentLang, nodeTranslations, focusTranslations } from '../i18n.js';
+import { logDiagInfo } from '../diagnostics.js';
 
 // ----- DOM refs -----
 const focusPanel = document.querySelector('#focusPanel');
@@ -84,6 +85,10 @@ function focusNode(i) {
   const n = nodes[i];
   if (!n) return; // guard: node not yet built
   const data = NODES[i];
+  logDiagInfo('node_selection_changed', {
+    selectedNode: i,
+    nodeName: data?.name || null
+  });
   const wp = n.group.getWorldPosition(new THREE.Vector3());
   const outward = wp.clone().normalize();
   const toPos = wp.clone().add(outward.multiplyScalar(3.25)).add(new THREE.Vector3(0, .45, 1.1));
@@ -106,6 +111,10 @@ function focusNode(i) {
 
 function resetView() {
   selected = -1;
+  logDiagInfo('node_selection_changed', {
+    selectedNode: -1,
+    action: 'reset_view'
+  });
   targetRot.x = targetRot.y = targetRot.z = 0;
   targetLook.set(0, 0, 0);
   const baseDist = getBaseCameraDistance();

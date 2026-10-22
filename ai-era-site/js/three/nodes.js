@@ -1,4 +1,5 @@
 // js/three/nodes.js — 6 business ecosystem nodes + energy lines + labels
+// FIX: mobile-index-webgl-crash — hide pulse lines on mobile, stop per-frame computeLineDistances
 import * as THREE from 'three';
 import { world } from './scene-setup.js';
 import { glowTex } from './core.js';
@@ -6,6 +7,12 @@ import { NODES } from '../data/nodes.js';
 import { getCurrentLang, onLanguageChange, nodeTranslations } from '../i18n.js';
 
 const labelsRoot = document.querySelector('#labels');
+
+// FIX: module-level low-power detection to skip pulse line work on mobile
+function isLowPowerViewport() {
+  return window.innerWidth < 768 ||
+    window.matchMedia?.('(pointer: coarse)')?.matches;
+}
 
 // Phải khớp với FOV khai báo ở scene-setup.js (new THREE.PerspectiveCamera(48, ...))
 const CAMERA_FOV_DEG = 48;
@@ -184,6 +191,10 @@ NODES.forEach((d, i) => {
   });
   const pulseLine = new THREE.Line(pulseGeo, pulseMat);
   pulseLine.computeLineDistances();
+  // FIX: hide pulse line on mobile to avoid per-frame VRAM leak from computeLineDistances
+  if (isLowPowerViewport()) {
+    pulseLine.visible = false;
+  }
   world.add(pulseLine);
 
   // DOM label — uses current language
@@ -242,7 +253,12 @@ export function animateNodes(t, selected) {
     b[4] = n.group.position.y;
     b[5] = n.group.position.z;
     n.pulseLine.geometry.attributes.position.needsUpdate = true;
-    n.pulseLine.computeLineDistances();
+
+    // FIX: only recompute line distances on desktop — on mobile this creates
+    // new GPU buffers every frame (6 nodes × 60fps = 360 allocs/s → VRAM leak → crash)
+    if (!isLowPowerViewport()) {
+      n.pulseLine.computeLineDistances();
+    }
     n.line.material.opacity = selected === i ? .48 : .11;
   });
 }

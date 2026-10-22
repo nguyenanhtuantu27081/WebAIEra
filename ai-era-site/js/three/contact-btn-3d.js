@@ -1,6 +1,8 @@
 // js/three/contact-btn-3d.js
 // 3D holographic quantum beacon for the Contact CTA button
+// FIX: mobile-index-webgl-crash — lower DPR on mobile, stop loop when tab hidden
 import * as THREE from 'three';
+import { logDiagInfo, logDiagError, logDiagWarn } from '../diagnostics.js';
 
 export function initContactBtn3D() {
   const canvas = document.querySelector('#contactBtnCanvas');
@@ -8,7 +10,11 @@ export function initContactBtn3D() {
   if (!canvas || !btn) return;
 
   const size = 56;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  // FIX: cap DPR to 1 on mobile to reduce GPU load for decorative canvas
+  const isSmallOrTouch =
+    window.innerWidth < 768 ||
+    window.matchMedia?.('(pointer: coarse)')?.matches;
+  const dpr = Math.min(window.devicePixelRatio || 1, isSmallOrTouch ? 1 : 2);
 
   // Scene & Camera
   const scene = new THREE.Scene();
@@ -25,6 +31,10 @@ export function initContactBtn3D() {
       powerPreference: 'low-power'
     });
   } catch (e) {
+    logDiagError('webgl_renderer_create_failed', {
+      renderer: 'contact-button',
+      message: String(e?.message || e)
+    });
     console.warn('WebGL not supported for contact button:', e);
     return;
   }
@@ -32,6 +42,26 @@ export function initContactBtn3D() {
   renderer.setSize(size, size);
   renderer.setPixelRatio(dpr);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  logDiagInfo('webgl_renderer_created', {
+    renderer: 'contact-button',
+    dpr,
+    size
+  });
+
+  canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    logDiagError('webgl_context_lost', {
+      renderer: 'contact-button',
+      statusMessage: e.statusMessage || 'unknown'
+    });
+  });
+
+  canvas.addEventListener('webglcontextrestored', () => {
+    logDiagWarn('webgl_context_restored', {
+      renderer: 'contact-button'
+    });
+  });
 
   // Lights
   const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
@@ -175,13 +205,22 @@ export function initContactBtn3D() {
   let isVisible = true;
 
   // Pause when tab is not visible
+  // FIX: properly track and restart loop to avoid double RAF registration
+  let loopRunning = false;
   document.addEventListener('visibilitychange', () => {
     isVisible = !document.hidden;
+    if (isVisible && !loopRunning) {
+      loopRunning = true;
+      renderLoop();
+    }
   });
 
   function renderLoop() {
+    if (!isVisible) {
+      loopRunning = false;
+      return;
+    }
     requestAnimationFrame(renderLoop);
-    if (!isVisible) return;
 
     const t = clock.getElapsedTime();
     const delta = clock.getDelta();
@@ -229,5 +268,6 @@ export function initContactBtn3D() {
     renderer.render(scene, camera);
   }
 
+  loopRunning = true;
   renderLoop();
 }

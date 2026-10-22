@@ -1,5 +1,7 @@
 // js/contact-footer.js — Three.js particle-network constellation for footer
+// FIX: mobile-index-webgl-crash — start/stop animation based on visibility
 import * as THREE from 'three';
+import { logDiagInfo, logDiagError, logDiagWarn } from './diagnostics.js';
 
 const PARTICLE_COUNT = 120;
 const CONNECTION_DISTANCE = 2.8;
@@ -18,8 +20,9 @@ const PALETTE = [
 
 let renderer, scene, camera, particles, lineMesh;
 let mouseX = 0, mouseY = 0;
-let animId = null;
+let animId = 0;
 let mounted = false;
+let footerVisible = false;
 
 // Particle data arrays
 const positions = new Float32Array(PARTICLE_COUNT * 3);
@@ -58,11 +61,40 @@ function createScene(container) {
   const h = Math.max(rect.height, 300);
 
   // Renderer
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
+  } catch (err) {
+    logDiagError('webgl_renderer_create_failed', {
+      renderer: 'footer',
+      message: String(err?.message || err)
+    });
+    return;
+  }
   renderer.setSize(w, h);
   renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   container.appendChild(renderer.domElement);
+
+  logDiagInfo('webgl_renderer_created', {
+    renderer: 'footer',
+    width: w,
+    height: h,
+    dpr: Math.min(devicePixelRatio, 1.5)
+  });
+
+  renderer.domElement.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    logDiagError('webgl_context_lost', {
+      renderer: 'footer',
+      statusMessage: e.statusMessage || 'unknown'
+    });
+  });
+
+  renderer.domElement.addEventListener('webglcontextrestored', () => {
+    logDiagWarn('webgl_context_restored', {
+      renderer: 'footer'
+    });
+  });
 
   // Scene & Camera
   scene = new THREE.Scene();
@@ -212,7 +244,7 @@ function updateParticles(dt) {
 }
 
 function animate() {
-  if (!mounted) return;
+  if (!mounted || !footerVisible || document.hidden) return;
 
   const t = performance.now() * 0.001;
   const dt = Math.min(1 / 30, 0.016);
@@ -236,11 +268,24 @@ function animate() {
   animId = requestAnimationFrame(animate);
 }
 
+// FIX: start/stop helpers to properly manage the footer animation loop
+function startFooterAnimation() {
+  if (animId || !mounted || !footerVisible || document.hidden) return;
+  animate();
+}
+
+function stopFooterAnimation() {
+  if (animId) {
+    cancelAnimationFrame(animId);
+    animId = 0;
+  }
+}
+
 function onResize(container) {
   if (!camera || !renderer) return;
   const rect = container.getBoundingClientRect();
-  const w = Math.max(rect.width, 300);
-  const h = Math.max(rect.height, 300);
+  const w = Math.max(rect.width, 1);
+  const h = Math.max(rect.height, 1);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   renderer.setSize(w, h);
@@ -275,12 +320,16 @@ export function initContactFooter() {
     });
   }
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !mounted) {
+  // FIX: use IntersectionObserver to start/stop animation (not just lazy-init)
+  const footerEl = document.querySelector('.contact-footer');
+  const observeTarget = footerEl || container;
+
+  const observer = new IntersectionObserver(([entry]) => {
+    footerVisible = entry.isIntersecting;
+    if (footerVisible) {
+      if (!mounted) {
         mounted = true;
         createScene(container);
-        animate();
 
         // Mouse tracking
         window.addEventListener('mousemove', onMouseMove, { passive: true });
@@ -288,13 +337,23 @@ export function initContactFooter() {
         // Resize
         const ro = new ResizeObserver(() => onResize(container));
         ro.observe(container);
-
-        observer.disconnect();
       }
-    });
-  }, { threshold: 0.05 });
+      startFooterAnimation();
+    } else {
+      stopFooterAnimation();
+    }
+  }, { threshold: 0.01 });
 
-  observer.observe(container);
+  observer.observe(observeTarget);
+
+  // FIX: also stop when tab is hidden, restart when tab visible + footer in view
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopFooterAnimation();
+    } else if (footerVisible) {
+      startFooterAnimation();
+    }
+  });
 }
 
 // Auto-init when DOM is ready

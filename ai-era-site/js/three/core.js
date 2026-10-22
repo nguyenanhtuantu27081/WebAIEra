@@ -1,4 +1,5 @@
 // js/three/core.js — AI Era core mesh, wireframe, halo, orbit rings, neural sparks
+// FIX: mobile-index-webgl-crash — reduced geometry detail, torus segments, spark count
 import * as THREE from 'three';
 import { world } from './scene-setup.js';
 
@@ -25,7 +26,7 @@ world.add(coreGroup);
 
 // Icosahedron core
 export const core = new THREE.Mesh(
-  new THREE.IcosahedronGeometry(1.28, 5),
+  new THREE.IcosahedronGeometry(1.28, 2),
   new THREE.MeshPhysicalMaterial({
     color: 0x11121e,
     metalness: .7,
@@ -40,7 +41,7 @@ coreGroup.add(core);
 
 // Wireframe overlay
 export const coreWire = new THREE.LineSegments(
-  new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.39, 2)),
+  new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.39, 1)),
   new THREE.LineBasicMaterial({ color: 0xa5b4fc, transparent: true, opacity: .19 })
 );
 coreGroup.add(coreWire);
@@ -61,7 +62,7 @@ coreGroup.add(halo);
 export const coreRings = [];
 [1.72, 2.08, 2.48].forEach((r, i) => {
   const torus = new THREE.Mesh(
-    new THREE.TorusGeometry(r, .009 + i * .003, 8, 190),
+    new THREE.TorusGeometry(r, .009 + i * .003, 6, 96),
     new THREE.MeshBasicMaterial({
       color: i === 1 ? 0x67e8f9 : 0x818cf8,
       transparent: true,
@@ -77,7 +78,7 @@ export const coreRings = [];
 // Neural sparks
 const sparkGroup = new THREE.Group();
 coreGroup.add(sparkGroup);
-for (let i = 0; i < 44; i++) {
+for (let i = 0; i < 24; i++) {
   const a = Math.random() * Math.PI * 2;
   const b = Math.acos(THREE.MathUtils.randFloatSpread(2));
   const r = THREE.MathUtils.randFloat(1.55, 2.72);

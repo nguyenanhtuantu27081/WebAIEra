@@ -77,6 +77,7 @@ SAFETY_IGNORE_PATTERNS = [
     # Temporary scratch scripts
     "scratch_scan.ps1",
     "check_source.js",
+    "commit-to-github.ps1",
     "ai-era-site/*.py",
     "ai-era-site/js/three/nodes_old.js",
 ]

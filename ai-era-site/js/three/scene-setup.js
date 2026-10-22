@@ -1,13 +1,35 @@
 // js/three/scene-setup.js — Scene, camera, renderer, composer, bloom
 // Optimized: conditional antialias, powerPreference, and Bloom per tier (A.6 + F.6)
+// FIX: mobile-index-webgl-crash — DPR helper, context loss listener, debounced resize, try/catch renderer
 import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
+import { logDiagInfo, logDiagWarn, logDiagError } from '../diagnostics.js';
 
-const tier = getQualityTier();
+export const tier = getQualityTier();
 const cfg = TIER_CONFIG[tier];
+
+logDiagInfo('render_quality_selected', {
+  tier,
+  configuredDpr: cfg.dpr,
+  antialias: cfg.antialias,
+  bloom: cfg.bloom,
+  pointerCoarse: window.matchMedia?.('(pointer: coarse)')?.matches ?? null,
+  reducedMotion: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? null,
+  saveData: navigator.connection?.saveData ?? null,
+});
+
+// --- DPR helper: cap pixel ratio on mobile/touch to reduce GPU fill-rate ---
+function getRenderPixelRatio() {
+  const isSmallOrTouch =
+    window.innerWidth < 768 ||
+    window.matchMedia?.('(pointer: coarse)')?.matches;
+
+  const cap = isSmallOrTouch ? 1 : cfg.dpr;
+  return Math.min(window.devicePixelRatio || 1, cap);
+}
 
 // Scene
 export const scene = new THREE.Scene();
@@ -26,18 +48,73 @@ export const camera = new THREE.PerspectiveCamera(48, innerWidth / innerHeight, 
 camera.position.set(0, .2, getInitialCameraZ());
 
 // Renderer — A.6: antialias and powerPreference now tier-dependent
+// FIX: wrapped in try/catch for graceful fallback when WebGL unavailable
 const mount = document.querySelector('#webgl');
-export const renderer = new THREE.WebGLRenderer({
-  antialias: cfg.antialias,               // false for LOW (mobile DPI already smooth)
-  alpha: true,
-  powerPreference: cfg.powerPreference     // 'low-power' for LOW, 'default' otherwise
-});
+
+let rendererInstance;
+try {
+  rendererInstance = new THREE.WebGLRenderer({
+    antialias: cfg.antialias,               // false for LOW (mobile DPI already smooth)
+    alpha: true,
+    powerPreference: cfg.powerPreference     // 'low-power' for LOW, 'default' otherwise
+  });
+} catch (error) {
+  logDiagError('webgl_renderer_create_failed', {
+    renderer: 'main',
+    name: String(error?.name || 'Error'),
+    message: String(error?.message || error).slice(0, 1000),
+    tier,
+  });
+  console.error('[WebGL] Unable to create main renderer', error);
+  document.documentElement.classList.add('webgl-unavailable');
+  throw error;
+}
+export const renderer = rendererInstance;
+
 renderer.setSize(innerWidth, innerHeight);
-renderer.setPixelRatio(Math.min(devicePixelRatio, cfg.dpr));
+renderer.setPixelRatio(getRenderPixelRatio());
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.05;
 mount.appendChild(renderer.domElement);
+
+logDiagInfo('webgl_renderer_created', {
+  renderer: 'main',
+  tier,
+  configuredDpr: cfg.dpr,
+  actualDpr: renderer.getPixelRatio(),
+  antialias: cfg.antialias,
+  powerPreference: cfg.powerPreference,
+  canvasWidth: renderer.domElement.width,
+  canvasHeight: renderer.domElement.height,
+});
+
+// --- WebGL context loss diagnostic listeners ---
+renderer.domElement.addEventListener('webglcontextlost', (event) => {
+  event.preventDefault();
+  logDiagError('webgl_context_lost', {
+    renderer: 'main',
+    statusMessage: event.statusMessage || 'unknown',
+    canvasWidth: renderer.domElement.width,
+    canvasHeight: renderer.domElement.height,
+    tier
+  });
+  console.error('[WebGL] Main context lost', {
+    width: window.innerWidth,
+    height: window.innerHeight,
+    dpr: window.devicePixelRatio,
+    tier
+  });
+});
+
+renderer.domElement.addEventListener('webglcontextrestored', () => {
+  logDiagWarn('webgl_context_restored', {
+    renderer: 'main',
+    canvasWidth: renderer.domElement.width,
+    canvasHeight: renderer.domElement.height,
+  });
+  console.warn('[WebGL] Main context restored');
+});
 
 // Post-processing — only create Bloom pass if tier has bloom > 0
 export const composer = new EffectComposer(renderer);
@@ -73,11 +150,37 @@ if (cfg.lights >= 2) {
 export const world = new THREE.Group();
 scene.add(world);
 
-// Resize handler
-export function onResize() {
-  camera.aspect = innerWidth / innerHeight;
+// Resize handler — FIX: debounced to avoid rapid resize on mobile address-bar toggle
+let resizeTimer = 0;
+let lastResizeLogAt = 0;
+
+function resizeNow() {
+  const w = Math.max(1, window.innerWidth);
+  const h = Math.max(1, window.innerHeight);
+
+  camera.aspect = w / h;
   camera.updateProjectionMatrix();
-  renderer.setPixelRatio(Math.min(devicePixelRatio, cfg.dpr));
-  renderer.setSize(innerWidth, innerHeight);
-  composer.setSize(innerWidth, innerHeight);
+
+  renderer.setPixelRatio(getRenderPixelRatio());
+  renderer.setSize(w, h, false);
+  composer.setSize(w, h);
+
+  const now = Date.now();
+  if (now - lastResizeLogAt >= 2000) {
+    lastResizeLogAt = now;
+    logDiagInfo('webgl_resize', {
+      renderer: 'main',
+      width: w,
+      height: h,
+      dpr: renderer.getPixelRatio(),
+      canvasWidth: renderer.domElement.width,
+      canvasHeight: renderer.domElement.height,
+    });
+  }
 }
+
+export function onResize() {
+  window.clearTimeout(resizeTimer);
+  resizeTimer = window.setTimeout(resizeNow, 120);
+}
+

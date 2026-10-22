@@ -2,12 +2,14 @@
 // 3D hamburger icon using Three.js lines in an OrthographicCamera scene
 // Morphs between 3 horizontal bars and an X icon with purple-indigo glow.
 import * as THREE from 'three';
+import { logDiagInfo, logDiagError, logDiagWarn } from '../diagnostics.js';
 
 export function initHamburgerMenu(canvas, panel, button) {
   if (!canvas || !panel || !button) return;
 
   const size = 26;
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const isMobile = window.innerWidth < 768 || window.matchMedia?.('(pointer: coarse)')?.matches;
+  const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
 
   const scene = new THREE.Scene();
   // Orthographic camera covering [-1, 1] bounds
@@ -19,16 +21,40 @@ export function initHamburgerMenu(canvas, panel, button) {
     renderer = new THREE.WebGLRenderer({
       canvas,
       alpha: true,
-      antialias: true,
+      antialias: !isMobile,
       powerPreference: 'low-power'
     });
   } catch (e) {
+    logDiagError('webgl_renderer_create_failed', {
+      renderer: 'hamburger-menu',
+      message: String(e?.message || e)
+    });
     console.warn('WebGL not supported for hamburger menu:', e);
     return;
   }
 
   renderer.setSize(size, size);
   renderer.setPixelRatio(dpr);
+
+  logDiagInfo('webgl_renderer_created', {
+    renderer: 'hamburger-menu',
+    dpr,
+    size
+  });
+
+  canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    logDiagError('webgl_context_lost', {
+      renderer: 'hamburger-menu',
+      statusMessage: e.statusMessage || 'unknown'
+    });
+  });
+
+  canvas.addEventListener('webglcontextrestored', () => {
+    logDiagWarn('webgl_context_restored', {
+      renderer: 'hamburger-menu'
+    });
+  });
 
   // Line materials with purple/indigo glow
   const colorNormal = 0xa5b4fc; // Indigo-2
@@ -149,11 +175,14 @@ export function initHamburgerMenu(canvas, panel, button) {
     });
   });
 
-  // Render & animation loop
+  // Render & animation loop with lifecycle management
   let lastTime = performance.now();
+  let rafId = null;
+  let isRunning = false;
 
   function animate() {
-    requestAnimationFrame(animate);
+    if (!isRunning) return;
+    rafId = requestAnimationFrame(animate);
 
     const now = performance.now();
     const dt = Math.min((now - lastTime) / 1000, 0.1);
@@ -175,5 +204,29 @@ export function initHamburgerMenu(canvas, panel, button) {
     renderer.render(scene, camera);
   }
 
-  animate();
+  function startLoop() {
+    if (isRunning) return;
+    isRunning = true;
+    lastTime = performance.now();
+    rafId = requestAnimationFrame(animate);
+  }
+
+  function stopLoop() {
+    if (!isRunning) return;
+    isRunning = false;
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopLoop();
+    } else {
+      startLoop();
+    }
+  });
+
+  startLoop();
 }

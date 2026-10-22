@@ -32,8 +32,18 @@
    31% x 31% elliptical radii yield approximately pi * .31 * .31 = 30% area.
    The grid fades softly toward the edge instead of ending with a hard boundary. */
 .grid-beam-background__grid {
-  -webkit-mask-image: radial-gradient(31% 31% at 50% 45%, #000 0%, transparent 100%);
-  mask-image: radial-gradient(31% 31% at 50% 45%, #000 0%, transparent 100%);
+  -webkit-mask-image: radial-gradient(
+    ellipse 42% 42% at 50% 45%,
+    #000 0%,
+    #000 74%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    ellipse 42% 42% at 50% 45%,
+    #000 0%,
+    #000 74%,
+    transparent 100%
+  );
 }
 
 /* Brighter 90px cursor hotspot, matching .u226-gl. */

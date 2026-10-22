@@ -1,0 +1,113 @@
+// js/diagnostics.js — Diagnostic logging for WebGL, lifecycle, and errors
+// Configured for multi-project Axiom monitoring with project prefix
+const PROJECT_PREFIX = 'ai-era-site';
+const SESSION_ID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+
+/**
+ * Send log record to ingest or console fallback.
+ * Formatted with project prefix to distinguish in shared Axiom datasets.
+ */
+function emitLog(level, event, details = {}) {
+  const prefixedEvent = `${PROJECT_PREFIX}:${event}`;
+  const record = {
+    project: PROJECT_PREFIX,
+    session: SESSION_ID,
+    event: prefixedEvent,
+    raw_event: event,
+    level,
+    time: new Date().toISOString(),
+    page: window.location.pathname,
+    visibility: document.visibilityState,
+    viewport: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      dpr: window.devicePixelRatio || 1,
+    },
+    details,
+  };
+
+  // 1. Output to browser console (readable in remote debugging and local inspection)
+  const fn = console[level] || console.log;
+  fn.call(console, `[${PROJECT_PREFIX}] [${level.toUpperCase()}] ${event}:`, record);
+
+  // 2. Dispatch a custom DOM event so any global forwarder/collector can capture it
+  try {
+    window.dispatchEvent(new CustomEvent('app:telemetry:log', { detail: record }));
+  } catch (e) {
+    // Ignore in non-browser or restricted environments
+  }
+
+  // 3. Optional endpoint beacon forwarder if configured
+  if (window.__AXIOM_INGEST_ENDPOINT__ && typeof navigator.sendBeacon === 'function') {
+    try {
+      const blob = new Blob([JSON.stringify(record)], { type: 'application/json' });
+      navigator.sendBeacon(window.__AXIOM_INGEST_ENDPOINT__, blob);
+    } catch (_) {}
+  }
+}
+
+export const logDiagInfo = (event, details) => emitLog('info', event, details);
+export const logDiagWarn = (event, details) => emitLog('warn', event, details);
+export const logDiagError = (event, details) => emitLog('error', event, details);
+
+let isInitialized = false;
+
+export function initDiagnostics() {
+  if (isInitialized) return;
+  isInitialized = true;
+
+  // Global uncaught errors
+  window.addEventListener('error', (event) => {
+    const target = event.target;
+    if (target && target !== window) {
+      logDiagError('resource_load_error', {
+        tagName: target.tagName || 'unknown',
+        resource: String(target.src || target.href || '').slice(0, 300),
+      });
+      return;
+    }
+
+    logDiagError('window_error', {
+      message: String(event.message || '').slice(0, 1000),
+      filename: String(event.filename || '').slice(0, 300),
+      line: event.lineno || null,
+      column: event.colno || null,
+      name: String(event.error?.name || ''),
+      stack: String(event.error?.stack || '').slice(0, 2000),
+    });
+  }, true);
+
+  // Unhandled promise rejections
+  window.addEventListener('unhandledrejection', (event) => {
+    const reason = event.reason;
+    logDiagError('unhandled_rejection', {
+      message: String(reason?.message || reason || '').slice(0, 1000),
+      stack: String(reason?.stack || '').slice(0, 2000),
+    });
+  });
+
+  // Page lifecycle events
+  document.addEventListener('visibilitychange', () => {
+    logDiagInfo('visibility_change', {
+      state: document.visibilityState,
+    });
+  });
+
+  window.addEventListener('pagehide', () => {
+    logDiagInfo('pagehide', {});
+  });
+
+  window.addEventListener('pageshow', (event) => {
+    logDiagInfo('pageshow', {
+      persistedFromBFCache: event.persisted,
+    });
+  });
+
+  window.addEventListener('orientationchange', () => {
+    logDiagInfo('orientation_change', {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      orientation: screen.orientation?.type || 'unknown',
+    });
+  });
+}
