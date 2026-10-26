@@ -2,10 +2,17 @@
 // 3D hamburger icon using Three.js lines in an OrthographicCamera scene
 // Morphs between 3 horizontal bars and an X icon with purple-indigo glow.
 import * as THREE from 'three';
+import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
 import { logDiagInfo, logDiagError, logDiagWarn } from '../diagnostics.js';
 
 export function initHamburgerMenu(canvas, panel, button) {
   if (!canvas || !panel || !button) return;
+
+  // Don't create WebGL context if button is hidden or chrome3d is disabled in tier
+  const tier = getQualityTier();
+  if (TIER_CONFIG[tier]?.chrome3d === false || window.getComputedStyle(button).display === 'none') {
+    return;
+  }
 
   const size = 26;
   const isMobile = window.innerWidth < 768 || window.matchMedia?.('(pointer: coarse)')?.matches;

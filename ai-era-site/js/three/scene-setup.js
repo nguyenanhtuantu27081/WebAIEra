@@ -71,11 +71,22 @@ try {
 }
 export const renderer = rendererInstance;
 
+import { reportContextLost } from '../quality-tier.js';
+
+export let contextLost = false;
+
+// Color space & Tone mapping: match linear output when bypassing composer
+if (cfg.postProcessing === false) {
+  renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+  renderer.toneMapping = THREE.NoToneMapping;
+} else {
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+}
+
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(getRenderPixelRatio());
-renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.05;
 mount.appendChild(renderer.domElement);
 
 logDiagInfo('webgl_renderer_created', {
@@ -85,6 +96,7 @@ logDiagInfo('webgl_renderer_created', {
   actualDpr: renderer.getPixelRatio(),
   antialias: cfg.antialias,
   powerPreference: cfg.powerPreference,
+  postProcessing: Boolean(cfg.postProcessing),
   canvasWidth: renderer.domElement.width,
   canvasHeight: renderer.domElement.height,
 });
@@ -92,6 +104,8 @@ logDiagInfo('webgl_renderer_created', {
 // --- WebGL context loss diagnostic listeners ---
 renderer.domElement.addEventListener('webglcontextlost', (event) => {
   event.preventDefault();
+  contextLost = true;
+  reportContextLost();
   logDiagError('webgl_context_lost', {
     renderer: 'main',
     statusMessage: event.statusMessage || 'unknown',
@@ -108,6 +122,7 @@ renderer.domElement.addEventListener('webglcontextlost', (event) => {
 });
 
 renderer.domElement.addEventListener('webglcontextrestored', () => {
+  contextLost = false;
   logDiagWarn('webgl_context_restored', {
     renderer: 'main',
     canvasWidth: renderer.domElement.width,
@@ -116,20 +131,26 @@ renderer.domElement.addEventListener('webglcontextrestored', () => {
   console.warn('[WebGL] Main context restored');
 });
 
-// Post-processing — only create Bloom pass if tier has bloom > 0
-export const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-
+// Post-processing — only create EffectComposer if tier enables postProcessing (desktop/high tier)
+export const usePostProcessing = Boolean(cfg.postProcessing);
+let composerInstance = null;
 export let bloom = null;
-if (cfg.bloom > 0) {
-  bloom = new UnrealBloomPass(
-    new THREE.Vector2(innerWidth, innerHeight), 1.1, .75, .18
-  );
-  bloom.strength = cfg.bloom;
-  bloom.radius = .8;
-  bloom.threshold = .08;
-  composer.addPass(bloom);
+
+if (usePostProcessing) {
+  composerInstance = new EffectComposer(renderer);
+  composerInstance.addPass(new RenderPass(scene, camera));
+
+  if (cfg.bloom > 0) {
+    bloom = new UnrealBloomPass(
+      new THREE.Vector2(innerWidth, innerHeight), 1.1, .75, .18
+    );
+    bloom.strength = cfg.bloom;
+    bloom.radius = .8;
+    bloom.threshold = .08;
+    composerInstance.addPass(bloom);
+  }
 }
+export const composer = composerInstance;
 
 // Lights
 export const ambientLight = new THREE.AmbientLight(0x30304c, .36);
@@ -163,7 +184,9 @@ function resizeNow() {
 
   renderer.setPixelRatio(getRenderPixelRatio());
   renderer.setSize(w, h, false);
-  composer.setSize(w, h);
+  if (usePostProcessing && composer) {
+    composer.setSize(w, h);
+  }
 
   const now = Date.now();
   if (now - lastResizeLogAt >= 2000) {
@@ -181,6 +204,6 @@ function resizeNow() {
 
 export function onResize() {
   window.clearTimeout(resizeTimer);
-  resizeTimer = window.setTimeout(resizeNow, 120);
+  resizeTimer = window.setTimeout(resizeNow, 150);
 }
 

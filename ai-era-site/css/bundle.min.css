@@ -1905,3 +1905,20 @@ body:has(.page){
   color: #ffffff;
 }
 
+
+/* === mobile-perf.css overrides === */
+@media (max-width: 768px), (pointer: coarse) {
+  .grain {
+    display: none !important;
+  }
+
+  /* Disable heavy backdrop-filters on labels, nav and contact CTA to prevent canvas redraw stalls */
+  .node-label,
+  .site-nav,
+  .contact-cta-btn,
+  .contact-item,
+  .contact-footer__card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}

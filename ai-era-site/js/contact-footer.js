@@ -1,6 +1,7 @@
 // js/contact-footer.js — Three.js particle-network constellation for footer
 // FIX: mobile-index-webgl-crash — start/stop animation based on visibility
 import * as THREE from 'three';
+import { getQualityTier, TIER_CONFIG } from './quality-tier.js';
 import { logDiagInfo, logDiagError, logDiagWarn } from './diagnostics.js';
 
 const PARTICLE_COUNT = 120;
@@ -328,6 +329,12 @@ export function initContactFooter() {
     footerVisible = entry.isIntersecting;
     if (footerVisible) {
       if (!mounted) {
+        const tier = getQualityTier();
+        if (TIER_CONFIG[tier]?.footer3d === false) {
+          // Disable 3D footer for mobile/SAFE tier, use CSS background fallback
+          return;
+        }
+
         mounted = true;
         createScene(container);
 

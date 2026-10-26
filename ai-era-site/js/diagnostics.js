@@ -2,16 +2,23 @@
 // Configured for multi-project Axiom monitoring with project prefix
 const PROJECT_PREFIX = 'ai-era-site';
 const SESSION_ID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+export const BUILD_VERSION = '20261026.3';
+const diagnosticStartedAt = performance.now();
+let logSequence = 0;
 
 /**
  * Send log record to ingest or console fallback.
  * Formatted with project prefix to distinguish in shared Axiom datasets.
  */
 function emitLog(level, event, details = {}) {
+  logSequence++;
   const prefixedEvent = `${PROJECT_PREFIX}:${event}`;
   const record = {
     project: PROJECT_PREFIX,
     session: SESSION_ID,
+    buildVersion: BUILD_VERSION,
+    sequence: logSequence,
+    elapsedMs: Math.round(performance.now() - diagnosticStartedAt),
     event: prefixedEvent,
     raw_event: event,
     level,
@@ -55,6 +62,14 @@ let isInitialized = false;
 export function initDiagnostics() {
   if (isInitialized) return;
   isInitialized = true;
+
+  // Drain any early boot errors caught before module evaluation
+  if (Array.isArray(window.__earlyBootErrors) && window.__earlyBootErrors.length > 0) {
+    window.__earlyBootErrors.forEach((err) => {
+      logDiagError('early_boot_error', err);
+    });
+    window.__earlyBootErrors.length = 0;
+  }
 
   // Global uncaught errors
   window.addEventListener('error', (event) => {

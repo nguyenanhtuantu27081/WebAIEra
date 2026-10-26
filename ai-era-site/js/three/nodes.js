@@ -254,34 +254,56 @@ export function animateNodes(t, selected) {
     b[5] = n.group.position.z;
     n.pulseLine.geometry.attributes.position.needsUpdate = true;
 
-    // FIX: only recompute line distances on desktop — on mobile this creates
-    // new GPU buffers every frame (6 nodes × 60fps = 360 allocs/s → VRAM leak → crash)
-    if (!isLowPowerViewport()) {
-      n.pulseLine.computeLineDistances();
+    // FIX: Update dashed line distance without recreating GPU buffers or calling computeLineDistances() per-frame
+    // Line has exactly 2 points: [0, 0, 0] at origin and [b[3], b[4], b[5]] at node
+    const ld = n.pulseLine.geometry.attributes.lineDistance;
+    if (ld && ld.array) {
+      ld.array[1] = Math.hypot(b[3], b[4], b[5]);
+      ld.needsUpdate = true;
     }
     n.line.material.opacity = selected === i ? .48 : .11;
   });
 }
 
-// Project labels onto screen space with smart boundary clamping
+// Reusable scratch vectors for projecting labels
+const _scratchVec = new THREE.Vector3();
+const _scratchCore = new THREE.Vector3();
+let _labelSizesCached = false;
+const _labelDims = [];
+
+export function invalidateLabelSizes() {
+  _labelSizesCached = false;
+}
+
+// Project labels onto screen space with smart boundary clamping and cached DOM sizes
 export function projectLabels(camera, coreGroup, selected) {
   const coreLabel = document.querySelector('.core-label');
   const w = window.innerWidth;
   const h = window.innerHeight;
 
-  nodes.forEach((n) => {
-    const wp = n.group.getWorldPosition(new THREE.Vector3());
-    const p = wp.clone().project(camera);
-    let x = (p.x * .5 + .5) * w;
-    let y = (-p.y * .5 + .5) * h;
-    const facing = p.z < 1 && p.z > -1;
+  if (!_labelSizesCached) {
+    _labelDims.length = 0;
+    nodes.forEach((n) => {
+      _labelDims.push({
+        halfW: (n.el.offsetWidth || 100) / 2 + 10,
+        halfH: (n.el.offsetHeight || 28) / 2 + 6,
+      });
+    });
+    _labelSizesCached = true;
+  }
+
+  nodes.forEach((n, i) => {
+    n.group.getWorldPosition(_scratchVec);
+    _scratchVec.project(camera);
+    let x = (_scratchVec.x * .5 + .5) * w;
+    let y = (-_scratchVec.y * .5 + .5) * h;
+    const facing = _scratchVec.z < 1 && _scratchVec.z > -1;
 
     // Viewport safety margin: clamp label coordinates so they never clip off screen
     if (w < 900) {
-      const halfW = (n.el.offsetWidth || 100) / 2 + 10;
-      const halfH = (n.el.offsetHeight || 28) / 2 + 6;
-      x = Math.max(halfW, Math.min(w - halfW, x));
-      y = Math.max(halfH + 50, Math.min(h - halfH - 60, y));
+      const dim = _labelDims[i] || { halfW: 60, halfH: 20 };
+      x = Math.max(dim.halfW, Math.min(w - dim.halfW, x));
+      y = Math.max(dim.halfH + 50, Math.min(h - dim.halfH - 60, y));
     }
 
     n.el.style.left = x + 'px';
@@ -290,9 +312,12 @@ export function projectLabels(camera, coreGroup, selected) {
     n.el.style.pointerEvents = facing ? 'auto' : 'none';
   });
 
-  const cp = coreGroup.getWorldPosition(new THREE.Vector3()).project(camera);
-  coreLabel.style.left = ((cp.x * .5 + .5) * w) + 'px';
-  coreLabel.style.top = ((-cp.y * .5 + .5) * h) + 'px';
-  coreLabel.style.opacity = (cp.z < 1 && cp.z > -1 && selected < 0) ? '1' : '.2';
+  if (coreLabel) {
+    coreGroup.getWorldPosition(_scratchCore);
+    _scratchCore.project(camera);
+    coreLabel.style.left = ((_scratchCore.x * .5 + .5) * w) + 'px';
+    coreLabel.style.top = ((-_scratchCore.y * .5 + .5) * h) + 'px';
+    coreLabel.style.opacity = (_scratchCore.z < 1 && _scratchCore.z > -1 && selected < 0) ? '1' : '.2';
+  }
 }
 

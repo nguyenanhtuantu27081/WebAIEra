@@ -8,6 +8,25 @@
     (function(){
       document.documentElement.setAttribute('data-theme', 'dark');
       try { localStorage.setItem('aiera_theme', 'dark'); } catch(e){}
+      window.__earlyBootErrors = [];
+      window.addEventListener('error', function (event) {
+        window.__earlyBootErrors.push({
+          type: 'error',
+          message: String(event.message || ''),
+          filename: String(event.filename || ''),
+          line: event.lineno || null,
+          column: event.colno || null,
+          time: Date.now()
+        });
+      }, true);
+      window.addEventListener('unhandledrejection', function (event) {
+        var reason = event.reason;
+        window.__earlyBootErrors.push({
+          type: 'unhandledrejection',
+          message: String(reason && reason.message || reason || ''),
+          time: Date.now()
+        });
+      });
     })();
   </script>
   <meta name="description" content="AIERA (AI Era Solutions) — Hệ sinh thái giải pháp trí tuệ nhân tạo toàn diện tại aiera.vn: Tài chính, Bảo hiểm, Fintech, AI Automation, AI Agent, AI SEO và Phần mềm doanh nghiệp." />
@@ -142,7 +161,7 @@
   </noscript>
 
   <!-- Bundled & Optimized CSS -->
-  <link rel="stylesheet" href="./css/bundle.min.css?v=20260914.6">
+  <link rel="stylesheet" href="./css/bundle.min.css?v=20261026.3">
 
   <!-- Defer Google Tag Manager -->
   <script>
@@ -364,9 +383,9 @@
   <div class="cursor-outline"></div>
 
   <!-- App Entry -->
-  <script type="module" src="./js/main.js?v=20260914.6"></script>
-  <script type="module" src="./js/contact-footer.js?v=20260914.6"></script>
-  <script type="module" src="./js/menu-init.js?v=20260914.6"></script>
+  <script type="module" src="./js/main.js?v=20261026.3"></script>
+  <script type="module" src="./js/contact-footer.js?v=20261026.3"></script>
+  <script type="module" src="./js/menu-init.js?v=20261026.3"></script>
 </body>
 </html>
 

@@ -2,12 +2,19 @@
 // 3D holographic quantum beacon for the Contact CTA button
 // FIX: mobile-index-webgl-crash — lower DPR on mobile, stop loop when tab hidden
 import * as THREE from 'three';
+import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
 import { logDiagInfo, logDiagError, logDiagWarn } from '../diagnostics.js';
 
 export function initContactBtn3D() {
   const canvas = document.querySelector('#contactBtnCanvas');
   const btn = document.querySelector('#contactShortcut');
   if (!canvas || !btn) return;
+
+  // Don't create WebGL context if chrome3d is disabled in tier (mobile/SAFE)
+  const tier = getQualityTier();
+  if (TIER_CONFIG[tier]?.chrome3d === false) {
+    return;
+  }
 
   const size = 56;
   // FIX: cap DPR to 1 on mobile to reduce GPU load for decorative canvas
