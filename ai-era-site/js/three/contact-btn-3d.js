@@ -2,7 +2,7 @@
 // 3D holographic quantum beacon for the Contact CTA button
 // FIX: mobile-index-webgl-crash — lower DPR on mobile, stop loop when tab hidden
 import * as THREE from 'three';
-import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
+import { getTierConfig, isMobileLike } from '../quality-tier.js';
 import { logDiagInfo, logDiagError, logDiagWarn } from '../diagnostics.js';
 
 export function initContactBtn3D() {
@@ -10,18 +10,16 @@ export function initContactBtn3D() {
   const btn = document.querySelector('#contactShortcut');
   if (!canvas || !btn) return;
 
-  // Don't create WebGL context if chrome3d is disabled in tier (mobile/SAFE)
-  const tier = getQualityTier();
-  if (TIER_CONFIG[tier]?.chrome3d === false) {
+  // Tier không cho phép WebGL phụ (mobile/SAFE/STATIC): KHÔNG tạo renderer.
+  // Ẩn canvas trống và bật orb CSS. Link #contactFooter vẫn hoạt động.
+  if (!getTierConfig().chrome3d) {
+    btn.classList.add('contact-cta-btn--lite');
+    canvas.style.display = 'none';
     return;
   }
 
   const size = 56;
-  // FIX: cap DPR to 1 on mobile to reduce GPU load for decorative canvas
-  const isSmallOrTouch =
-    window.innerWidth < 768 ||
-    window.matchMedia?.('(pointer: coarse)')?.matches;
-  const dpr = Math.min(window.devicePixelRatio || 1, isSmallOrTouch ? 1 : 2);
+  const dpr = Math.min(window.devicePixelRatio || 1, isMobileLike() ? 1 : 2);
 
   // Scene & Camera
   const scene = new THREE.Scene();

@@ -1,97 +1,173 @@
-// Crash loop guard & SAFE tier detection
-const BOOT_KEY = 'aiera_boot_ts';
-const CRASH_COUNT_KEY = 'aiera_crash_count';
-const SAFE_MODE_KEY = 'aiera_safe_mode';
+// js/quality-tier.js — NGUỒN SỰ THẬT DUY NHẤT cho chất lượng render + chống crash-loop.
+//
+// QUY TẮC SẮT:
+//  1. Module này được evaluate ĐÚNG 1 LẦN (ES module singleton). Tier được tính ngay ở đây
+//     và KHÔNG ĐỔI trong suốt vòng đời trang. getQualityTier() chỉ là getter thuần, không side-effect.
+//  2. Không file nào khác được tự phát hiện mobile / viewport / pointer. Luôn dùng isMobileLike(),
+//     getQualityTier(), getTierConfig().
+//  3. Các mức: STATIC (không WebGL) < SAFE < LOW < MEDIUM < HIGH < ULTRA.
 
-function checkCrashLoop() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('safe') === '1') return true;
+const SESSION_KEY = 'aiera_s';       // sessionStorage: trạng thái của TAB này  { inflight, alive, hidden }
+const LOCAL_KEY = 'aiera_g';         // localStorage: hình phạt dùng chung mọi tab { strikes, until }
+const CRASH_WINDOW_MS = 120000;      // lần tải trước "sống" trong 120s gần đây mà không thoát sạch => crash
+const PENALTY_MS = 24 * 60 * 60 * 1000;
+const HEARTBEAT_MS = 4000;
+const VALID = ['STATIC', 'SAFE', 'LOW', 'MEDIUM', 'HIGH', 'ULTRA'];
 
-    // Check if previous boot crashed within 10s without normal cleanup
-    const lastBoot = sessionStorage.getItem(BOOT_KEY);
-    const crashCount = parseInt(localStorage.getItem(CRASH_COUNT_KEY) || '0', 10);
-    const safeMode = localStorage.getItem(SAFE_MODE_KEY) === '1';
+function safe(fn, fallback) { try { return fn(); } catch (_) { return fallback; } }
+function readJSON(getStore, key) {
+  return safe(() => JSON.parse(getStore().getItem(key) || '{}') || {}, {});
+}
+function writeJSON(getStore, key, val) {
+  safe(() => getStore().setItem(key, JSON.stringify(val)));
+}
+const sessionStore = () => window.sessionStorage;
+const localStore = () => window.localStorage;
 
-    if (safeMode || crashCount >= 2) return true;
+const params = typeof location !== 'undefined' ? new URLSearchParams(location.search) : new URLSearchParams();
+const now = Date.now();
 
-    if (lastBoot) {
-      const elapsed = Date.now() - parseInt(lastBoot, 10);
-      if (elapsed < 12000) {
-        // Unclean exit during boot/initial render
-        const newCount = crashCount + 1;
-        localStorage.setItem(CRASH_COUNT_KEY, String(newCount));
-        if (newCount >= 2) {
-          localStorage.setItem(SAFE_MODE_KEY, '1');
-          return true;
-        }
-      }
-    }
-    sessionStorage.setItem(BOOT_KEY, String(Date.now()));
-  } catch (_) {}
-  return false;
+// ---------------------------------------------------------------------------
+// 1) Phát hiện crash của lần tải trước (chạy 1 lần duy nhất)
+// ---------------------------------------------------------------------------
+if (params.get('reset') === '1') {
+  safe(() => localStorage.removeItem(LOCAL_KEY));
+  safe(() => sessionStorage.removeItem(SESSION_KEY));
 }
 
+const sess = readJSON(sessionStore, SESSION_KEY);
+const guard = readJSON(localStore, LOCAL_KEY);
+let guardDirty = false;
+
+// Tab chết đột ngột khi đang ở foreground: không có pagehide → inflight vẫn true,
+// và heartbeat cuối cùng còn rất mới. Tab bị OS kill lúc đang ở nền (hidden) KHÔNG tính là crash.
+if (sess.inflight && !sess.hidden && now - (sess.alive || 0) < CRASH_WINDOW_MS) {
+  guard.strikes = (guard.strikes || 0) + 1;
+  guard.until = now + PENALTY_MS;
+  guard.lastCrashAt = now;
+  guardDirty = true;
+}
+if (guard.until && now > guard.until) { // hết hạn phạt
+  guard.strikes = 0;
+  guard.until = 0;
+  guardDirty = true;
+}
+if (guardDirty) writeJSON(localStore, LOCAL_KEY, guard);
+
+// ---------------------------------------------------------------------------
+// 2) Heartbeat: chứng minh trang còn sống; pagehide = thoát sạch
+// ---------------------------------------------------------------------------
+function beat() {
+  const isHidden = typeof document !== 'undefined' ? !!document.hidden : false;
+  writeJSON(sessionStore, SESSION_KEY, { inflight: true, alive: Date.now(), hidden: isHidden });
+}
+beat();
+if (typeof setInterval !== 'undefined') {
+  const timer = setInterval(beat, HEARTBEAT_MS);
+  if (timer && typeof timer.unref === 'function') {
+    timer.unref();
+  }
+}
+if (typeof document !== 'undefined' && document.addEventListener) {
+  document.addEventListener('visibilitychange', beat);
+}
+if (typeof window !== 'undefined' && window.addEventListener) {
+  window.addEventListener('pagehide', () => writeJSON(sessionStore, SESSION_KEY, { inflight: false, alive: Date.now() }));
+  window.addEventListener('pageshow', (e) => { if (e.persisted) beat(); });
+}
+
+// WebGL context lost = tín hiệu crash mạnh → lần tải sau hạ mức. Chỉ tính 1 lần/trang.
+let contextLostReported = false;
 export function reportContextLost() {
-  try {
-    localStorage.setItem(SAFE_MODE_KEY, '1');
-    const count = parseInt(localStorage.getItem(CRASH_COUNT_KEY) || '0', 10);
-    localStorage.setItem(CRASH_COUNT_KEY, String(count + 1));
-  } catch (_) {}
+  if (contextLostReported) return;
+  contextLostReported = true;
+  const g = readJSON(localStore, LOCAL_KEY);
+  g.strikes = (g.strikes || 0) + 1;
+  g.until = Date.now() + PENALTY_MS;
+  g.lastCrashAt = Date.now();
+  writeJSON(localStore, LOCAL_KEY, g);
 }
 
-export function clearCrashMarkers() {
-  try {
-    sessionStorage.removeItem(BOOT_KEY);
-    localStorage.removeItem(SAFE_MODE_KEY);
-    localStorage.removeItem(CRASH_COUNT_KEY);
-  } catch (_) {}
-}
-
-// Clear boot marker on clean pagehide or after 15s stable run
-window.addEventListener('pagehide', () => {
-  try { sessionStorage.removeItem(BOOT_KEY); } catch (_) {}
-});
-setTimeout(() => {
-  try {
-    sessionStorage.removeItem(BOOT_KEY);
-    // If ran cleanly for 15s, reset crash count
-    localStorage.removeItem(CRASH_COUNT_KEY);
-    localStorage.removeItem(SAFE_MODE_KEY);
-  } catch (_) {}
-}, 15000);
-
-export function getQualityTier() {
-  // 1. Crash loop or explicit ?safe=1 query
-  if (checkCrashLoop()) return 'SAFE';
-
-  // 2. Explicit ?lite=1 query
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('lite') === '1') return 'LOW';
-  } catch (_) {}
-
-  // 3. Respect user preferences — always LOW for reduced motion or data saver
-  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
-  const saveData = navigator.connection?.saveData;
-  const isMobile =
-    window.innerWidth < 768 ||
-    window.matchMedia?.('(pointer: coarse)')?.matches ||
+// ---------------------------------------------------------------------------
+// 3) Phát hiện thiết bị — DUY NHẤT một chỗ
+// ---------------------------------------------------------------------------
+export function isMobileLike() {
+  if (typeof window === 'undefined') return false;
+  return window.innerWidth < 768 ||
+    !!window.matchMedia?.('(pointer: coarse)')?.matches ||
     /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
 
-  if (reduceMotion || saveData || isMobile) return 'LOW';
+// ---------------------------------------------------------------------------
+// 4) Chọn tier (1 lần) + lý do
+// ---------------------------------------------------------------------------
+let tierReason = '';
+function computeTier() {
+  const q = (params.get('tier') || '').toUpperCase();
+  if (VALID.includes(q)) { tierReason = 'query:tier'; return q; }
+  if (params.get('static') === '1') { tierReason = 'query:static'; return 'STATIC'; }
+  if (params.get('safe') === '1') { tierReason = 'query:safe'; return 'SAFE'; }
 
-  // Desktop/laptop: use viewport as rough proxy
-  const w = window.innerWidth;
+  if (guard.until && guard.until > now) {
+    tierReason = 'crash_guard';
+    return (guard.strikes || 0) >= 2 ? 'STATIC' : 'SAFE';
+  }
+  if (params.get('lite') === '1') { tierReason = 'query:lite'; return 'LOW'; }
+
+  if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) {
+    tierReason = 'reduced_motion'; return 'LOW';
+  }
+  if (typeof navigator !== 'undefined' && navigator.connection?.saveData) {
+    tierReason = 'save_data'; return 'LOW';
+  }
+  if (isMobileLike()) {
+    tierReason = 'mobile'; return 'LOW';
+  }
+
+  tierReason = 'desktop';
+  const w = typeof window !== 'undefined' ? window.innerWidth : 1200;
   if (w < 1024) return 'MEDIUM';
   if (w < 1920) return 'HIGH';
   return 'ULTRA';
 }
+const TIER = computeTier();
+
+// ---------------------------------------------------------------------------
+// 5) Cấu hình theo tier
+// ---------------------------------------------------------------------------
+const FULL = {
+  webgl: true, postProcessing: true, pulseLines: true, nodeLights: true, physical: true,
+  chrome3d: true, footer3d: true, coreDetail: 5, ringSegments: 190, ringRadial: 8, sparks: 44, maxFps: 0
+};
+const LITE = {
+  webgl: true, postProcessing: false, pulseLines: false, nodeLights: false, physical: false,
+  chrome3d: false, footer3d: false, coreDetail: 3, ringSegments: 96, ringRadial: 6, sparks: 24, maxFps: 60
+};
 
 export const TIER_CONFIG = {
-  SAFE:   { particles: 30,   dpr: 0.75, bloom: 0,    lights: 1, antialias: false, powerPreference: 'low-power', chrome3d: false, footer3d: false, postProcessing: false, maxFps: 30 },
-  LOW:    { particles: 60,   dpr: 0.75, bloom: 0,    lights: 1, antialias: false, powerPreference: 'low-power', chrome3d: false, footer3d: false, postProcessing: false, maxFps: 60 },
-  MEDIUM: { particles: 250,  dpr: 1.0,  bloom: 0.2,  lights: 2, antialias: false, powerPreference: 'default',   chrome3d: true,  footer3d: true,  postProcessing: true,  maxFps: 60 },
-  HIGH:   { particles: 600,  dpr: 1.25, bloom: 0.45, lights: 2, antialias: true,  powerPreference: 'default',   chrome3d: true,  footer3d: true,  postProcessing: true,  maxFps: 0 },
-  ULTRA:  { particles: 1000, dpr: 1.5,  bloom: 0.65, lights: 3, antialias: true,  powerPreference: 'default',   chrome3d: true,  footer3d: true,  postProcessing: true,  maxFps: 0 }
+  STATIC: { ...LITE, webgl: false, particles: 0, dpr: 1, bloom: 0, lights: 0, antialias: false, powerPreference: 'low-power', maxFps: 0 },
+  SAFE:   { ...LITE, coreDetail: 2, ringSegments: 64, sparks: 12, particles: 40, dpr: 0.75, bloom: 0, lights: 1, antialias: false, powerPreference: 'low-power', maxFps: 30 },
+  LOW:    { ...LITE, particles: 90, dpr: 1, bloom: 0, lights: 1, antialias: false, powerPreference: 'low-power' },
+  MEDIUM: { ...FULL, particles: 250, dpr: 1.0, bloom: 0.2, lights: 2, antialias: false, powerPreference: 'default', maxFps: 60 },
+  HIGH:   { ...FULL, particles: 600, dpr: 1.25, bloom: 0.45, lights: 2, antialias: true, powerPreference: 'default' },
+  ULTRA:  { ...FULL, particles: 1000, dpr: 1.5, bloom: 0.65, lights: 3, antialias: true, powerPreference: 'default' }
 };
+
+// Bisect trên thiết bị thật: ?on=pulse,nodelights,physical,composer,chrome3d,footer3d
+// bật lại TỪNG nhóm trong tier hiện tại để tìm nhóm gây crash. Chỉ dùng khi điều tra.
+const ON = new Set((params.get('on') || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean));
+const ON_MAP = {
+  pulse: { pulseLines: true }, nodelights: { nodeLights: true }, physical: { physical: true },
+  composer: { postProcessing: true, bloom: 0.2 }, chrome3d: { chrome3d: true }, footer3d: { footer3d: true }
+};
+const RESOLVED = { ...TIER_CONFIG[TIER] };
+if (TIER !== 'STATIC') ON.forEach((k) => { if (ON_MAP[k]) Object.assign(RESOLVED, ON_MAP[k]); });
+
+// ---------------------------------------------------------------------------
+// 6) API công khai — getter thuần, KHÔNG side-effect
+// ---------------------------------------------------------------------------
+export function getQualityTier() { return TIER; }
+export function getTierReason() { return tierReason; }
+export function getTierConfig() { return RESOLVED; }
+export function isStaticMode() { return TIER === 'STATIC'; }
+export function getGuardState() { return { ...guard, tier: TIER, reason: tierReason, bisect: [...ON] }; }

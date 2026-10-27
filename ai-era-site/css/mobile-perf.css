@@ -1,0 +1,56 @@
+/* ============================================
+   AI Era — Mobile / GPU performance + fallback (nạp CUỐI bundle)
+   ============================================ */
+
+/* Nhãn node di chuyển bằng thuộc tính `translate` (compositor-only), không còn left/top */
+.node-label{will-change:translate,opacity}
+
+/* ----- Nút Liên hệ: orb CSS thay cho WebGL canvas (mobile/SAFE/STATIC) ----- */
+.contact-cta-btn--lite .contact-cta-canvas-wrap::before{
+  content:"";position:absolute;inset:9px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0,#c7d2fe 14%,#818cf8 45%,#312e81 100%);
+  box-shadow:0 0 14px rgba(129,140,248,.75);
+  animation:cta-orb-pulse 2.4s ease-in-out infinite;
+}
+.contact-cta-btn--lite .contact-cta-canvas-wrap::after{
+  content:"";position:absolute;inset:3px;border-radius:50%;
+  border:1.5px solid transparent;
+  border-top-color:#67e8f9;border-right-color:rgba(192,132,252,.7);
+  animation:cta-orb-spin 3.2s linear infinite;
+}
+@keyframes cta-orb-pulse{0%,100%{transform:scale(.92);opacity:.9}50%{transform:scale(1.06);opacity:1}}
+@keyframes cta-orb-spin{to{transform:rotate(360deg)}}
+
+/* ----- Footer: nền tĩnh khi không dùng WebGL ----- */
+.contact-footer__canvas.is-static{
+  background:
+    radial-gradient(circle at 20% 30%,rgba(129,140,248,.16),transparent 45%),
+    radial-gradient(circle at 80% 70%,rgba(103,232,249,.10),transparent 45%),
+    radial-gradient(circle at 55% 20%,rgba(192,132,252,.10),transparent 40%);
+}
+
+/* ----- Chế độ STATIC (không WebGL): danh sách 6 giải pháp dạng thẻ ----- */
+.no-webgl #webgl,.no-webgl #labels,.no-webgl .hud,.no-webgl .focus-panel{display:none !important}
+.no-webgl body{cursor:auto}
+.no-webgl .spatial-hero{height:0}
+.no-webgl .intro{
+  position:relative;left:auto;top:auto;max-width:680px;
+  margin:112px auto 0;padding:0 20px;pointer-events:auto;
+}
+.static-nodes{
+  position:relative;z-index:20;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;
+  max-width:1100px;margin:28px auto 40px;padding:0 20px;
+}
+.static-node{
+  display:flex;flex-direction:column;gap:6px;padding:16px 18px;border-radius:16px;
+  border:1px solid color-mix(in srgb,var(--node-color) 45%,transparent);
+  background:rgba(10,10,18,.9);color:#e5e7eb;text-decoration:none;
+}
+.static-node-name{font-size:1rem;color:#fff}
+.static-node-desc{font-size:.85rem;line-height:1.45;color:#a1a1b0}
+
+@media (prefers-reduced-motion:reduce){
+  .contact-cta-btn--lite .contact-cta-canvas-wrap::before,
+  .contact-cta-btn--lite .contact-cta-canvas-wrap::after{animation:none}
+}

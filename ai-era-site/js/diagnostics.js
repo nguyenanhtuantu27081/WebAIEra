@@ -1,16 +1,18 @@
-// js/diagnostics.js — Diagnostic logging for WebGL, lifecycle, and errors
-// Configured for multi-project Axiom monitoring with project prefix
 const PROJECT_PREFIX = 'ai-era-site';
 const SESSION_ID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-export const BUILD_VERSION = '20261026.3';
+export const BUILD_VERSION = '20261027.1';
 const diagnosticStartedAt = performance.now();
 let logSequence = 0;
+let emittedCount = 0;
+const MAX_EVENTS_PER_SESSION = 300; // chặn log tràn; riêng 'error' luôn được gửi
 
 /**
  * Send log record to ingest or console fallback.
  * Formatted with project prefix to distinguish in shared Axiom datasets.
  */
 function emitLog(level, event, details = {}) {
+  if (emittedCount >= MAX_EVENTS_PER_SESSION && level !== 'error') return;
+  emittedCount++;
   logSequence++;
   const prefixedEvent = `${PROJECT_PREFIX}:${event}`;
   const record = {

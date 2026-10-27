@@ -1,18 +1,12 @@
-// js/three/nodes.js — 6 business ecosystem nodes + energy lines + labels
-// FIX: mobile-index-webgl-crash — hide pulse lines on mobile, stop per-frame computeLineDistances
 import * as THREE from 'three';
 import { world } from './scene-setup.js';
 import { glowTex } from './core.js';
 import { NODES } from '../data/nodes.js';
 import { getCurrentLang, onLanguageChange, nodeTranslations } from '../i18n.js';
+import { getTierConfig } from '../quality-tier.js';
 
+const cfg = getTierConfig();
 const labelsRoot = document.querySelector('#labels');
-
-// FIX: module-level low-power detection to skip pulse line work on mobile
-function isLowPowerViewport() {
-  return window.innerWidth < 768 ||
-    window.matchMedia?.('(pointer: coarse)')?.matches;
-}
 
 // Phải khớp với FOV khai báo ở scene-setup.js (new THREE.PerspectiveCamera(48, ...))
 const CAMERA_FOV_DEG = 48;
@@ -135,9 +129,10 @@ NODES.forEach((d, i) => {
   world.add(group);
 
   // Node shell
+  const ShellMat = cfg.physical ? THREE.MeshPhysicalMaterial : THREE.MeshStandardMaterial;
   const shell = new THREE.Mesh(
     new THREE.IcosahedronGeometry(.26, 2),
-    new THREE.MeshPhysicalMaterial({
+    new ShellMat({
       color: 0x101018,
       emissive: d.color,
       emissiveIntensity: 1.2,
@@ -149,7 +144,7 @@ NODES.forEach((d, i) => {
 
   // Point light
   const point = new THREE.PointLight(d.color, 5.5, 5.2, 2);
-  group.add(point);
+  if (cfg.nodeLights) group.add(point); // mobile: bỏ 6 PointLight (emissive + aura sprite đã đủ sáng)
 
   // Aura sprite
   const aura = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -181,26 +176,27 @@ NODES.forEach((d, i) => {
   );
   world.add(line);
 
-  // Pulsing dashed line
-  const pulseGeo = new THREE.BufferGeometry().setFromPoints([
-    new THREE.Vector3(0, 0, 0), base.clone()
-  ]);
-  const pulseMat = new THREE.LineDashedMaterial({
-    color: d.color, transparent: true, opacity: .22,
-    dashSize: .09, gapSize: .16
-  });
-  const pulseLine = new THREE.Line(pulseGeo, pulseMat);
-  pulseLine.computeLineDistances();
-  // FIX: hide pulse line on mobile to avoid per-frame VRAM leak from computeLineDistances
-  if (isLowPowerViewport()) {
-    pulseLine.visible = false;
+  // Pulsing dashed line — chỉ tạo khi tier cho phép. Mobile KHÔNG tạo (không geometry, không update).
+  let pulseLine = null;
+  if (cfg.pulseLines) {
+    const pulseGeo = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(0, 0, 0), base.clone()
+    ]);
+    const pulseMat = new THREE.LineDashedMaterial({
+      color: d.color, transparent: true, opacity: .22,
+      dashSize: .09, gapSize: .16
+    });
+    pulseLine = new THREE.Line(pulseGeo, pulseMat);
+    pulseLine.computeLineDistances(); // CHỈ 1 lần: tạo attribute 'lineDistance'
+    world.add(pulseLine);
   }
-  world.add(pulseLine);
 
   // DOM label — uses current language
   const lang = getCurrentLang();
   const el = document.createElement('div');
   el.className = 'node-label';
+  el.style.left = '0';  // vị trí thật do style.translate quyết định
+  el.style.top = '0';
   el.style.setProperty('--node-color', '#' + d.color.toString(16).padStart(6, '0'));
   el.innerHTML = `<span class="node-label-name">${getNodeName(i, lang)}</span>`;
   labelsRoot.appendChild(el);
@@ -223,8 +219,7 @@ onLanguageChange((lang) => {
     const nameEl = n.el.querySelector('.node-label-name');
     if (nameEl) nameEl.textContent = getNodeName(i, lang);
   });
-  // Tiêu đề hero đổi độ dài theo ngôn ngữ (VI thường dài hơn, xuống 3 dòng trên mobile)
-  // -> tính lại vị trí node/hạt nhân để né đúng theo ngôn ngữ mới.
+  invalidateLabelSizes();
   updateNodeOrbits();
 });
 
@@ -248,40 +243,50 @@ export function animateNodes(t, selected) {
     a[5] = n.group.position.z;
     n.line.geometry.attributes.position.needsUpdate = true;
 
-    const b = n.pulseLine.geometry.attributes.position.array;
-    b[3] = n.group.position.x;
-    b[4] = n.group.position.y;
-    b[5] = n.group.position.z;
-    n.pulseLine.geometry.attributes.position.needsUpdate = true;
+    if (n.pulseLine) {
+      const b = n.pulseLine.geometry.attributes.position.array;
+      b[3] = n.group.position.x;
+      b[4] = n.group.position.y;
+      b[5] = n.group.position.z;
+      n.pulseLine.geometry.attributes.position.needsUpdate = true;
 
-    // FIX: Update dashed line distance without recreating GPU buffers or calling computeLineDistances() per-frame
-    // Line has exactly 2 points: [0, 0, 0] at origin and [b[3], b[4], b[5]] at node
-    const ld = n.pulseLine.geometry.attributes.lineDistance;
-    if (ld && ld.array) {
-      ld.array[1] = Math.hypot(b[3], b[4], b[5]);
-      ld.needsUpdate = true;
+      // KHÔNG gọi computeLineDistances() mỗi frame (tạo BufferAttribute + GL buffer mới → rò rỉ).
+      const ld = n.pulseLine.geometry.attributes.lineDistance;
+      if (ld && ld.array) {
+        ld.array[1] = Math.hypot(b[3], b[4], b[5]);
+        ld.needsUpdate = true;
+      }
     }
     n.line.material.opacity = selected === i ? .48 : .11;
   });
 }
 
-// Reusable scratch vectors for projecting labels
+// ---------------------------------------------------------------------------
+// Label projection: không DOM query mỗi frame, không layout thrashing, chỉ ghi khi giá trị đổi
+// ---------------------------------------------------------------------------
 const _scratchVec = new THREE.Vector3();
-const _scratchCore = new THREE.Vector3();
+const HAS_TRANSLATE = typeof CSS !== 'undefined' && !!CSS.supports && CSS.supports('translate', '1px 1px');
+let _coreLabel = null;
 let _labelSizesCached = false;
 const _labelDims = [];
 
 export function invalidateLabelSizes() {
   _labelSizesCached = false;
 }
+if (typeof document !== 'undefined' && document.fonts?.ready?.then) {
+  document.fonts.ready.then(invalidateLabelSizes);
+}
 
-// Project labels onto screen space with smart boundary clamping and cached DOM sizes
 export function projectLabels(camera, coreGroup, selected) {
-  const coreLabel = document.querySelector('.core-label');
+  if (!_coreLabel && typeof document !== 'undefined') {
+    _coreLabel = document.querySelector('.core-label');
+  }
   const w = window.innerWidth;
   const h = window.innerHeight;
+  const clampToViewport = w < 900;
 
-  if (!_labelSizesCached) {
+  // Đọc kích thước MỘT lần theo batch (chỉ đọc, không ghi xen kẽ → tối đa 1 lần layout)
+  if (clampToViewport && !_labelSizesCached) {
     _labelDims.length = 0;
     nodes.forEach((n) => {
       _labelDims.push({
@@ -299,25 +304,39 @@ export function projectLabels(camera, coreGroup, selected) {
     let y = (-_scratchVec.y * .5 + .5) * h;
     const facing = _scratchVec.z < 1 && _scratchVec.z > -1;
 
-    // Viewport safety margin: clamp label coordinates so they never clip off screen
-    if (w < 900) {
+    if (clampToViewport) {
       const dim = _labelDims[i] || { halfW: 60, halfH: 20 };
       x = Math.max(dim.halfW, Math.min(w - dim.halfW, x));
       y = Math.max(dim.halfH + 50, Math.min(h - dim.halfH - 60, y));
     }
 
-    n.el.style.left = x + 'px';
-    n.el.style.top = y + 'px';
-    n.el.style.opacity = facing ? '1' : '0';
-    n.el.style.pointerEvents = facing ? 'auto' : 'none';
+    const rx = Math.round(x * 10) / 10;
+    const ry = Math.round(y * 10) / 10;
+    if (rx !== n._lx || ry !== n._ly) {
+      n._lx = rx; n._ly = ry;
+      if (HAS_TRANSLATE) {
+        n.el.style.translate = rx + 'px ' + ry + 'px'; // compositor-only, không kích hoạt layout
+      } else {
+        n.el.style.left = rx + 'px';
+        n.el.style.top = ry + 'px';
+      }
+    }
+    if (n._facing !== facing) {
+      n._facing = facing;
+      n.el.style.opacity = facing ? '1' : '0';
+      n.el.style.pointerEvents = facing ? 'auto' : 'none';
+    }
   });
 
-  if (coreLabel) {
-    coreGroup.getWorldPosition(_scratchCore);
-    _scratchCore.project(camera);
-    coreLabel.style.left = ((_scratchCore.x * .5 + .5) * w) + 'px';
-    coreLabel.style.top = ((-_scratchCore.y * .5 + .5) * h) + 'px';
-    coreLabel.style.opacity = (_scratchCore.z < 1 && _scratchCore.z > -1 && selected < 0) ? '1' : '.2';
+  if (_coreLabel) {
+    coreGroup.getWorldPosition(_scratchVec).project(camera);
+    _coreLabel.style.left = Math.round(((_scratchVec.x * .5 + .5) * w) * 10) / 10 + 'px';
+    _coreLabel.style.top = Math.round(((-_scratchVec.y * .5 + .5) * h) * 10) / 10 + 'px';
+    const op = (_scratchVec.z < 1 && _scratchVec.z > -1 && selected < 0) ? '1' : '.2';
+    if (_coreLabel._op !== op) {
+      _coreLabel._op = op;
+      _coreLabel.style.opacity = op;
+    }
   }
 }
 

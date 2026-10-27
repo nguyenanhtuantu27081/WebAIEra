@@ -1,10 +1,9 @@
 // js/three/starfield.js — 2-layer deep-space particle field + grid rings
 import * as THREE from 'three';
 import { scene } from './scene-setup.js';
-import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
+import { getTierConfig } from '../quality-tier.js';
 
-const tier = getQualityTier();
-const cfg = TIER_CONFIG[tier];
+const cfg = getTierConfig();
 
 function makeStarLayer(count, spread, size, opacity) {
   const g = new THREE.BufferGeometry();

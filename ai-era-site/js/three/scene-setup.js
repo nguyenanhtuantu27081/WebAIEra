@@ -5,30 +5,23 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { getQualityTier, TIER_CONFIG } from '../quality-tier.js';
+import { getQualityTier, getTierConfig, getTierReason, reportContextLost } from '../quality-tier.js';
 import { logDiagInfo, logDiagWarn, logDiagError } from '../diagnostics.js';
 
 export const tier = getQualityTier();
-const cfg = TIER_CONFIG[tier];
+const cfg = getTierConfig();
 
 logDiagInfo('render_quality_selected', {
   tier,
+  reason: getTierReason(),
   configuredDpr: cfg.dpr,
   antialias: cfg.antialias,
   bloom: cfg.bloom,
-  pointerCoarse: window.matchMedia?.('(pointer: coarse)')?.matches ?? null,
-  reducedMotion: window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? null,
-  saveData: navigator.connection?.saveData ?? null,
 });
 
-// --- DPR helper: cap pixel ratio on mobile/touch to reduce GPU fill-rate ---
+// --- DPR helper: cap pixel ratio from tier config ---
 function getRenderPixelRatio() {
-  const isSmallOrTouch =
-    window.innerWidth < 768 ||
-    window.matchMedia?.('(pointer: coarse)')?.matches;
-
-  const cap = isSmallOrTouch ? 1 : cfg.dpr;
-  return Math.min(window.devicePixelRatio || 1, cap);
+  return Math.min(window.devicePixelRatio || 1, cfg.dpr);
 }
 
 // Scene
@@ -71,8 +64,6 @@ try {
 }
 export const renderer = rendererInstance;
 
-import { reportContextLost } from '../quality-tier.js';
-
 export let contextLost = false;
 
 // Color space & Tone mapping: match linear output when bypassing composer
@@ -85,8 +76,9 @@ if (cfg.postProcessing === false) {
   renderer.toneMappingExposure = 1.05;
 }
 
-renderer.setSize(innerWidth, innerHeight);
+// updateStyle=false: kích thước hiển thị do CSS (#webgl canvas {width:100%;height:100%}) quyết định.
 renderer.setPixelRatio(getRenderPixelRatio());
+renderer.setSize(innerWidth, innerHeight, false);
 mount.appendChild(renderer.domElement);
 
 logDiagInfo('webgl_renderer_created', {
@@ -171,8 +163,7 @@ if (cfg.lights >= 2) {
 export const world = new THREE.Group();
 scene.add(world);
 
-// Resize handler — FIX: debounced to avoid rapid resize on mobile address-bar toggle
-let resizeTimer = 0;
+// Resize handler — debounce được thực hiện MỘT chỗ duy nhất ở three-app.js
 let lastResizeLogAt = 0;
 
 function resizeNow() {
@@ -203,7 +194,6 @@ function resizeNow() {
 }
 
 export function onResize() {
-  window.clearTimeout(resizeTimer);
-  resizeTimer = window.setTimeout(resizeNow, 150);
+  resizeNow();
 }
 
