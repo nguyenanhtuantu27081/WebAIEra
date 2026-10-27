@@ -333,8 +333,26 @@ async function runTests() {
     passedCount++;
   }
 
+  // 17. Tự động xoá hình phạt tích luỹ từ build cũ khi vừa nâng cấp build mới
+  {
+    sharedLocalStorage.setItem('aiera_g', JSON.stringify({
+      strikes: 2,
+      until: Date.now() + 86400000,
+      build: '20261028.1' // build cũ
+    }));
+    setupBrowserEnv({
+      width: 414,
+      newTab: true,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 27_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+    });
+    const mod = await loadQualityTierModule();
+    assert.equal(mod.getGuardState().strikes, 0); // Đã được auto-reset
+    assert.equal(mod.getQualityTier(), 'SAFE'); // Vào đúng tier SAFE của iOS thay vì bị kẹt ở STATIC
+    passedCount++;
+  }
+
   console.log(`\n========================================`);
-  console.log(`KẾT QUẢ: ${passedCount}/16 kịch bản đạt!`);
+  console.log(`KẾT QUẢ: ${passedCount}/17 kịch bản đạt!`);
   console.log(`========================================\n`);
 }
 

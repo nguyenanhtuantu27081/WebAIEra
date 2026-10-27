@@ -375,3 +375,11 @@ Cụ thể:
 - **Commit:** `ea431b26`.
 - **Kết quả CI/CD:** GitHub Actions workflow `Build and Push Docker Image (ARM64)` (Run ID: `40511909872`) hoàn thành `success`.
 
+### 10.3 V5.1: Cơ chế Auto-Reset Crash Guard theo Build Version
+- **Hiện tượng:** Sau khi deploy V5, Safari và Firefox trên iOS hoạt động mượt mà đầy đủ node 3D, nhưng Chrome trên iOS mất node (do `localStorage` độc lập của Chrome đã lưu `strikes >= 2` từ các phiên bản trước đó và tự động áp dụng hình phạt `STATIC` trong 24 giờ).
+- **Giải pháp:**
+  - `quality-tier.js`: Thêm trường `build` vào object hình phạt `aiera_g`. Khi client tải trang có `BUILD_VERSION` mới (`guard.build !== BUILD_VERSION`), hệ thống tự động xóa sạch `strikes = 0` và giải phóng `until = 0`, giúp người dùng tự động chuyển vào tier tối ưu `SAFE` mà không cần nhập thủ công `?reset=1`.
+  - Bump `BUILD_VERSION` lên `20261028.3` đồng bộ trong `diagnostics.js`, `index.html`.
+  - Thêm kịch bản test số 17 vào `tests/quality-tier.test.mjs` (kết quả: 17/17 tests PASS).
+
+

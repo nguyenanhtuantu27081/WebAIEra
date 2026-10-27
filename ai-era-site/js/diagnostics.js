@@ -1,6 +1,6 @@
 const PROJECT_PREFIX = 'ai-era-site';
 const SESSION_ID = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
-export const BUILD_VERSION = '20261028.2';
+export const BUILD_VERSION = '20261028.3';
 const diagnosticStartedAt = performance.now();
 let logSequence = 0;
 let emittedCount = 0;

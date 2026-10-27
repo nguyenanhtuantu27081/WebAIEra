@@ -7,8 +7,10 @@
 //     getQualityTier(), getTierConfig().
 //  3. Các mức: STATIC (không WebGL) < SAFE < LOW < MEDIUM < HIGH < ULTRA.
 
+import { BUILD_VERSION } from './diagnostics.js';
+
 const SESSION_KEY = 'aiera_s';       // sessionStorage: trạng thái của TAB này  { inflight, alive, hidden }
-const LOCAL_KEY = 'aiera_g';         // localStorage: hình phạt dùng chung mọi tab { strikes, until }
+const LOCAL_KEY = 'aiera_g';         // localStorage: hình phạt dùng chung mọi tab { strikes, until, build }
 const CRASH_WINDOW_MS = 120000;      // lần tải trước "sống" trong 120s gần đây mà không thoát sạch => crash
 const PENALTY_MS = 24 * 60 * 60 * 1000;
 const HEARTBEAT_MS = 4000;
@@ -38,6 +40,16 @@ if (params.get('reset') === '1') {
 const sess = readJSON(sessionStore, SESSION_KEY);
 const guard = readJSON(localStore, LOCAL_KEY);
 let guardDirty = false;
+
+// Tự động giải toả hình phạt tích luỹ từ bản cũ khi phát hiện build version mới
+if (guard.build !== BUILD_VERSION) {
+  if (guard.strikes || guard.until) {
+    guard.strikes = 0;
+    guard.until = 0;
+  }
+  guard.build = BUILD_VERSION;
+  guardDirty = true;
+}
 
 // Tab chết đột ngột khi đang ở foreground: không có pagehide → inflight vẫn true,
 // và heartbeat cuối cùng còn rất mới. Tab bị OS kill lúc đang ở nền (hidden) KHÔNG tính là crash.
@@ -85,6 +97,7 @@ export function reportContextLost() {
   g.strikes = (g.strikes || 0) + 1;
   g.until = Date.now() + PENALTY_MS;
   g.lastCrashAt = Date.now();
+  g.build = BUILD_VERSION;
   writeJSON(localStore, LOCAL_KEY, g);
 }
 
