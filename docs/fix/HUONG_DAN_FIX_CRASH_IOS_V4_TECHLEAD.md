@@ -462,3 +462,56 @@ Chạy 2 lần trong console, cách nhau vài giây: `sessionStorage.setItem('ai
     BUILD_VERSION = '20261028.1'
   ```
 
+---
+
+## 10. V5 — CSS-first Defense (Emergency Patch)
+
+### 10.1 Bối cảnh
+V4 đã deploy lên production (build `20261028.1`) nhưng **iOS vẫn crash**, kể cả ở `/?tier=STATIC` (không WebGL).
+
+**Phát hiện gốc rễ:** V4 dựa vào JS (`quality-tier.js`) để thêm class `fx-off-*` lên `<html>`. Nhưng trên iOS WebKit:
+1. CSS `bundle.min.css` được parse → browser BẮT ĐẦU render các animation/filter nặng **ngay lập tức**
+2. JS module `main.js → quality-tier.js` evaluate **SAU** CSS parse (do `type="module"` là defer)
+3. Trong khoảng thời gian giữa CSS render và JS class toggle, 4 lớp `drop-shadow` + animation gradient + `backdrop-filter` + vignette `box-shadow: inset 0 0 180px` **đã đủ crash tiến trình WebContent** của iPhone 11 Pro Max (4GB RAM, DPR 3)
+
+### 10.2 Giải pháp V5
+1. **Inline `<style>` trong `<head>`** — render TRƯỚC mọi external CSS:
+   ```css
+   @media (max-width: 767px), (hover: none) and (pointer: coarse) {
+     .core-label strong { animation: none !important; filter: none !important; }
+     .vignette { box-shadow: none !important; }
+     .grain { display: none !important; }
+     /* + tắt tất cả backdrop-filter */
+   }
+   ```
+2. **Cuối `bundle.min.css` và `mobile-perf.css`** — cùng media query CSS-first defense
+3. **`quality-tier.js`** — iOS mobile mặc định vào tier **SAFE** (30fps, 0.75 DPR) thay vì LOW
+
+### 10.3 Files thay đổi so với V4
+| File | Loại | Mô tả |
+|---|---|---|
+| `index.html` | Sửa | Thêm inline `<style>` CSS-first defense + bump `?v=20261028.2` |
+| `css/bundle.min.css` | Nối thêm | Khối CSS v5 media query |
+| `css/mobile-perf.css` | Nối thêm | Khối CSS v5 media query |
+| `js/quality-tier.js` | Sửa | iOS → SAFE mặc định |
+| `js/diagnostics.js` | Sửa | `BUILD_VERSION = '20261028.2'` |
+
+### 10.4 Bằng chứng kiểm thử V5
+- **Bộ Test tự động 16 kịch bản:** ĐẠT
+  ```text
+  $ node tests/quality-tier.test.mjs
+  ========================================
+  KẾT QUẢ: 16/16 kịch bản đạt!
+  ========================================
+  ```
+- **Syntax Check toàn bộ JS:** ĐẠT (tất cả file JS hợp lệ cú pháp)
+- **Kiểm tra version đồng bộ:**
+  ```text
+  index.html:
+    <link rel="stylesheet" href="./css/bundle.min.css?v=20261028.2">
+    <script type="module" src="./js/main.js?v=20261028.2"></script>
+    <script type="module" src="./js/contact-footer.js?v=20261028.2"></script>
+    <script type="module" src="./js/menu-init.js?v=20261028.2"></script>
+  diagnostics.js:
+    BUILD_VERSION = '20261028.2'
+  ```

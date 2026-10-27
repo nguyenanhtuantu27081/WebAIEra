@@ -95,3 +95,29 @@ html.fx-off-vignette .vignette{
   box-shadow:none;
   background:radial-gradient(ellipse at center,transparent 56%,rgba(0,0,0,.5) 100%);
 }
+
+/* ============================================
+   v5 — CSS-first defense (media query, no JS needed)
+   ============================================ */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  .core-label strong {
+    animation: none !important;
+    filter: none !important;
+    background-size: 100% 100% !important;
+  }
+  .vignette {
+    box-shadow: none !important;
+    background: radial-gradient(ellipse at center, transparent 56%, rgba(0,0,0,.5) 100%);
+  }
+  .grain { display: none !important; }
+  .site-nav, .lang-switch, .node-label, .hud, .focus-panel,
+  .contact-cta-btn, .menu-toggle, .control,
+  .site-menu-panel, .contact-footer__close, .contact-item,
+  .contact-footer__card, .cursor-outline {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .node-label { will-change: auto !important; }
+  .contact-footer__title { animation: none !important; }
+  .contact-footer__close { animation: none !important; }
+}

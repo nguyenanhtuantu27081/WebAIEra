@@ -127,6 +127,11 @@ function computeTier() {
   if (typeof navigator !== 'undefined' && navigator.connection?.saveData) {
     tierReason = 'save_data'; return 'LOW';
   }
+  // V5: iOS luôn vào SAFE (30fps, 0.75DPR, ít particles) thay vì LOW.
+  // WebKit có giới hạn bộ nhớ chặt hơn Chromium nhiều (jetsam limit ~1.3GB trên iPhone 4GB RAM).
+  if (isMobileLike() && isIOS()) {
+    tierReason = 'ios_mobile'; return 'SAFE';
+  }
   if (isMobileLike()) {
     tierReason = 'mobile'; return 'LOW';
   }

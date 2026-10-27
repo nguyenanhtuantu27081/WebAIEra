@@ -2017,4 +2017,39 @@ html.fx-off-vignette .vignette{
   background:radial-gradient(ellipse at center,transparent 56%,rgba(0,0,0,.5) 100%);
 }
 
-
+/* ============================================
+   v5 — CSS-first defense: disable heavy effects on mobile via @media BEFORE JS runs.
+   This is the LAST RESORT safety net. On iOS WebKit, CSS renders before JS modules evaluate,
+   so the gap between CSS parse and quality-tier.js adding fx-off-* classes can crash the process.
+   These rules use @media queries (no JS dependency) to kill the heaviest offenders immediately.
+   Desktop is NOT affected.
+   ============================================ */
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+  /* I1: core-label gradient animation + 4-layer drop-shadow — most expensive single element */
+  .core-label strong {
+    animation: none !important;
+    filter: none !important;
+    background-size: 100% 100% !important;
+  }
+  /* I3: vignette inset box-shadow 180px radius at DPR 3 */
+  .vignette {
+    box-shadow: none !important;
+    background: radial-gradient(ellipse at center, transparent 56%, rgba(0,0,0,.5) 100%);
+  }
+  /* Grain SVG filter overlay — already hidden by v3 media query but reinforce */
+  .grain { display: none !important; }
+  /* I2: ALL backdrop-filter elements — WebKit re-blurs every frame when canvas underneath updates */
+  .site-nav, .lang-switch, .node-label, .hud, .focus-panel,
+  .contact-cta-btn, .menu-toggle, .control,
+  .site-menu-panel, .contact-footer__close, .contact-item,
+  .contact-footer__card, .cursor-outline {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  /* Prevent excessive compositor layers from will-change on mobile */
+  .node-label { will-change: auto !important; }
+  /* Contact footer title gradient animation */
+  .contact-footer__title { animation: none !important; }
+  /* Close button pulse animation */
+  .contact-footer__close { animation: none !important; }
+}
