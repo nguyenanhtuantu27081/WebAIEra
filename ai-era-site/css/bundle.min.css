@@ -1976,3 +1976,45 @@ body:has(.page){
   .contact-cta-btn--lite .contact-cta-canvas-wrap::after{animation:none}
 }
 
+/* ============================================
+   v4 — Hiệu ứng nặng với WebKit/iOS (điều khiển bằng class trên <html>, xem quality-tier.js)
+   ============================================ */
+
+/* Nhãn lõi di chuyển bằng translate → có lớp compositor riêng, không repaint khi di chuyển */
+.core-label{will-change:translate}
+
+/* --- fx-off-core: chữ "AI ERA" ở giữa ---
+   Bản gốc: gradient chữ (background-clip:text) + animation background-position vô hạn
+   + 4 lớp drop-shadow (blur tới 60px) trên phần tử bị dịch chuyển MỖI FRAME, nằm trên canvas WebGL
+   → WebKit phải vẽ lại chữ và chạy lại 4 bộ lọc blur mỗi frame. Bản nhẹ: gradient TĨNH + quầng sáng tĩnh. */
+html.fx-off-core .core-label strong{
+  animation:none;
+  filter:none;
+  background-size:100% 100%;
+}
+html.fx-off-core .core-label::before{
+  content:"";position:absolute;inset:-26px;border-radius:50%;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle,rgba(129,140,248,.30) 0,rgba(103,232,249,.10) 42%,transparent 70%);
+}
+
+/* --- fx-off-backdrop: không blur nền phía sau (WebKit phải blur lại canvas 3D mỗi frame) --- */
+html.fx-off-backdrop :is(.node-label,.site-nav,.contact-cta-btn,.lang-switch,.menu-toggle,.control,.hud,
+  .focus-panel,.site-menu-panel,.contact-footer__close,.contact-item,.contact-footer__card,.cursor-outline){
+  -webkit-backdrop-filter:none !important;
+  backdrop-filter:none !important;
+}
+/* nền đặc hơn để bù khi mất blur */
+html.fx-off-backdrop .site-nav{background:linear-gradient(180deg,rgba(3,3,5,.94),rgba(3,3,5,.78))}
+html.fx-off-backdrop .lang-switch{background:rgba(8,8,14,.88)}
+html.fx-off-backdrop .focus-panel,
+html.fx-off-backdrop .site-menu-panel{background:rgba(12,14,24,.96)}
+html.fx-off-backdrop .contact-item{background:rgba(8,8,16,.82)}
+html.fx-off-backdrop .contact-footer__close{background:rgba(8,8,16,.9)}
+
+/* --- fx-off-vignette: box-shadow inset blur 180px toàn màn hình → radial-gradient (rẻ hơn nhiều) --- */
+html.fx-off-vignette .vignette{
+  box-shadow:none;
+  background:radial-gradient(ellipse at center,transparent 56%,rgba(0,0,0,.5) 100%);
+}
+
+

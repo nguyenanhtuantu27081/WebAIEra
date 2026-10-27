@@ -91,6 +91,13 @@ export function reportContextLost() {
 // ---------------------------------------------------------------------------
 // 3) Phát hiện thiết bị — DUY NHẤT một chỗ
 // ---------------------------------------------------------------------------
+// iPhone/iPad (kể cả iPadOS ở chế độ "Desktop website" báo UA là Macintosh). Mọi trình duyệt iOS dùng WebKit.
+export function isIOS() {
+  if (typeof navigator === 'undefined') return false;
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+}
+
 export function isMobileLike() {
   if (typeof window === 'undefined') return false;
   return window.innerWidth < 768 ||
@@ -136,11 +143,11 @@ const TIER = computeTier();
 // 5) Cấu hình theo tier
 // ---------------------------------------------------------------------------
 const FULL = {
-  webgl: true, postProcessing: true, pulseLines: true, nodeLights: true, physical: true,
+  webgl: true, opaque: false, postProcessing: true, pulseLines: true, nodeLights: true, physical: true,
   chrome3d: true, footer3d: true, coreDetail: 5, ringSegments: 190, ringRadial: 8, sparks: 44, maxFps: 0
 };
 const LITE = {
-  webgl: true, postProcessing: false, pulseLines: false, nodeLights: false, physical: false,
+  webgl: true, opaque: false, postProcessing: false, pulseLines: false, nodeLights: false, physical: false,
   chrome3d: false, footer3d: false, coreDetail: 3, ringSegments: 96, ringRadial: 6, sparks: 24, maxFps: 60
 };
 
@@ -153,15 +160,39 @@ export const TIER_CONFIG = {
   ULTRA:  { ...FULL, particles: 1000, dpr: 1.5, bloom: 0.65, lights: 3, antialias: true, powerPreference: 'default' }
 };
 
-// Bisect trên thiết bị thật: ?on=pulse,nodelights,physical,composer,chrome3d,footer3d
+// Bisect trên thiết bị thật: ?on=pulse,nodelights,physical,composer,chrome3d,footer3d,opaque
 // bật lại TỪNG nhóm trong tier hiện tại để tìm nhóm gây crash. Chỉ dùng khi điều tra.
 const ON = new Set((params.get('on') || '').split(',').map(s => s.trim().toLowerCase()).filter(Boolean));
 const ON_MAP = {
   pulse: { pulseLines: true }, nodelights: { nodeLights: true }, physical: { physical: true },
-  composer: { postProcessing: true, bloom: 0.2 }, chrome3d: { chrome3d: true }, footer3d: { footer3d: true }
+  composer: { postProcessing: true, bloom: 0.2 }, chrome3d: { chrome3d: true }, footer3d: { footer3d: true },
+  opaque: { opaque: true } // canvas không trong suốt (alpha:false) — thử nghiệm cho iOS
 };
 const RESOLVED = { ...TIER_CONFIG[TIER] };
 if (TIER !== 'STATIC') ON.forEach((k) => { if (ON_MAP[k]) Object.assign(RESOLVED, ON_MAP[k]); });
+
+// ---------------------------------------------------------------------------
+// 5b) Hiệu ứng CSS nặng (đặc biệt với WebKit/iOS) — bật/tắt theo NHÓM bằng class trên <html>
+//   fx-off-core     : chữ "AI ERA" ở giữa: bỏ animation nền + 4 lớp drop-shadow, thay bằng quầng sáng tĩnh
+//   fx-off-backdrop : bỏ mọi backdrop-filter (blur nền) phủ lên canvas WebGL
+//   fx-off-vignette : thay box-shadow inset 180px bằng radial-gradient
+// Mặc định: tắt cả 3 nhóm ở tier STATIC/SAFE/LOW. ?fx=full giữ hiệu ứng đầy đủ (để so sánh);
+// ?fxoff=core,backdrop chỉ tắt các nhóm được liệt kê (để bisect), áp dụng cho mọi tier.
+// ---------------------------------------------------------------------------
+const FX_GROUPS = ['core', 'backdrop', 'vignette'];
+const fxOff = (() => {
+  const q = params.get('fxoff');
+  if (q !== null) return q.split(',').map(s => s.trim().toLowerCase()).filter(g => FX_GROUPS.includes(g));
+  if (params.get('fx') === 'full') return [];
+  return (TIER === 'STATIC' || TIER === 'SAFE' || TIER === 'LOW') ? FX_GROUPS.slice() : [];
+})();
+safe(() => {
+  if (typeof document !== 'undefined' && document.documentElement) {
+    const cl = document.documentElement.classList;
+    fxOff.forEach(g => cl.add('fx-off-' + g));
+    if (isIOS()) cl.add('is-ios');
+  }
+});
 
 // ---------------------------------------------------------------------------
 // 6) API công khai — getter thuần, KHÔNG side-effect
@@ -170,4 +201,5 @@ export function getQualityTier() { return TIER; }
 export function getTierReason() { return tierReason; }
 export function getTierConfig() { return RESOLVED; }
 export function isStaticMode() { return TIER === 'STATIC'; }
-export function getGuardState() { return { ...guard, tier: TIER, reason: tierReason, bisect: [...ON] }; }
+export function getFxOff() { return fxOff.slice(); }
+export function getGuardState() { return { ...guard, tier: TIER, reason: tierReason, bisect: [...ON], fxOff: fxOff.slice(), ios: isIOS() }; }

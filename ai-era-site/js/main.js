@@ -20,7 +20,7 @@ if (new URLSearchParams(location.search).get('diag') === '1') {
   const el = document.createElement('pre');
   el.id = 'diagOverlay';
   el.style.cssText = 'position:fixed;left:6px;bottom:6px;z-index:99999;margin:0;padding:6px 8px;font:11px/1.35 monospace;color:#0f0;background:rgba(0,0,0,.75);border-radius:6px;pointer-events:none;white-space:pre-wrap;max-width:90vw';
-  el.textContent = `build ${BUILD_VERSION}\ntier ${g.tier} (${g.reason})\nstrikes ${g.strikes || 0} until ${g.until ? new Date(g.until).toISOString() : '-'}\nbisect [${g.bisect}]\ndpr ${devicePixelRatio} vp ${innerWidth}x${innerHeight}`;
+  el.textContent = `build ${BUILD_VERSION}\ntier ${g.tier} (${g.reason})\nstrikes ${g.strikes || 0} until ${g.until ? new Date(g.until).toISOString() : '-'}\nbisect [${g.bisect}]\nfxOff [${g.fxOff}] ios ${g.ios}\ndpr ${devicePixelRatio} vp ${innerWidth}x${innerHeight}`;
   document.body.appendChild(el);
 }
 

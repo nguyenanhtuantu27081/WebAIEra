@@ -48,7 +48,7 @@ let rendererInstance;
 try {
   rendererInstance = new THREE.WebGLRenderer({
     antialias: cfg.antialias,               // false for LOW (mobile DPI already smooth)
-    alpha: true,
+    alpha: !cfg.opaque,
     powerPreference: cfg.powerPreference     // 'low-power' for LOW, 'default' otherwise
   });
 } catch (error) {
@@ -79,6 +79,8 @@ if (cfg.postProcessing === false) {
 // updateStyle=false: kích thước hiển thị do CSS (#webgl canvas {width:100%;height:100%}) quyết định.
 renderer.setPixelRatio(getRenderPixelRatio());
 renderer.setSize(innerWidth, innerHeight, false);
+// Canvas không trong suốt (chỉ khi bật ?on=opaque): WebKit không phải blend canvas với DOM phía sau.
+if (cfg.opaque) renderer.setClearColor(0x030305, 1);
 mount.appendChild(renderer.domElement);
 
 logDiagInfo('webgl_renderer_created', {

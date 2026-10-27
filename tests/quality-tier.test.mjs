@@ -1,5 +1,5 @@
 // tests/quality-tier.test.mjs
-// Automated tests for crash-loop guard & quality-tier logic across 12 scenarios
+// Automated tests for crash-loop guard & quality-tier logic across 16 scenarios (v4: iOS & CSS fxOff)
 
 import assert from 'node:assert/strict';
 import { pathToFileURL } from 'node:url';
@@ -30,6 +30,7 @@ let currentWidth = 1440;
 let currentHidden = false;
 let currentMediaMatches = {};
 let listeners = new Map();
+let docClassList = new Set();
 
 function setupBrowserEnv(options = {}) {
   const {
@@ -38,7 +39,10 @@ function setupBrowserEnv(options = {}) {
     hidden = false,
     media = {},
     newTab = false,
-    freshLocal = false
+    freshLocal = false,
+    userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    platform = 'Win32',
+    maxTouchPoints = 0
   } = options;
 
   if (freshLocal) {
@@ -53,6 +57,7 @@ function setupBrowserEnv(options = {}) {
   currentHidden = hidden;
   currentMediaMatches = media;
   listeners.clear();
+  docClassList.clear();
 
   globalThis.window = {
     sessionStorage: currentSessionStorage,
@@ -71,6 +76,13 @@ function setupBrowserEnv(options = {}) {
 
   globalThis.document = {
     hidden: currentHidden,
+    documentElement: {
+      classList: {
+        add(cls) { docClassList.add(cls); },
+        remove(cls) { docClassList.delete(cls); },
+        contains(cls) { return docClassList.has(cls); }
+      }
+    },
     addEventListener(event, fn) {
       if (!listeners.has(event)) listeners.set(event, []);
       listeners.get(event).push(fn);
@@ -85,7 +97,9 @@ function setupBrowserEnv(options = {}) {
   globalThis.localStorage = sharedLocalStorage;
   Object.defineProperty(globalThis, 'navigator', {
     value: {
-      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      userAgent,
+      platform,
+      maxTouchPoints,
       connection: {}
     },
     configurable: true,
@@ -248,8 +262,79 @@ async function runTests() {
     passedCount++;
   }
 
+  // 13. Mobile tắt đúng 3 nhóm CSS (core, backdrop, vignette) trên html
+  {
+    sharedLocalStorage.clear();
+    setupBrowserEnv({ width: 375, freshLocal: true, newTab: true });
+    const mod = await loadQualityTierModule();
+    assert.deepEqual(mod.getFxOff(), ['core', 'backdrop', 'vignette']);
+    assert.equal(docClassList.has('fx-off-core'), true);
+    assert.equal(docClassList.has('fx-off-backdrop'), true);
+    assert.equal(docClassList.has('fx-off-vignette'), true);
+    passedCount++;
+  }
+
+  // 14. Desktop giữ nguyên hiệu ứng đầy đủ (fxOff rỗng)
+  {
+    setupBrowserEnv({ width: 1440, freshLocal: true, newTab: true });
+    const mod = await loadQualityTierModule();
+    assert.deepEqual(mod.getFxOff(), []);
+    assert.equal(docClassList.has('fx-off-core'), false);
+    assert.equal(docClassList.has('fx-off-backdrop'), false);
+    assert.equal(docClassList.has('fx-off-vignette'), false);
+    passedCount++;
+  }
+
+  // 15. ?fx=full trên mobile giữ hiệu ứng đầy đủ, ?fxoff=core,backdrop áp dụng có chọn lọc
+  {
+    setupBrowserEnv({ width: 375, search: '?fx=full', freshLocal: true, newTab: true });
+    const mod1 = await loadQualityTierModule();
+    assert.deepEqual(mod1.getFxOff(), []);
+
+    setupBrowserEnv({ width: 1440, search: '?fxoff=core,backdrop', freshLocal: true, newTab: true });
+    const mod2 = await loadQualityTierModule();
+    assert.deepEqual(mod2.getFxOff(), ['core', 'backdrop']);
+    assert.equal(docClassList.has('fx-off-core'), true);
+    assert.equal(docClassList.has('fx-off-backdrop'), true);
+    assert.equal(docClassList.has('fx-off-vignette'), false);
+    passedCount++;
+  }
+
+  // 16. Phát hiện iOS (iPhone/iPad/iPadOS Desktop mode) và cờ ?on=opaque
+  {
+    // iPhone
+    setupBrowserEnv({
+      width: 414,
+      freshLocal: true,
+      newTab: true,
+      userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 27_0_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
+    });
+    const modIPhone = await loadQualityTierModule();
+    assert.equal(modIPhone.isIOS(), true);
+    assert.equal(docClassList.has('is-ios'), true);
+
+    // iPadOS Desktop mode: UA Macintosh, maxTouchPoints > 1
+    setupBrowserEnv({
+      width: 1024,
+      freshLocal: true,
+      newTab: true,
+      userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15',
+      platform: 'MacIntel',
+      maxTouchPoints: 5
+    });
+    const modIPad = await loadQualityTierModule();
+    assert.equal(modIPad.isIOS(), true);
+
+    // ?on=opaque
+    setupBrowserEnv({ width: 414, search: '?tier=LOW&on=opaque', freshLocal: true, newTab: true });
+    const modOpaque = await loadQualityTierModule();
+    assert.equal(modOpaque.getTierConfig().opaque, true);
+
+    passedCount++;
+  }
+
   console.log(`\n========================================`);
-  console.log(`KẾT QUẢ: ${passedCount}/12 kịch bản đạt!`);
+  console.log(`KẾT QUẢ: ${passedCount}/16 kịch bản đạt!`);
   console.log(`========================================\n`);
 }
 

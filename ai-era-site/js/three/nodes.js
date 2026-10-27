@@ -267,6 +267,8 @@ export function animateNodes(t, selected) {
 const _scratchVec = new THREE.Vector3();
 const HAS_TRANSLATE = typeof CSS !== 'undefined' && !!CSS.supports && CSS.supports('translate', '1px 1px');
 let _coreLabel = null;
+let _coreX = NaN;
+let _coreY = NaN;
 let _labelSizesCached = false;
 const _labelDims = [];
 
@@ -280,6 +282,11 @@ if (typeof document !== 'undefined' && document.fonts?.ready?.then) {
 export function projectLabels(camera, coreGroup, selected) {
   if (!_coreLabel && typeof document !== 'undefined') {
     _coreLabel = document.querySelector('.core-label');
+    // Vị trí thật do style.translate (compositor) quyết định → đưa left/top về 0 một lần
+    if (_coreLabel && HAS_TRANSLATE) {
+      _coreLabel.style.left = '0';
+      _coreLabel.style.top = '0';
+    }
   }
   const w = window.innerWidth;
   const h = window.innerHeight;
@@ -330,8 +337,17 @@ export function projectLabels(camera, coreGroup, selected) {
 
   if (_coreLabel) {
     coreGroup.getWorldPosition(_scratchVec).project(camera);
-    _coreLabel.style.left = Math.round(((_scratchVec.x * .5 + .5) * w) * 10) / 10 + 'px';
-    _coreLabel.style.top = Math.round(((-_scratchVec.y * .5 + .5) * h) * 10) / 10 + 'px';
+    const cx = Math.round(((_scratchVec.x * .5 + .5) * w) * 10) / 10;
+    const cy = Math.round(((-_scratchVec.y * .5 + .5) * h) * 10) / 10;
+    if (cx !== _coreX || cy !== _coreY) {
+      _coreX = cx; _coreY = cy;
+      if (HAS_TRANSLATE) {
+        _coreLabel.style.translate = cx + 'px ' + cy + 'px'; // không layout, không repaint lớp chữ
+      } else {
+        _coreLabel.style.left = cx + 'px';
+        _coreLabel.style.top = cy + 'px';
+      }
+    }
     const op = (_scratchVec.z < 1 && _scratchVec.z > -1 && selected < 0) ? '1' : '.2';
     if (_coreLabel._op !== op) {
       _coreLabel._op = op;
