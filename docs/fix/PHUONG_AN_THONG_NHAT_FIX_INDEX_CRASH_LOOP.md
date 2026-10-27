@@ -352,3 +352,26 @@ Cụ thể:
   ai-era-site/js/quality-tier.js:97:    !!window.matchMedia?.('(pointer: coarse)')?.matches ||
   => Tập trung duy nhất tại quality-tier.js:isMobileLike().
   ```
+
+---
+
+## 10. Nhật ký triển khai V4 & V5 — iOS WebKit & CSS-First Defense
+
+### 10.1 V4: Xử lý nghẽn bộ nhớ GPU WebKit trên iOS
+- **Mục tiêu:** Giải quyết lỗi crash đặc thù trên iOS (iPhone 11 Pro Max / iOS 27 WebKit) do 4 lớp `drop-shadow` + animation gradient 9s trên `.core-label strong` + `backdrop-filter` lồng nhau.
+- **Thực hiện:**
+  - `quality-tier.js`: Thêm `isIOS()`, cờ `fx-off-*` (`fx-off-core`, `fx-off-backdrop`, `fx-off-vignette`).
+  - `mobile-perf.css` & `bundle.min.css`: Thêm class override tắt các hiệu ứng nặng khi phát hiện mobile/tier thấp.
+  - Bump build version `20261028.1`.
+- **Commit:** `cd3dce0b`.
+
+### 10.2 V5: CSS-First Defense & iOS Default SAFE Tier (Khắc phục dứt điểm)
+- **Phát hiện:** `bundle.min.css` được browser parse và render TRƯỚC KHI JavaScript module (`quality-tier.js`) hoàn tất nạp. Do đó WebKit bị quá tải bộ nhớ và crash process ngay từ pha render CSS ban đầu, dẫn đến hiện tượng `/?tier=STATIC` cũng bị crash nếu chỉ dựa vào JS để bật class.
+- **Biện pháp triển khai:**
+  1. **Inline `<style>` trong `<head>` của `index.html`:** Áp dụng `@media (max-width: 767px), (hover: none) and (pointer: coarse)` trực tiếp trước mọi external styles/scripts để triệt tiêu animation/drop-shadow/backdrop-filter ngay lập tức mà không phụ thuộc JS.
+  2. **CSS-First rules trong `bundle.min.css` & `mobile-perf.css`:** Đồng bộ các rules vô hiệu hóa animation/filter nặng cho mọi màn hình mobile.
+  3. **iOS Default SAFE Tier:** Thiết lập `quality-tier.js` tự động định tuyến iOS vào tier `SAFE` (canvas tĩnh/tối giản, giới hạn DPR 0.75, 30 FPS).
+  4. **Bump Build Version:** Nâng lên `20261028.2` đồng bộ trong `index.html` và `diagnostics.js`.
+- **Commit:** `ea431b26`.
+- **Kết quả CI/CD:** GitHub Actions workflow `Build and Push Docker Image (ARM64)` (Run ID: `40511909872`) hoàn thành `success`.
+
